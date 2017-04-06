@@ -1,11 +1,22 @@
-#mybatis:
-  #mapperLocations:classpath:mapper/*Mapper.xml
-  #typeAliasesPackage:com.yq.se.model
-  #mybatis.config：mybatis-config.xml配置文件的路径
-  #mybatis.typeHandlersPackage：扫描typeHandlers的包
-  #mybatis.checkConfigLocation：检查配置文件是否存在
-  #mybatis.executorType：设置执行模式（SIMPLE, REUSE, BATCH），默认为SIMPLE
+mybatis:
+  mapper-locations:classpath:mapper/*Mapper.xml
+  type-aliasesPackage:com.yq.se.model
+#  mybatis.config：mybatis-config.xml配置文件的路径
+#  mybatis.typeHandlersPackage：扫描typeHandlers的包
+#  mybatis.checkConfigLocation：检查配置文件是否存在
+#  mybatis.executorType：设置执行模式（SIMPLE, REUSE, BATCH），默认为SIMPLE
+# Server settings
+server:
+    port: 9000
+    address: 127.0.0.1
 spring:
+    http:
+        encoding.charset: UTF-8
+        encoding.enable: true
+        encoding.force: true
+    mvc:
+        view.prefix: /page/
+        view.suffix: .html
     datasource:
         name: se
         url: jdbc:mysql://localhost:3306/se?useUnicode=true&characterEncoding=utf-8&useSSL=false

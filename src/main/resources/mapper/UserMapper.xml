@@ -43,14 +43,6 @@
             <if test="user.username!=null">or username = #{user.username}</if>
         </where>
     </sql>
-    <sql id="page_break">
-        <if test="sort!=null">order by ${sort}</if>
-        <if test="position>0">
-            <if test="columns>0">
-                limit ${position} , ${columns}
-            </if>
-        </if>
-    </sql>
     <resultMap id="user_map" type="com.yq.se.model.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
@@ -61,39 +53,59 @@
         <result column="status" property="status"/>
     </resultMap>
     <insert id="add">
-        <selectKey resultType="int" keyColumn="id" keyProperty="user.id" order="AFTER">
-            select LAST_INSERT_ID()
-        </selectKey>
-        insert into
+        INSERT INTO
         <include refid="table_name"/>
         (<include refid="insert_fields"/>)
-        values(<include refid="values"/>)
+        VALUES(<include refid="values"/>)
     </insert>
     <update id="modify">
-        update
+        UPDATE
         <include refid="table_name"/>
         <include refid="set"/>
         <include refid="where"/>
     </update>
     <delete id="delete">
-        delete from
+        DELETE FROM
         <include refid="table_name"/>
-        <include refid="where"/>
+        WHERE
+        id = #{id}
     </delete>
     <select id="queryById" resultMap="user_map">
-        select
+        SELECT
         <include refid="fields"/>
-        from
+        FROM
         <include refid="table_name"/>
-        <include refid="where"/>
-        <include refid="page_break"/>
+        WHERE
+        id = #{id}
     </select>
     <select id="queryAll" resultType="com.yq.se.model.User">
-        select
+        SELECT
         <include refid="fields"/>
-        from
+        FROM
         <include refid="table_name"/>
-        where status = #{status}
-        <include refid="page_break"/>
+        <where>
+            <if test="true">status!=-1</if>
+            <if test="status!=null">AND status=#{status}</if>
+        </where>
+        <if test="page!=null">
+            <if test="page.sort!=null">order by ${page.sort} ${page.order}</if>
+        </if>
+        <if test="page!=null">
+            <if test="page.begin!=null">
+                <if test="page.size!=null">
+                    limit #{page.begin} , #{page.size}
+                </if>
+            </if>
+        </if>
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        <include refid="table_name"/>
+        <where>
+            <if test="true">status!=-1</if>
+            <if test="status!=null">AND status=#{status}</if>
+        </where>
     </select>
 </mapper>

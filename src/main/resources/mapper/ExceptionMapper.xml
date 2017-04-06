@@ -4,40 +4,29 @@
 
     <sql id="table_name">t_exception</sql>
     <sql id="fields">
-        id as exception_id,
-        username,
+        id,
         class_full_name,
         description,
         create_date,
         last_update,
-        status
+        `status`,
+        user_id
     </sql>
     <sql id="values">
         #{exception.id},
-        #{exception.user.id},
         #{exception.classFullName},
         #{exception.description},
         #{exception.createDate},
         #{exception.lastUpdate},
-        #{exception.status}
-    </sql>
-    <sql id="set">
-        <set>
-            <if test="exception.id!=null">id=#{exception.id},</if>
-            <if test="exception.user.id!=null">user_id=#{exception.user.id},</if>
-            <if test="exception.classFullName!=null">class_full_name=#{exception.classFullName},</if>
-            <if test="exception.description!=null">description=#{exception.description},</if>
-            <if test="exception.createDate!=null">create_date=#{exception.createDate},</if>
-            <if test="exception.lastUpdate!=null">last_update=#{exception.lastUpdate},</if>
-            <if test="exception.status!=null">status=#{exception.status}</if>
-        </set>
+        #{exception.status},
+        #{exception.user.id}
     </sql>
     <resultMap id="exception_user_map" type="com.yq.se.model.Exception">
         <id column="exception_id" property="id"/>
         <result column="class_full_name" property="classFullName"/>
         <result column="description" property="description"/>
         <result column="exception_create_date" property="createDate"/>
-        <result column="last_update" property="lastUpdate"/>
+        <result column="exception_last_update" property="lastUpdate"/>
         <result column="exception_status" property="status"/>
         <association property="user" javaType="com.yq.se.model.User">
             <id column="user_id" property="id"/>
@@ -45,44 +34,78 @@
             <result column="password" property="password"/>
             <result column="nickname" property="nickname"/>
             <result column="phone" property="phone"/>
-            <result column="user_create_date" property="createDate"/>
-            <result column="user_status" property="status"/>
+            <result column="create_date" property="createDate"/>
+            <result column="status" property="status"/>
         </association>
     </resultMap>
     <insert id="add">
-        insert into
-        <include refid="table_name"/>
-        values(<include refid="values"/>)
+        INSERT INTO
+        t_exception
+        (<include refid="fields"/>)
+        VALUES(<include refid="values"/>)
     </insert>
-    <update id="modifyById">
-        update
-        <include refid="table_name"/>
-        <include refid="set"/>
-        where id = #{exception.id}
+    <update id="modify">
+        UPDATE
+        t_exception
+        <set>
+            <if test="exception.classFullName!=null">class_full_name=#{exception.classFullName},</if>
+            <if test="exception.description!=null">description=#{exception.description},</if>
+            <if test="exception.createDate!=null">create_date=#{exception.createDate},</if>
+            <if test="exception.lastUpdate!=null">last_update=#{exception.lastUpdate},</if>
+            <if test="exception.status!=null">`status`=#{exception.status},</if>
+            <if test="exception.user.id!=null">user_id=#{exception.user.id},</if>
+        </set>
+        WHERE
+        id = #{exception.id}
     </update>
     <delete id="delete">
-        delete from
+        DELETE FROM
         <include refid="table_name"/>
-        where id = #{exception.id}
+        WHERE id = #{id}
     </delete>
     <select id="queryById" resultMap="exception_user_map">
-        select
-        <include refid="fields"/>
-        from
-        <include refid="table_name"/>
-        where id = #{exception.id}
+        SELECT
+        e.*,u.*
+        FROM
+        (
+        SELECT
+        id as exception_id , class_full_name , description , create_date as exception_create_date,
+        last_update as exception_last_update , status as exception_status , user_id
+        FROM
+        t_exception
+        WHERE
+        id = #{id}
+        ) e
+        LEFT JOIN
+        t_user u
+        ON
+        e.user_id = u.id
     </select>
     <select id="queryAll" resultMap="exception_user_map">
-        select
-        <include refid="fields"/>
-        from
-        <include refid="table_name"/>
-        <if test="sort!=null">
-            order by ${sort}
+        SELECT
+        e.*,u.*
+        FROM
+        (
+        SELECT
+        id as exception_id , class_full_name , description , create_date as exception_create_date,
+        last_update as exception_last_update , status as exception_status , user_id
+        FROM
+        t_exception
+        <where>
+            <if test="true">status!=-1</if>
+            <if test="status!=null">AND status=#{status}</if>
+        </where>
+        ) e
+        LEFT JOIN
+        t_user u
+        ON
+        e.user_id = u.id
+        <if test="page.sort!=null">
+            ORDER BY ${page.sort} ${page.order}
         </if>
-        <if test="position > 0">
-            <if test="columns > 0">
-                limit ${position} , ${columns}
+        <if test="page.begin!=null">
+            <if test="page.size!=null">
+                LIMIT ${page.begin} , ${page.size}
             </if>
         </if>
     </select>
