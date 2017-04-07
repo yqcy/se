@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Exception {
     private Integer id;
-    private String classFullName;//异常全限定名
+    private String fullClassName;//异常全限定名
     private String description;//描述信息
     private List<Solve> solves;//解决方案
     private Date createDate;//创建日期
@@ -25,12 +25,12 @@ public class Exception {
     }
 
 
-    public String getClassFullName() {
-        return classFullName;
+    public String getFullClassName() {
+        return fullClassName;
     }
 
-    public void setClassFullName(String classFullName) {
-        this.classFullName = classFullName;
+    public void setFullClassName(String fullClassName) {
+        this.fullClassName = fullClassName;
     }
 
     public String getDescription() {

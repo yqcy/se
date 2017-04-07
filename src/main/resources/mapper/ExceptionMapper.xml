@@ -5,7 +5,7 @@
     <sql id="table_name">t_exception</sql>
     <sql id="fields">
         id,
-        class_full_name,
+        full_class_name,
         description,
         create_date,
         last_update,
@@ -14,7 +14,7 @@
     </sql>
     <sql id="values">
         #{exception.id},
-        #{exception.classFullName},
+        #{exception.fullClassName},
         #{exception.description},
         #{exception.createDate},
         #{exception.lastUpdate},
@@ -23,7 +23,7 @@
     </sql>
     <resultMap id="exception_user_map" type="com.yq.se.model.Exception">
         <id column="exception_id" property="id"/>
-        <result column="class_full_name" property="classFullName"/>
+        <result column="full_class_name" property="fullClassName"/>
         <result column="description" property="description"/>
         <result column="exception_create_date" property="createDate"/>
         <result column="exception_last_update" property="lastUpdate"/>
@@ -39,6 +39,9 @@
         </association>
     </resultMap>
     <insert id="add">
+        <selectKey keyColumn="id" keyProperty="id" resultType="int" order="AFTER">
+            SELECT MAX(id) FROM t_exception
+        </selectKey>
         INSERT INTO
         t_exception
         (<include refid="fields"/>)
@@ -48,7 +51,7 @@
         UPDATE
         t_exception
         <set>
-            <if test="exception.classFullName!=null">class_full_name=#{exception.classFullName},</if>
+            <if test="exception.fullClassName!=null">full_class_name=#{exception.fullClassName},</if>
             <if test="exception.description!=null">description=#{exception.description},</if>
             <if test="exception.createDate!=null">create_date=#{exception.createDate},</if>
             <if test="exception.lastUpdate!=null">last_update=#{exception.lastUpdate},</if>
@@ -69,7 +72,7 @@
         FROM
         (
         SELECT
-        id as exception_id , class_full_name , description , create_date as exception_create_date,
+        id as exception_id , full_class_name , description , create_date as exception_create_date,
         last_update as exception_last_update , status as exception_status , user_id
         FROM
         t_exception
@@ -87,13 +90,19 @@
         FROM
         (
         SELECT
-        id as exception_id , class_full_name , description , create_date as exception_create_date,
+        id as exception_id , full_class_name , description , create_date as exception_create_date,
         last_update as exception_last_update , status as exception_status , user_id
         FROM
         t_exception
         <where>
-            <if test="true">status!=-1</if>
-            <if test="status!=null">AND status=#{status}</if>
+            <if test="true">status != -1</if>
+            <if test="exception.id!=null">AND id = #{exception.id}</if>
+            <if test="exception.fullClassName!=null">AND full_class_name = #{exception.fullClassName}</if>
+            <if test="exception.status!=null">AND status = #{exception.status}</if>
+            <if test="exception.user.id!=null">AND user_id = #{exception.user.id}</if>
+            <if test="begin!=null">
+                <if test="end!=null">AND ${dateType} BETWEEN #{page.begin} AND #{page.size}</if>
+            </if>
         </where>
         ) e
         LEFT JOIN
@@ -108,5 +117,21 @@
                 LIMIT ${page.begin} , ${page.size}
             </if>
         </if>
+    </select>
+    <select id="queryCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        t_exception
+        <where>
+            <if test="true">status != -1</if>
+            <if test="exception.id!=null">AND id = #{exception.id}</if>
+            <if test="exception.fullClassName!=null">AND full_class_name = #{exception.fullClassName}</if>
+            <if test="exception.status!=null">AND status = #{exception.status}</if>
+            <if test="exception.user.id!=null">AND user_id = #{exception.user.id}</if>
+            <if test="begin!=null">
+                <if test="end!=null">AND ${dateType} BETWEEN #{begin} AND #{end}</if>
+            </if>
+        </where>
     </select>
 </mapper>
