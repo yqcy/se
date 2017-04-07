@@ -1,14 +1,15 @@
 mybatis:
-  mapper-locations:classpath:mapper/*Mapper.xml
-  type-aliasesPackage:com.yq.se.model
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  type-aliasesPackage: com.yq.se.model
 #  mybatis.config：mybatis-config.xml配置文件的路径
 #  mybatis.typeHandlersPackage：扫描typeHandlers的包
 #  mybatis.checkConfigLocation：检查配置文件是否存在
 #  mybatis.executorType：设置执行模式（SIMPLE, REUSE, BATCH），默认为SIMPLE
 # Server settings
 server:
-    port: 9000
+    port: 8989
     address: 127.0.0.1
+    servlet-path: /swagger
 spring:
     http:
         encoding.charset: UTF-8

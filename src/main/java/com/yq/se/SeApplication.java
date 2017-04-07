@@ -30,28 +30,28 @@ public class SeApplication implements ApplicationListener<ApplicationReadyEvent>
         sa.run(args);
     }
 
-    @Autowired
-    private DataSource dataSource;
-
-    @Bean("sqlSessionFactory")
-    public SqlSessionFactory getSqlSessionFactory() {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(dataSource);
-        bean.setTypeAliasesPackage("com.yq.se.model");
-        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        try {
-            bean.setMapperLocations(resolver.getResources("classpath:mapper/*Mapper.xml"));
-            return bean.getObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Bean("sqlSessionTemplate")
-    public SqlSessionTemplate getSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
-        return new SqlSessionTemplate(sqlSessionFactory);
-    }
+//    @Autowired
+//    private DataSource dataSource;
+//
+//    @Bean("sqlSessionFactory")
+//    public SqlSessionFactory getSqlSessionFactory() {
+//        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+//        bean.setDataSource(dataSource);
+//        bean.setTypeAliasesPackage("com.yq.se.model");
+//        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//        try {
+//            bean.setMapperLocations(resolver.getResources("classpath:mapper/*Mapper.xml"));
+//            return bean.getObject();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    @Bean("sqlSessionTemplate")
+//    public SqlSessionTemplate getSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+//        return new SqlSessionTemplate(sqlSessionFactory);
+//    }
 
     /**
      * 工厂启动事件监听
