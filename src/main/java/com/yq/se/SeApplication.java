@@ -1,5 +1,7 @@
 package com.yq.se;
 
+import com.yq.se.mapper.UserMapper;
+import com.yq.se.model.User;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,6 +22,13 @@ import javax.sql.DataSource;
  */
 @SpringBootApplication
 public class SeApplication implements ApplicationListener<ApplicationReadyEvent> {
+
+    public static void main(String[] args) {
+//        SpringApplication.run(SeApplication.class, args);
+        SpringApplication sa = new SpringApplication(SeApplication.class);
+        sa.addListeners(new SeApplication());//添加监听类
+        sa.run(args);
+    }
 
     @Autowired
     private DataSource dataSource;
@@ -44,19 +53,11 @@ public class SeApplication implements ApplicationListener<ApplicationReadyEvent>
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
-    public static void main(String[] args) {
-//        SpringApplication.run(SeApplication.class, args);
-        SpringApplication sa = new SpringApplication(SeApplication.class);
-        sa.addListeners(new SeApplication());//添加监听类
-        sa.run(args);
-    }
-
-
+    /**
+     * 工厂启动事件监听
+     * @param applicationReadyEvent
+     */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        /*
-        在这里写入项目启动后要执行的任务集
-         */
-
     }
 }
