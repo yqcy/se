@@ -22,7 +22,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 public class SwaggerConfig {
 
     @Value("${server.servlet-path}")
-    private String pathMapping;
+    private String servletPath;
 
     private ApiInfo initApiInfo() {
         ApiInfo apiInfo = new ApiInfo("异常日常管理",//大标题
@@ -48,14 +48,12 @@ public class SwaggerConfig {
 
     @Bean
     public Docket restfulApi() {
-        System.out.println("http://localhost:8989" + pathMapping + "/swagger-ui.html");
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("RestfulApi")
                 .genericModelSubstitutes(ResponseEntity.class)
                 .useDefaultResponseMessages(true)
                 .forCodeGeneration(false)
-                .pathMapping(pathMapping) // base，最终调用接口后会和paths拼接在一起
+                .pathMapping(servletPath) // base，最终调用接口后会和paths拼接在一起
                 .select()
                 .paths(doFilteringRules())
                 .build()

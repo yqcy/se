@@ -6,8 +6,10 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationPreparedEvent;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -55,9 +57,11 @@ public class SeApplication implements ApplicationListener<ApplicationReadyEvent>
 
     /**
      * 工厂启动事件监听
-     * @param applicationReadyEvent
+     *
+     * @param event
      */
     @Override
-    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+        System.out.println("http://localhost:8989" + "/swagger-ui.html");
     }
 }

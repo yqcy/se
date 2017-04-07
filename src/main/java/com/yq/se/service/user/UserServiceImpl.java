@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.REQUIRED)
     public User addNewUser(User user) {
         user.setCreateDate(new Date());
+        user.setStatus(0);
         userMapper.add(user);
         return user;
     }

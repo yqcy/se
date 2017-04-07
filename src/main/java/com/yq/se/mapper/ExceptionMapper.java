@@ -5,6 +5,7 @@ import com.yq.se.util.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +22,8 @@ public interface ExceptionMapper {
 
     Exception queryById(@Param("id") Integer id);
 
-    List<Exception> queryAll(@Param("page")Page page , @Param("status") Integer status);
+    List<Exception> queryAll(@Param("exception") Exception e, @Param("page") Page page, @Param("dateType") String dateType, @Param("begin") Date begin, @Param("end") Date end);
+
+    int queryCount(@Param("exception") Exception e, @Param("dateType") String dateType, @Param("begin") Date begin, @Param("end") Date end);
 
 }
