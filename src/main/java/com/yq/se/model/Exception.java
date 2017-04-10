@@ -1,5 +1,7 @@
 package com.yq.se.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +13,9 @@ public class Exception {
     private String fullClassName;//异常全限定名
     private String description;//描述信息
     private List<Solve> solves;//解决方案
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;//创建日期
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastUpdate;
     private Integer status;
     private User user;
