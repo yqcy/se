@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wb264139 on 2017/4/7.
@@ -27,7 +29,7 @@ public class ExceptionController {
     @Autowired
     private ExceptionService service;
 
-    @ApiOperation(value = "查询异常", notes = "支持GET方式", response = String.class)
+    @ApiOperation(value = "查询异常", notes = "支持POST方式", response = String.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "id", dataType = "Int", paramType = "query"),
             @ApiImplicitParam(name = "fullClassName", value = "fullClassName", dataType = "String", paramType = "query"),
@@ -36,8 +38,8 @@ public class ExceptionController {
             @ApiImplicitParam(name = "dateType", value = "dateType", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "beginTime", value = "beginTime", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "endTime", value = "endTime", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "pageIndex", value = "pageIndex", dataType = "Int", paramType = "query"),
-            @ApiImplicitParam(name = "pageSize", value = "pageSize", dataType = "Int", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "page", dataType = "Int", paramType = "query"),
+            @ApiImplicitParam(name = "rows", value = "rows", dataType = "Int", paramType = "query"),
     })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "请求已完成"),
@@ -46,20 +48,23 @@ public class ExceptionController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/show", method = RequestMethod.GET)
-    public Object show(@RequestParam(required = false) Integer id, @RequestParam(required = false) String fullClassName, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer userId, @RequestParam(required = false) String dateType, @RequestParam(required = false) Date beginTime, @RequestParam(required = false) Date endTime, @RequestParam(required = false) Integer pageIndex, @RequestParam(required = false) Integer pageSize) {
+    @RequestMapping(value = "/show", method = RequestMethod.POST)
+    public Object show(@RequestParam(required = false) Integer id, @RequestParam(required = false) String fullClassName, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer userId, @RequestParam(required = false) String dateType, @RequestParam(required = false) Date beginTime, @RequestParam(required = false) Date endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows) {
         Exception e = new Exception();
         User user = new User();
-        Page page = new Page();
-        page.setIndex(pageIndex);
-        page.setSize(pageSize);
+        Page p = new Page();
+        p.setIndex(page);
+        p.setSize(rows);
         user.setId(userId);
         e.setId(id);
         e.setFullClassName(fullClassName);
         e.setStatus(status);
         e.setUser(user);
-        List<Exception> exceptions = service.queryAll(e, page, dateType, beginTime, endTime);
-        return exceptions;
+        List<Exception> exceptions = service.queryAll(e, p, dateType, beginTime, endTime);
+        Map map = new HashMap<>();
+        map.put("total", p.getCount());
+        map.put("rows", exceptions);
+        return map;
     }
 
     @ApiOperation(value = "添加异常信息", notes = "支持POST方式", response = String.class)
