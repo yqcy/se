@@ -31,11 +31,9 @@
         <association property="user" javaType="com.yq.se.model.User">
             <id column="user_id" property="id"/>
             <result column="username" property="username"/>
-            <result column="password" property="password"/>
             <result column="nickname" property="nickname"/>
             <result column="phone" property="phone"/>
             <result column="create_date" property="createDate"/>
-            <result column="status" property="status"/>
         </association>
     </resultMap>
     <insert id="add">
@@ -68,7 +66,7 @@
     </delete>
     <select id="queryById" resultMap="exception_user_map">
         SELECT
-        e.*,u.*
+        e.*,u.id,u.username,u.nickname,u.phone,u.create_date
         FROM
         (
         SELECT
@@ -86,7 +84,7 @@
     </select>
     <select id="queryAll" resultMap="exception_user_map">
         SELECT
-        e.*,u.*
+        e.*,u.id,u.username,u.nickname,u.phone,u.create_date
         FROM
         (
         SELECT
