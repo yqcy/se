@@ -1,5 +1,5 @@
 import com.yq.se.SeApplication;
-import com.yq.se.model.User;
+import com.yq.se.entity.User;
 import com.yq.se.service.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

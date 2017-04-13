@@ -1,4 +1,4 @@
-package com.yq.se.model;
+package com.yq.se.entity;
 
 import java.util.Date;
 

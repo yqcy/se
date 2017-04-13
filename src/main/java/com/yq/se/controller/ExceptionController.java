@@ -1,7 +1,7 @@
 package com.yq.se.controller;
 
-import com.yq.se.model.Exception;
-import com.yq.se.model.User;
+import com.yq.se.entity.Exception;
+import com.yq.se.entity.User;
 import com.yq.se.service.exception.ExceptionService;
 import com.yq.se.util.Page;
 import io.swagger.annotations.*;

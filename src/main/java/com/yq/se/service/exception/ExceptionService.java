@@ -1,6 +1,6 @@
 package com.yq.se.service.exception;
 
-import com.yq.se.model.Exception;
+import com.yq.se.entity.Exception;
 import com.yq.se.util.Page;
 
 import java.util.Date;
