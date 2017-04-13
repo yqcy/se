@@ -1,6 +1,6 @@
 package com.yq.se.service.user;
 
-import com.yq.se.model.User;
+import com.yq.se.entity.User;
 
 import java.util.List;
 

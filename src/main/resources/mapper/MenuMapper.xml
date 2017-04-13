@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.yq.se.mapper.MenuMapper">
+
+    <insert id="insert">
+        INSERT INTO t_menu
+        (
+        <trim suffixOverrides=",">
+            name,
+            <if test="menu.url!=null">url,</if>
+            <if test="menu.pid!=null">pid,</if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+            #{menu.name},
+            <if test="menu.url!=null">#{menu.url},</if>
+            <if test="menu.pid!=null">#{menu.pid},</if>
+        </trim>
+        )
+    </insert>
+    <select id="selectParents" resultType="com.yq.se.entity.Menu">
+        SELECT * FROM t_menu WHERE pid IS NULL
+    </select>
+    <select id="selectChidren" resultType="com.yq.se.entity.Menu">
+        SELECT * FROM t_menu WHERE pid = #{pid}
+    </select>
+</mapper>

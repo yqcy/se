@@ -1,6 +1,6 @@
 package com.yq.se.mapper;
 
-import com.yq.se.model.Exception;
+import com.yq.se.entity.Exception;
 import com.yq.se.util.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

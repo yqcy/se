@@ -1,6 +1,6 @@
 package com.yq.se.controller;
 
-import com.yq.se.model.User;
+import com.yq.se.entity.User;
 import com.yq.se.service.user.UserService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;

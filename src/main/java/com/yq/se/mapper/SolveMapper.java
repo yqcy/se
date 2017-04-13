@@ -1,6 +1,6 @@
 package com.yq.se.mapper;
 
-import com.yq.se.model.Solve;
+import com.yq.se.entity.Solve;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
