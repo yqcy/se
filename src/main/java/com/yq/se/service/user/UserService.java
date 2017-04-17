@@ -2,6 +2,7 @@ package com.yq.se.service.user;
 
 import com.yq.se.entity.User;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,6 +12,7 @@ public interface UserService {
 
     /**
      * 添加新注册用户
+     *
      * @param user
      * @return
      */
@@ -18,6 +20,7 @@ public interface UserService {
 
     /**
      * 根据ID主键删除用户
+     *
      * @param id
      * @return
      */
@@ -25,6 +28,7 @@ public interface UserService {
 
     /**
      * 修改用户个人信息
+     *
      * @param user
      * @return
      */
@@ -32,14 +36,18 @@ public interface UserService {
 
     /**
      * 分页查询用户
+     * @param status
      * @param pageNum
      * @param pageSize
+     * @param beginTime
+     * @param endTime
      * @return
      */
-    List<User> queryAllUsers(Integer pageNum, Integer pageSize);
+    List<User> queryAllUsers(Integer status, Integer pageNum, Integer pageSize, Date beginTime, Date endTime);
 
     /**
      * 查询指定ID的用户
+     *
      * @param id
      * @return
      */

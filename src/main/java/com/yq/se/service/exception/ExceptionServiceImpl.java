@@ -48,7 +48,7 @@ public class ExceptionServiceImpl implements ExceptionService {
 
     @Override
     public List<Exception> queryAll(Exception e, Page page, String dateType, Date beginTime, Date endTime) {
-        int count = mapper.queryCount(e, dateType, beginTime, endTime);
+        int count = mapper.count(e, dateType, beginTime, endTime);
         page.setCount(count);
         List<Exception> exceptions = mapper.queryAll(e, page, dateType, beginTime, endTime);
         return exceptions;

@@ -29,11 +29,11 @@ function solutionFormatter(value, row, index) {
 
 function statusFormatter(value, row, index) {
 	if(value == 0) {
-		return "未解决";
+		return "审核";
 	} else if(value == 1) {
-		return "已解决";
+		return "通过";
 	} else {
-		return "未知";
+		return "异常";
 	}
 }
 

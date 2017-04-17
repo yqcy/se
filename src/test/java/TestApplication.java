@@ -29,7 +29,7 @@ public class TestApplication {
 
     @Test
     public void addUser() {
-        List<User> users = userService.queryAllUsers(1, 5);
+        List<User> users = userService.queryAllUsers(null, 1, 10, null, null);
         System.out.println(users.size());
     }
 
