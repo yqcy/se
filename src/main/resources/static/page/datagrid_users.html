@@ -15,9 +15,13 @@
 		<script type="text/javascript" src="../js/kindeditor/kindeditor-min.js"></script>
 		<script type="text/javascript" src="../js/kindeditor/zh_CN.js"></script>
 		<script type="text/javascript" src="../js/init.js"></script>
+		<script>
+			$().ready(function() {})
+		</script>
 	</head>
+
 	<body class="easyui-layout">
-			<table class="easyui-datagrid" data-options="url:'http://localhost:8989/user/show',
+		<table id="ut" class="easyui-datagrid" data-options="url:'http://localhost:8989/user/show',
 				toolbar:'#tl',checkOnSelect:false,onLoadSuccess:loadSuccess,idField:'id',
 				sortName:'createDate',sortOrder:'DESC',striped:true,multiSort:true,pageSize:5,pageList:[5,10,15],pagination:true,
 				frozenColumns:[[
@@ -25,37 +29,35 @@
 					{field:'username',width:250,resizable:true,formatter:classNameFormatter,title:'<font color=#D84F4B><strong>用户名</strong></font>',halign:'center',resizable:false},
 					{field:'nickname',width:250,resizable:true,formatter:classNameFormatter,title:'<font color=#D84F4B><strong>用户昵称</strong></font>',halign:'center',resizable:false}
 			]]" style="width: 100%;height: 100%;">
-				<thead>
-					<tr>
-						<th data-options="field:'id',width:100,hidden:true">主键</th>
-						<th data-options="field:'phone',width:150,resizable:false,halign:'center',formatter:userFormatter,
-					            	align:'left'">
-							<font color="#D84F4B"><strong>手机号</strong></font>
-						</th>
-						<th data-options="field:'status',width:80,resizable:false,halign:'center',align:'center',formatter:statusFormatter">
-							<font color="#D84F4B"><strong>状态</strong></font>
-						</th>
-						<th data-options="field:'createDate',width:150,sortable:true,resizable:false,halign:'center',
+			<thead>
+				<tr>
+					<th data-options="field:'id',width:100,hidden:true">主键</th>
+					<th data-options="field:'phone',width:150,resizable:false,halign:'center',
 					            	align:'center'">
-							<font color="#D84F4B"><strong>创建日期</strong></font>
-						</th>
-						<th data-options="field:'btn1',width:120,formatter:btnFormatter,align:'center'"></th>
-						<th data-options="field:'space',width:10"></th>
-					</tr>
-				</thead>
-			</table>
+						<font color="#D84F4B"><strong>手机号</strong></font>
+					</th>
+					<th data-options="field:'status',width:80,resizable:false,halign:'center',align:'center',formatter:statusFormatter">
+						<font color="#D84F4B"><strong>状态</strong></font>
+					</th>
+					<th data-options="field:'createDate',width:150,sortable:true,resizable:false,halign:'center',
+					            	align:'center'">
+						<font color="#D84F4B"><strong>创建日期</strong></font>
+					</th>
+					<th data-options="field:'btn1',width:120,formatter:btnFormatter,align:'center'"></th>
+					<th data-options="field:'space',width:10"></th>
+				</tr>
+			</thead>
+		</table>
 		<div id="tl">
-			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime" data-options="prompt:'选择开始时间',editable:false,width:120" /> 到 <input class="easyui-datebox" name="endTime" id="endTime" data-options="prompt:'选择结束时间',editable:false,width:120" />&nbsp; 提供者：
-			<input class="easyui-textbox" name="provider" id="provider" data-options="prompt:'请选择提供者进行查询'" />&nbsp; 异常名：
-			<input class="easyui-textbox" name="exception" id="exception" data-options="prompt:'请选择异常进行查询',width:180" />&nbsp; 解决状态：
-			<input class="easyui-combobox" name="status" id="status" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,
+			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime" data-options="prompt:'选择开始时间',editable:false,width:120,onSelect:userSearch" /> &nbsp; 到 <input class="easyui-datebox" name="endTime" id="endTime" data-options="prompt:'选择结束时间',editable:false,width:120,onSelect:userSearch" /> &nbsp; 审核状态：
+			<input class="easyui-combobox" name="status" id="status" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,onChange:userSearch,
 				textField:'text',valueField:'value',data:[
 				{value:'',text:'不限'},
-				{value:'success',text:'已解决'},
-				{value:'false',text:'未解决'}
+				{value:'0',text:'审核中'},
+				{value:'1',text:'审核通过'}
 			]" />&nbsp;
 			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:80,plain:true">查询</a><br />
-			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',width:120,plain:true" onclick="add();"><strong><font color="#404040">添加我的异常</font></strong></a>
 		</div>
 	</body>
+
 </html>

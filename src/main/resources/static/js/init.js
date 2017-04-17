@@ -139,3 +139,23 @@ function addTab(title, src) {
 	}
 
 }
+/*
+ * 多条件进行查询用户
+ */
+function userSearch(data){
+	console.info(data);
+	var beginTime = $('#beginTime').datebox('getValue');
+	var endTime = $('#endTime').datebox('getValue');
+	var status = $('#status').combobox('getValue');
+	$('#ut').datagrid('reload',{
+		beginTime:beginTime,
+		endTime:endTime,
+		status:status
+	});
+}
+/*
+ * 多条件查询异常
+ */
+function exceptionSearch(){
+	
+}

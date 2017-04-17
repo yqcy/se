@@ -29,11 +29,11 @@ function solutionFormatter(value, row, index) {
 
 function statusFormatter(value, row, index) {
 	if(value == 0) {
-		return "未解决";
+		return "审核";
 	} else if(value == 1) {
-		return "已解决";
+		return "通过";
 	} else {
-		return "未知";
+		return "异常";
 	}
 }
 
@@ -138,4 +138,21 @@ function addTab(title, src) {
 		$('#tt').tabs('select', title);
 	}
 
+}
+/*
+ * 按多条件进行查询
+ */
+function userSearch(beginTime,endTime,status){
+	$('#ut').datagrid('reload',{
+		beginTime:beginTime,
+		endTime:endTime,
+		status:status
+	});
+}
+//user的datagrid的查询
+function beginFunc(){
+	var beginTime = $('#beginTime').datebox('getValue');
+	var endTime = $('#endTime').datebox('getValue');
+	var status = $('#status').textbox('getValue');
+	userSearch(beginTime,endTime,status);
 }

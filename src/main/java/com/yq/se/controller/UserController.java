@@ -1,9 +1,9 @@
 package com.yq.se.controller;
 
-import com.yq.se.entity.Exception;
 import com.yq.se.entity.User;
 import com.yq.se.service.user.UserService;
 import com.yq.se.util.Page;
+import com.yq.se.util.SimpleDateUtils;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import static com.yq.se.util.StringSupport.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,7 @@ public class UserController {
             @ApiImplicitParam(name = "endTime", value = "endTime", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "page", value = "page", dataType = "Int", paramType = "query"),
             @ApiImplicitParam(name = "rows", value = "rows", dataType = "Int", paramType = "query"),
+            @ApiImplicitParam(name = "order", value = "order", dataType = "String", paramType = "query"),
     })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "请求已完成"),
@@ -67,12 +69,12 @@ public class UserController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/show", method = RequestMethod.POST)
-    public Object show(@RequestParam(required = false) Integer status, @RequestParam(required = false) Date beginTime, @RequestParam(required = false) Date endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows) {
+    @RequestMapping(value = "/show", method = {RequestMethod.POST, RequestMethod.GET})
+    public Object show(@RequestParam(required = false) Integer status, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows, @RequestParam(required = false) String order) {
         Page p = new Page();
         p.setIndex(page);
         p.setSize(rows);
-        List<User> users = userService.queryAllUsers(status, page, rows, beginTime, endTime);
+        List<User> users = userService.queryAllUsers(status, page, rows, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)), order);
         Map map = new HashMap<>();
         map.put("total", p.getCount());
         map.put("rows", users);
