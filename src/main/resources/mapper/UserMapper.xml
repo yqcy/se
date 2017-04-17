@@ -8,7 +8,7 @@
         password,
         nickname,
         phone,
-        create_date,
+        create_date AS createDate,
         status
     </sql>
     <sql id="insert_fields">
@@ -86,6 +86,8 @@
         <where>
             <if test="true">status!=-1</if>
             <if test="status!=null">AND status=#{status}</if>
+            <if test="beginTime!=null">AND create_date &lt; #{beginTime}</if>
+            <if test="endTime!=null">AND create_date &gt; #{endTime}</if>
         </where>
         <if test="page!=null">
             <if test="page.sort!=null">order by ${page.sort} ${page.order}</if>
@@ -98,7 +100,7 @@
             </if>
         </if>
     </select>
-    <select id="count" resultType="java.lang.Integer">
+    <select id="count" resultType="int">
         SELECT
         COUNT(*)
         FROM
@@ -106,6 +108,8 @@
         <where>
             <if test="true">status!=-1</if>
             <if test="status!=null">AND status=#{status}</if>
+            <if test="beginTime!=null">AND create_date &gt; #{beginTime}</if>
+            <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
     </select>
 </mapper>

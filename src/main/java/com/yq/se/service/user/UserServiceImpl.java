@@ -45,10 +45,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<User> queryAllUsers(Integer pageNum, Integer pageSize) {
-        int count = userMapper.count(null);
+    public List<User> queryAllUsers(Integer status, Integer pageNum, Integer pageSize, Date beginTime, Date endTime) {
+        int count = userMapper.count(status, beginTime, endTime);
         Page page = new Page(pageNum, pageSize, count);
-        return userMapper.queryAll(page, null);
+        return userMapper.queryAll(page, status, beginTime, endTime);
     }
 
     @Override

@@ -22,8 +22,8 @@ public interface ExceptionMapper {
 
     Exception queryById(@Param("id") Integer id);
 
-    List<Exception> queryAll(@Param("exception") Exception e, @Param("page") Page page, @Param("dateType") String dateType, @Param("begin") Date begin, @Param("end") Date end);
+    List<Exception> queryAll(@Param("exception") Exception e, @Param("page") Page page, @Param("dateType") String dateType, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
-    int queryCount(@Param("exception") Exception e, @Param("dateType") String dateType, @Param("begin") Date begin, @Param("end") Date end);
+    int count(@Param("exception") Exception e, @Param("dateType") String dateType, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
 }

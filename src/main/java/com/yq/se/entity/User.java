@@ -1,5 +1,7 @@
 package com.yq.se.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -11,6 +13,7 @@ public class User {
     private String password;
     private String nickname;
     private String phone;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private Integer status;
 

@@ -5,6 +5,7 @@ import com.yq.se.util.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public interface UserMapper {
 
     User queryById(@Param("id") Integer id);
 
-    List<User> queryAll(@Param("page") Page page, @Param("status") Integer status);
+    List<User> queryAll(@Param("page") Page page, @Param("status") Integer status, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
-    int count(@Param("status") Integer status);
+    int count(@Param("status") Integer status, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 }
