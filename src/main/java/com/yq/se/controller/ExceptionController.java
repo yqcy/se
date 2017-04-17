@@ -4,6 +4,7 @@ import com.yq.se.entity.Exception;
 import com.yq.se.entity.User;
 import com.yq.se.service.exception.ExceptionService;
 import com.yq.se.util.Page;
+import com.yq.se.util.SimpleDateUtils;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.yq.se.util.StringSupport.*;
 
 /**
  * Created by wb264139 on 2017/4/7.
@@ -35,7 +37,6 @@ public class ExceptionController {
             @ApiImplicitParam(name = "fullClassName", value = "fullClassName", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "status", value = "status", dataType = "Int", paramType = "query"),
             @ApiImplicitParam(name = "userId", value = "userId", dataType = "Int", paramType = "query"),
-            @ApiImplicitParam(name = "dateType", value = "dateType", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "beginTime", value = "beginTime", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "endTime", value = "endTime", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "page", value = "page", dataType = "Int", paramType = "query"),
@@ -48,8 +49,8 @@ public class ExceptionController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/show", method = RequestMethod.POST)
-    public Object show(@RequestParam(required = false) Integer id, @RequestParam(required = false) String fullClassName, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer userId, @RequestParam(required = false) String dateType, @RequestParam(required = false) Date beginTime, @RequestParam(required = false) Date endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows) {
+    @RequestMapping(value = "/show", method = {RequestMethod.POST, RequestMethod.GET})
+    public Object show(@RequestParam(required = false) Integer id, @RequestParam(required = false) String fullClassName, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer userId, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows) {
         Exception e = new Exception();
         User user = new User();
         Page p = new Page();
@@ -60,7 +61,7 @@ public class ExceptionController {
         e.setFullClassName(fullClassName);
         e.setStatus(status);
         e.setUser(user);
-        List<Exception> exceptions = service.queryAll(e, p, dateType, beginTime, endTime);
+        List<Exception> exceptions = service.queryAll(e, p, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)));
         Map map = new HashMap<>();
         map.put("total", p.getCount());
         map.put("rows", exceptions);

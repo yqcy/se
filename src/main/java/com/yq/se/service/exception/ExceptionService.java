@@ -19,6 +19,6 @@ public interface ExceptionService {
 
     Exception queryById(Integer id);
 
-    List<Exception> queryAll(Exception e, Page page, String dateType, Date beginTime, Date endTime);
+    List<Exception> queryAll(Exception e, Page page, Date beginTime, Date endTime);
 
 }

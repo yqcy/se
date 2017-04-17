@@ -41,9 +41,10 @@ public interface UserService {
      * @param pageSize
      * @param beginTime
      * @param endTime
+     * @param order
      * @return
      */
-    List<User> queryAllUsers(Integer status, Integer pageNum, Integer pageSize, Date beginTime, Date endTime);
+    List<User> queryAllUsers(Integer status, Integer pageNum, Integer pageSize, Date beginTime, Date endTime, String order);
 
     /**
      * 查询指定ID的用户

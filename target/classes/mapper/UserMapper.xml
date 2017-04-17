@@ -86,11 +86,14 @@
         <where>
             <if test="true">status!=-1</if>
             <if test="status!=null">AND status=#{status}</if>
-            <if test="beginTime!=null">AND create_date &lt; #{beginTime}</if>
-            <if test="endTime!=null">AND create_date &gt; #{endTime}</if>
+            <if test="beginTime!=null">AND create_date &gt; #{beginTime}</if>
+            <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
         <if test="page!=null">
             <if test="page.sort!=null">order by ${page.sort} ${page.order}</if>
+        </if>
+        <if test="order!=null">
+            ORDER BY ${order}
         </if>
         <if test="page!=null">
             <if test="page.begin!=null">
