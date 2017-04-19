@@ -24,7 +24,7 @@
 					<a class="hiddenanchor" id="tologin"></a>
 					<div id="wrapper">
 						<div id="login" class="animate form">
-							<form action="#" autocomplete="on">
+							<form action="" autocomplete="on">
 								<h1>登录</h1>
 								<p>
 									<label for="username" class="uname" data-icon="u"> 邮箱或手机号 </label>
@@ -49,19 +49,19 @@
 						</div>
 
 						<div id="register" class="animate form">
-							<form action="mysuperscript.php" autocomplete="on">
+							<form action="http://localhost:8989/user/register" autocomplete="on">
 								<h1> 注册 </h1>
 								<p>
-									<label for="emailsignup" class="youmail" data-icon="e"> 邮箱或手机号</label>
-									<input id="emailsignup" name="emailsignup" required="required" type="email" placeholder="请输入邮箱或手机号作为登录用户名" />
+									<label for="emailsignup" class="youmail" data-icon="e"> 邮箱</label>
+									<input id="emailsignup" name="username" required="required" type="email" placeholder="请输入有效邮箱作为登录帐号" />
 								</p>
 								<p>
 									<label for="passwordsignup" class="youpasswd" data-icon="p">输入密码 </label>
-									<input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="请输入不少于6位密码" />
+									<input id="passwordsignup" name="password" required="required" type="password" placeholder="请输入不少于6位密码" />
 								</p>
 								<p>
 									<label for="passwordsignup_confirm" class="youpasswd" data-icon="p">请再次输入密码 </label>
-									<input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="请输入不少于6位密码" />
+									<input id="passwordsignup_confirm" name="password2" required="required" type="password" placeholder="请输入不少于6位密码" />
 								</p>
 								<p class="signin button">
 									<input type="submit" value="注册" />
