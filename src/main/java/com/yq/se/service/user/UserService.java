@@ -54,4 +54,6 @@ public interface UserService {
      */
     User queryById(Integer id);
 
+    boolean checkUsername(String username);
+
 }

@@ -115,4 +115,7 @@
             <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
     </select>
+    <select id="queryByUsername" resultMap="user_map">
+        SELECT * FROM t_user WHERE username = #{username}
+    </select>
 </mapper>

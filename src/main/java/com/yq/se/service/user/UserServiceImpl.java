@@ -56,4 +56,12 @@ public class UserServiceImpl implements UserService {
     public User queryById(Integer id) {
         return userMapper.queryById(id);
     }
+
+    @Override
+    public boolean checkUsername(String username) {
+        if (username == null) return false;
+        User user = userMapper.queryByUsername(username);
+        if (user!=null)return false;
+        return true;
+    }
 }
