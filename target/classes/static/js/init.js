@@ -140,19 +140,22 @@ function addTab(title, src) {
 
 }
 /*
- * 按多条件进行查询
+ * 多条件进行查询用户
  */
-function userSearch(beginTime,endTime,status){
+function userSearch(data){
+	console.info(data);
+	var beginTime = $('#beginTime').datebox('getValue');
+	var endTime = $('#endTime').datebox('getValue');
+	var status = $('#status').combobox('getValue');
 	$('#ut').datagrid('reload',{
 		beginTime:beginTime,
 		endTime:endTime,
 		status:status
 	});
 }
-//user的datagrid的查询
-function beginFunc(){
-	var beginTime = $('#beginTime').datebox('getValue');
-	var endTime = $('#endTime').datebox('getValue');
-	var status = $('#status').textbox('getValue');
-	userSearch(beginTime,endTime,status);
+/*
+ * 多条件查询异常
+ */
+function exceptionSearch(){
+	
 }

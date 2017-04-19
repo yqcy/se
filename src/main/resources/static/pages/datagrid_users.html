@@ -16,8 +16,7 @@
 		<script type="text/javascript" src="../js/kindeditor/zh_CN.js"></script>
 		<script type="text/javascript" src="../js/init.js"></script>
 		<script>
-			$().ready(function() {
-			})
+			$().ready(function() {})
 		</script>
 	</head>
 
@@ -50,8 +49,8 @@
 			</thead>
 		</table>
 		<div id="tl">
-			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime" data-options="prompt:'选择开始时间',editable:false,width:120,onSelect:beginFunc" /> 到 <input class="easyui-datebox" name="endTime" id="endTime" data-options="prompt:'选择结束时间',editable:false,width:120" /> &nbsp; 审核状态：
-			<input class="easyui-combobox" name="status" id="status" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,
+			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime" data-options="prompt:'选择开始时间',editable:false,width:120,onSelect:userSearch" /> &nbsp; 到 <input class="easyui-datebox" name="endTime" id="endTime" data-options="prompt:'选择结束时间',editable:false,width:120,onSelect:userSearch" /> &nbsp; 审核状态：
+			<input class="easyui-combobox" name="status" id="status" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,onChange:userSearch,
 				textField:'text',valueField:'value',data:[
 				{value:'',text:'不限'},
 				{value:'0',text:'审核中'},
