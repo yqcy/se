@@ -81,7 +81,7 @@ public class UserController {
         return map;
     }
 
-    @ApiOperation(value = "查询用户", notes = "支持GET方式", response = String.class)
+    @ApiOperation(value = "检查用户名是否已经被注册", notes = "支持GET方式", response = String.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", value = "username", dataType = "String", paramType = "query"),
     })
