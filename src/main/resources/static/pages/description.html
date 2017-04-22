@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>异常搜索</title>
+		<base target="_blank" />
+		<link href="../css/baidu.css" type="text/css" rel="stylesheet" />
+		<script src="../js/easyui/jquery.min.js"></script>
+		<script>
+			$(function() {
+				$.post('http://localhost:8989/user/check/login', function(data) {
+					console.log(data);
+
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<!--表头左侧LOGO和搜索框-->
+			<div style="float: left;width:800px;">
+				<img src="../images/logo1.jpg" height="60px" width="200px" style="float: left;margin-top: 15px;" />
+				<form style="width: 500px;margin-top: 15px;margin-left: 10px;float: left;">
+						<input name="input" type="text" id="text" value="" maxlength="100">
+						<input id="button" name="baidu" type="submit" title="搜搜" value="搜搜">
+				</form>
+			</div>
+			<!--表头右侧登录菜单-->
+			<div style="float: right;">
+				<img src="../images/logo_header.jpg" height="60" width="60" />
+				<a href="javascript:void(0)">登录</a>&nbsp;
+				<a href="javascript:void(0)">退出</a>&nbsp;
+				<a href="javascript:void(0)">个人中心</a>&nbsp;
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+		<!--异常-->
+		<div style="margin-top: 30px;margin-bottom: 50px;">
+			<!--异常名-->
+			<div style="margin-bottom: 15px;">
+				异常1
+			</div>
+			<!--异常标签-->
+			<div style="margin-bottom: 15px;">
+				spring strust2 mybatis
+			</div>
+			<!--异常描述信息-->
+			<div style="margin-bottom: 30px;">
+				在使用其它框架与spring集成的时候出现的异常
+			</div>
+			<!--分页解决方案-->
+			<div>
+				<!--方案1-->
+				<div class="solution_div">
+					<!--提供者-->
+					<div class="provider">张三</div>
+					<!--提供者的解决方案-->
+					<div class="solution">
+						导入相应的jar包，更新项目
+					</div>
+					<!--赞同率-->
+					<div class="agreement_rate">11人赞同</div>
+				</div>
+				<div style="clear: both;"></div>
+				<!--方案2-->
+				<div class="solution_div">
+					<!--提供者-->
+					<div class="provider">张三</div>
+					<!--提供者的解决方案-->
+					<div class="solution">
+						导入相应的jar包，更新项目
+					</div>
+					<!--赞同率-->
+					<div class="agreement_rate">11人赞同</div>
+				</div>
+				<div style="clear: both;"></div>
+				<!--方案3-->
+				<div class="solution_div">
+					<!--提供者-->
+					<div class="provider">张三</div>
+					<!--提供者的解决方案-->
+					<div class="solution">
+						导入相应的jar包，更新项目
+					</div>
+					<!--赞同率-->
+					<div class="agreement_rate">11人赞同</div>
+				</div>
+				<div style="clear: both;"></div>
+				<!--方案4-->
+				<div class="solution_div">
+					<!--提供者-->
+					<div class="provider">张三</div>
+					<!--提供者的解决方案-->
+					<div class="solution">
+						导入相应的jar包，更新项目
+					</div>
+					<!--赞同率-->
+					<div class="agreement_rate">11人赞同</div>
+				</div>
+				<div style="clear: both;"></div>
+				<!--方案5-->
+				<div class="solution_div">
+					<!--提供者-->
+					<div class="provider">张三</div>
+					<!--提供者的解决方案-->
+					<div class="solution">
+						导入相应的jar包，更新项目
+					</div>
+					<!--赞同率-->
+					<div class="agreement_rate">11人赞同</div>
+				</div>
+			</div>
+			<!--分页-->
+			<div class="page">
+						<a href="#">首页</a>
+						<a href="#">上一页</a>
+						<a href="#">1</a>
+						<a href="#">2</a>
+						<a href="#">下一页</a>
+						<a href="#">尾页</a>
+					</div>
+		</div>
+		
+	</body>
+
+</html>

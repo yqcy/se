@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 import static com.yq.se.util.StringSupport.*;
 
 import java.util.HashMap;
@@ -69,7 +71,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/show", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/show", method = {RequestMethod.GET})
     public Object show(@RequestParam(required = false) Integer status, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows, @RequestParam(required = false) String order) {
         Page p = new Page();
         p.setIndex(page);
@@ -95,6 +97,22 @@ public class UserController {
     @RequestMapping(value = "/check/username", method = {RequestMethod.GET})
     public Object checkUsername(String username) {
         return userService.checkUsername(username);
+    }
+
+    @ApiOperation(value = "检查用户是否已经登录", notes = "支持POST方式", response = String.class)
+    @ApiImplicitParams({
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "请求已完成"),
+            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求"),
+            @ApiResponse(code = 401, message = "未授权客户机访问数据"),
+            @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
+            @ApiResponse(code = 500, message = "服务器不能完成请求")}
+    )
+    @RequestMapping(value = "/check/login", method = {RequestMethod.POST})
+    public Object checkLogin(@RequestParam(required = false) HttpSession session) {
+        Object user = session.getAttribute("user");
+        return user != null;
     }
 
 }
