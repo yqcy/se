@@ -142,20 +142,62 @@ function addTab(title, src) {
 /*
  * 多条件进行查询用户
  */
-function userSearch(data){
+function userSearch(data) {
 	console.info(data);
 	var beginTime = $('#beginTime').datebox('getValue');
 	var endTime = $('#endTime').datebox('getValue');
 	var status = $('#status').combobox('getValue');
-	$('#ut').datagrid('reload',{
-		beginTime:beginTime,
-		endTime:endTime,
-		status:status
+	$('#ut').datagrid('reload', {
+		beginTime: beginTime,
+		endTime: endTime,
+		status: status
 	});
 }
 /*
  * 多条件查询异常
  */
-function exceptionSearch(){
-	
+function exceptionSearch() {
+
+}
+/*
+ * 比较两次密码是否一致
+ */
+function comparedPassword() {
+	var p1 = $('#passwordsignup');
+	var p2 = $('#passwordsignup_confirm');
+	if(p1.val().length < 6 || p2.val().length < 6) {
+		p1.val('');
+		p2.val('');
+		p1.attr('placeholder', '请重新输入密码!');
+		p2.attr('placeholder', '密码长度不能小于6位!');
+		return false;
+	}
+	if(p1.val() != p2.val()) {
+		p1.val('');
+		p2.val('');
+		p1.attr('placeholder', '请重新输入密码!');
+		p2.attr('placeholder', '两次输入密码不一致!');
+		return false;
+	}
+	return true;
+}
+/*
+ * 检查注册信息是否正确
+ */
+function checkRegister() {
+	if(comparedPassword()) {
+		var url = 'http://localhost:8989/user/check/username';
+		var username = $('#username_register').val();
+		$.get(url, {
+			'username': username
+		}, function(data) {
+			console.log(data);
+			if(data) {
+				$('#form_register').submit();
+			} else {
+				$('#username_register').val('');
+				$('#username_register').attr('placeholder', '该邮箱已经被注册,请选择其它或找回!');
+			}
+		},'json');
+	}
 }

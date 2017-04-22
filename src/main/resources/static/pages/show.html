@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>异常搜索</title>
+		<base target="_blank" />
+		<link href="../css/baidu.css" type="text/css" rel="stylesheet" />
+		<script src="../js/easyui/jquery.min.js"></script>
+		<script>
+			$(function() {
+				$.post('http://localhost:8989/user/check/login', function(data) {
+					console.log(data);
+
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<!--表头左侧LOGO和搜索框-->
+			<div style="float: left;width:800px;">
+				<img src="../images/logo1.jpg" height="60px" width="200px" style="float: left;margin-top: 15px;" />
+				<form style="width: 500px;margin-top: 15px;margin-left: 10px;float: left;">
+						<input name="input" type="text" id="text" value="" maxlength="100">
+						<input id="button" name="baidu" type="submit" title="搜搜" value="搜搜">
+				</form>
+			</div>
+			<!--表头右侧登录菜单-->
+			<div style="float: right;">
+				<img src="../images/logo_header.jpg" height="60" width="60" />
+				<a href="javascript:void(0)">登录</a>&nbsp;
+				<a href="javascript:void(0)">退出</a>&nbsp;
+				<a href="javascript:void(0)">个人中心</a>&nbsp;
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+		<div style="margin-top: 30px;">
+				<!--左侧搜索结果展示-->
+				<div style="float: left;width: 65%;">
+					<div style="padding-bottom: 50px;padding-left: 10px;height: 120px;">
+						标题1<br />
+						正文<br />
+						创建者  时间  标签
+					</div>
+					<div style="padding-bottom: 50px;padding-left: 10px;height: 120px;">
+						标题2<br />
+						正文<br />
+						创建者  时间  标签
+					</div>
+					<div style="padding-bottom: 50px;padding-left: 10px;height: 120px;">
+						标题3<br />
+						正文<br />
+						创建者  时间  标签
+					</div>
+					<div style="padding-bottom: 50px;padding-left: 10px;height: 120px;">
+						标题4<br />
+						正文<br />
+						创建者  时间  标签
+					</div>
+					<div style="padding-bottom: 15px;padding-left: 10px;height: 120px;">
+						标题5<br />
+						正文<br />
+						创建者  时间  标签
+					</div>
+					<!--分页-->
+					<div style="padding-bottom: 30px;">
+						<a href="#">首页</a>
+						<a href="#">上一页</a>
+						<a href="#">1</a>
+						<a href="#">2</a>
+						<a href="#">下一页</a>
+						<a href="#">尾页</a>
+					</div>
+			</div>
+			<!--右侧排行榜单-->
+			<div style="float: right;width: 35%;">
+				<!--热门搜索榜-->
+				<div>
+					<div style="margin-bottom: 15px;">
+						<a href="#">异常榜第一</a>
+					</div>
+					<div style="margin-bottom: 15px;">
+						<a href="#">异常榜第二</a>
+					</div>
+					<div style="margin-bottom: 15px;">
+						<a href="#">异常榜第三</a>
+					</div>
+					<div style="margin-bottom: 15px;">
+						<a href="#">异常榜第四</a>
+					</div>
+					<div style="margin-bottom: 15px;">
+						<a href="#">异常榜第五</a>
+					</div>
+				</div>
+				<!--最新注册用户-->
+				<div style="margin-top: 30px;">
+					<div style="margin-bottom: 15px;">
+						<img src="../images/logo_header.jpg" style="width: 30px;height: 30px;" />张三
+					</div>
+					<div style="margin-bottom: 15px;">
+						<img src="../images/logo_header.jpg" style="width: 30px;height: 30px;" />李四
+					</div>
+					<div style="margin-bottom: 15px;">
+						<img src="../images/logo_header.jpg" style="width: 30px;height: 30px;" />王尼玛
+					</div>
+					<div style="margin-bottom: 15px;">
+						<img src="../images/logo_header.jpg" style="width: 30px;height: 30px;" />赵铁柱
+					</div>
+					<div style="margin-bottom: 15px;">
+						<img src="../images/logo_header.jpg" style="width: 30px;height: 30px;" />大队长
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+
+</html>

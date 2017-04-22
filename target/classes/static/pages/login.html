@@ -12,6 +12,8 @@
 		<link rel="stylesheet" type="text/css" href="../css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="../css/style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/animate-custom.css" />
+		<script src="../js/easyui/jquery.min.js"></script>
+		<script src="../js/init.js"></script>
 		<title></title>
 	</head>
 
@@ -49,11 +51,11 @@
 						</div>
 
 						<div id="register" class="animate form">
-							<form action="http://localhost:8989/user/register" autocomplete="on">
+							<form id="form_register" action="http://localhost:8989/user/register" autocomplete="on" method="post">
 								<h1> 注册 </h1>
 								<p>
 									<label for="emailsignup" class="youmail" data-icon="e"> 邮箱</label>
-									<input id="emailsignup" name="username" required="required" type="email" placeholder="请输入有效邮箱作为登录帐号" />
+									<input id="username_register" name="username" required="required" type="email" placeholder="请输入有效邮箱作为登录帐号" />
 								</p>
 								<p>
 									<label for="passwordsignup" class="youpasswd" data-icon="p">输入密码 </label>
@@ -61,10 +63,10 @@
 								</p>
 								<p>
 									<label for="passwordsignup_confirm" class="youpasswd" data-icon="p">请再次输入密码 </label>
-									<input id="passwordsignup_confirm" name="password2" required="required" type="password" placeholder="请输入不少于6位密码" />
+									<input id="passwordsignup_confirm" name="password2" required="required" type="password" placeholder="请输入不少于6位密码" onblur="comparedPassword()" />
 								</p>
 								<p class="signin button">
-									<input type="submit" value="注册" />
+									<input type="button" value="注册" onclick="checkRegister()" />
 								</p>
 								<p class="change_link">
 									已经注册帐号 ?
@@ -72,11 +74,9 @@
 								</p>
 							</form>
 						</div>
-
 					</div>
 				</div>
 			</section>
 		</div>
 	</body>
-
 </html>
