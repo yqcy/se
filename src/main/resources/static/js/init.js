@@ -201,3 +201,12 @@ function checkRegister() {
 		},'json');
 	}
 }
+/*
+ * 从search.html跳转到show.html页面，中间携带参数
+ */
+function skipToShow(){
+	var str = $('#search_text').val();
+	window.location.href="http://localhost:8989/pages/show.html?str="+str;
+}
+
+	

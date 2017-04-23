@@ -1,4 +1,4 @@
-package com.yq.se.util;
+package com.yq.se.util.common;
 
 /**
  * Created by wb264139 on 2017/3/9.

@@ -1,7 +1,7 @@
 package com.yq.se.mapper;
 
 import com.yq.se.entity.User;
-import com.yq.se.util.Page;
+import com.yq.se.util.mybatis.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

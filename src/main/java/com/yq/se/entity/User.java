@@ -2,6 +2,7 @@ package com.yq.se.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -71,5 +72,11 @@ public class User {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return "nickname=" + this.nickname + "&registerDate=" + sdf.format(this.createDate);
     }
 }

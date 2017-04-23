@@ -1,4 +1,4 @@
-package com.yq.se.util;
+package com.yq.se.util.common;
 
 import org.apache.commons.io.FileUtils;
 

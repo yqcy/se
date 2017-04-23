@@ -7,12 +7,22 @@
 		<base target="_blank" />
 		<link href="../css/baidu.css" type="text/css" rel="stylesheet" />
 		<script src="../js/easyui/jquery.min.js"></script>
+		<script src="../js/init.js"></script>
 		<script>
 			$(function() {
-				$.post('http://localhost:8989/user/check/login', function(data) {
-					console.log(data);
-
-				});
+				var h = window.location.href;
+				var array1 = h.split("?");
+				var array2 = array1[1].split("=");
+				var str = array2[1];
+				$.get("http://localhost:8989/exception/search?str="+str,
+						function(data){
+							$('#show_text').val(str);
+						}
+				);
+//				$.post('http://localhost:8989/user/check/login', function(data) {
+//					console.log(data);
+//					
+//				});
 			});
 		</script>
 	</head>
@@ -23,7 +33,7 @@
 			<div style="float: left;width:800px;">
 				<img src="../images/logo1.jpg" height="60px" width="200px" style="float: left;margin-top: 15px;" />
 				<form style="width: 500px;margin-top: 15px;margin-left: 10px;float: left;">
-						<input name="input" type="text" id="text" value="" maxlength="100">
+						<input name="show_text" type="text" id="show_text" value="" maxlength="100">
 						<input id="button" name="baidu" type="submit" title="搜搜" value="搜搜">
 				</form>
 			</div>

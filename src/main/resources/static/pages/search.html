@@ -5,6 +5,8 @@
 		<title>异常搜索</title>
 		<base target="_blank" />
 		<link href="../css/baidu.css" type="text/css" rel="stylesheet" />
+		<script src="../js/easyui/jquery.min.js"></script>
+		<script src="../js/init.js"></script>
 	</head>
 
 	<body>
@@ -25,8 +27,8 @@
 			<!--搜索框和搜索按钮-->
 			<div>
 				<form>
-					<input name="input" type="text" id="text" value="" maxlength="100">
-					<input id="button" name="baidu" type="submit" title="搜搜" value="搜搜">
+					<input name="search_text" type="text" id="search_text" value="" maxlength="100">
+					<input id="button" name="baidu" type="button" title="搜搜" value="搜搜" onclick="skipToShow();">
 				</form>
 			</div>
 		</div>
