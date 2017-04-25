@@ -1,4 +1,4 @@
-package com.yq.se.util;
+package com.yq.se.util.common;
 
 import java.text.DateFormat;
 import java.text.ParseException;

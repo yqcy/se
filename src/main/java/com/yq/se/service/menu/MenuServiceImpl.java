@@ -1,6 +1,6 @@
 package com.yq.se.service.menu;
 
-import com.yq.se.entity.Menu;
+import com.yq.se.entity.db.Menu;
 import com.yq.se.mapper.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

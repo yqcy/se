@@ -1,4 +1,4 @@
-package com.yq.se.util;
+package com.yq.se.util.common;
 
 import org.apache.commons.io.FileUtils;
 
@@ -58,7 +58,7 @@ public class SimpleFileUtils {
     public static List<Class> getAllClassesForCurrentProject(Class clz) {
         List<Class> list = new ArrayList<>();
         String packageName = clz.getPackage().getName();
-        URL resource = clz.getResource("/" + StringSupport.replace(packageName, CLASS_SEPARATOR, "/"));
+        URL resource = clz.getResource("/" + StringUtils.replace(packageName, CLASS_SEPARATOR, "/"));
         String path = resource.getPath();
 //        System.out.println("the file's path is :\t" + path + "=================================");
         if (path.indexOf("jar!") != -1) {//是个jar
@@ -93,11 +93,11 @@ public class SimpleFileUtils {
     }
 
     public static String transferToClassName(String name, String packageName) {
-        name = StringSupport.replace(name, "/", CLASS_SEPARATOR);//把/分隔符转换成.
-        name = StringSupport.replace(name, SEPARATOR, CLASS_SEPARATOR);//把windowns 上的\\或linue上的/转换为.
-        name = StringSupport.removePrefix(name, packageName);//去掉包名之前的部分
-        name = StringSupport.removeSuffix(name, SimpleFileUtils.CLASS_SUFFIX);//去掉.class
-        name = StringSupport.substringAfter(name, packageName);
+        name = StringUtils.replace(name, "/", CLASS_SEPARATOR);//把/分隔符转换成.
+        name = StringUtils.replace(name, SEPARATOR, CLASS_SEPARATOR);//把windowns 上的\\或linue上的/转换为.
+        name = StringUtils.removePrefix(name, packageName);//去掉包名之前的部分
+        name = StringUtils.removeSuffix(name, SimpleFileUtils.CLASS_SUFFIX);//去掉.class
+        name = StringUtils.substringAfter(name, packageName);
         return name;
     }
 }

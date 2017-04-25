@@ -1,6 +1,7 @@
-package com.yq.se.entity;
+package com.yq.se.entity.db;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yq.se.anno.lucene.ToDocTag;
 
 import java.util.Date;
 import java.util.List;
@@ -9,8 +10,11 @@ import java.util.List;
  * Created by 晴 on 2017/3/4.
  */
 public class Exception {
-    private Integer id;
+    @ToDocTag(type = "string")
+    private String id;
+    @ToDocTag
     private String fullClassName;//异常全限定名
+    @ToDocTag
     private String description;//描述信息
     private List<Solve> solves;//解决方案
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -18,13 +22,14 @@ public class Exception {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastUpdate;
     private Integer status;
+    @ToDocTag
     private User user;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

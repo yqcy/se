@@ -1,6 +1,6 @@
 package com.yq.se.mapper;
 
-import com.yq.se.entity.Menu;
+import com.yq.se.entity.db.Menu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

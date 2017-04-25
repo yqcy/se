@@ -29,4 +29,4 @@ CREATE TABLE `t_user` (
   `status` tinyint(2) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_username` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;

@@ -32,7 +32,7 @@
             <if test="solve.status!=null">status=#{solve.status}</if>
         </set>
     </sql>
-    <resultMap id="solve_map" type="com.yq.se.entity.Solve">
+    <resultMap id="solve_map" type="com.yq.se.entity.db.Solve">
         <id column="id" property="id"/>
         <result column="exception_id" property="exception.id"/>
         <result column="user_id" property="user.id"/>
@@ -56,7 +56,7 @@
             <if test="solve.id!=null">id=#{solve.id}</if>
         </where>
     </delete>
-    <select id="queryById" resultType="com.yq.se.entity.Solve">
+    <select id="queryById" resultType="com.yq.se.entity.db.Solve">
         select
         <include refid="fields"/>
         from <include refid="table_name" />
@@ -64,7 +64,7 @@
             <if test="id!=null">id=#{id}</if>
         </where>
     </select>
-    <select id="queryAll" resultType="com.yq.se.entity.Solve">
+    <select id="queryAll" resultType="com.yq.se.entity.db.Solve">
         select <include refid="fields"/>
         from <include refid="table_name"/>
     </select>

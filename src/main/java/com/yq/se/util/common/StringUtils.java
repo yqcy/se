@@ -1,9 +1,9 @@
-package com.yq.se.util;
+package com.yq.se.util.common;
 
 /**
  * Created by wb264139 on 2017/3/9.
  */
-public class StringSupport {
+public class StringUtils {
 
     private static final String SEPARATOR = ",";
 
@@ -56,7 +56,7 @@ public class StringSupport {
      */
     public static String removePrefix(String str, String prefix) {
         if (prefix == null || str == null || str.indexOf(prefix) == -1) return str;
-        return str.substring(str.indexOf(prefix));
+        return str.substring(prefix.length());
     }
 
     /**
@@ -134,5 +134,17 @@ public class StringSupport {
         str = str.replaceAll("\"", "");
         str = str.replaceAll("\'", "");
         return str;
+    }
+
+    /**
+     * 首字母小写
+     *
+     * @param string
+     * @return
+     */
+    public static String toLowerCaseForFirstWord(String string) {
+        String firstWord = string.substring(0, 1);
+        String lowerCase = firstWord.toLowerCase();
+        return string.replaceFirst(firstWord, lowerCase);
     }
 }

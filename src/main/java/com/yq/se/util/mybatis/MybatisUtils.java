@@ -1,4 +1,4 @@
-package com.yq.se.util;
+package com.yq.se.util.mybatis;
 
 import java.io.IOException;
 import java.io.InputStream;

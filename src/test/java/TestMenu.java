@@ -1,5 +1,5 @@
 import com.yq.se.SeApplication;
-import com.yq.se.entity.Menu;
+import com.yq.se.entity.db.Menu;
 import com.yq.se.service.menu.MenuService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

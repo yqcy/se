@@ -1,9 +1,9 @@
 package com.yq.se.controller;
 
-import com.yq.se.entity.User;
+import com.yq.se.entity.db.User;
 import com.yq.se.service.user.UserService;
-import com.yq.se.util.Page;
-import com.yq.se.util.SimpleDateUtils;
+import com.yq.se.util.mybatis.Page;
+import com.yq.se.util.common.SimpleDateUtils;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
-import static com.yq.se.util.StringSupport.*;
+import static com.yq.se.util.common.StringUtils.*;
 
 import java.util.HashMap;
 import java.util.List;

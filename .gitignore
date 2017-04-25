@@ -2,3 +2,4 @@
 /se.iml
 *.project
 /target/
+/lucene_local_repository/

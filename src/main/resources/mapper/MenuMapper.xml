@@ -20,10 +20,10 @@
         </trim>
         )
     </insert>
-    <select id="selectParents" resultType="com.yq.se.entity.Menu">
+    <select id="selectParents" resultType="com.yq.se.entity.db.Menu">
         SELECT * FROM t_menu WHERE pid IS NULL
     </select>
-    <select id="selectChidren" resultType="com.yq.se.entity.Menu">
+    <select id="selectChidren" resultType="com.yq.se.entity.db.Menu">
         SELECT * FROM t_menu WHERE pid = #{pid}
     </select>
 </mapper>

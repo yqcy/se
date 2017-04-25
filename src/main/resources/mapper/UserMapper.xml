@@ -43,7 +43,7 @@
             <if test="user.username!=null">or username = #{user.username}</if>
         </where>
     </sql>
-    <resultMap id="user_map" type="com.yq.se.entity.User">
+    <resultMap id="user_map" type="com.yq.se.entity.db.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -78,7 +78,7 @@
         WHERE
         id = #{id}
     </select>
-    <select id="queryAll" resultType="com.yq.se.entity.User">
+    <select id="queryAll" resultType="com.yq.se.entity.db.User">
         SELECT
         <include refid="fields"/>
         FROM

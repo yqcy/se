@@ -48,7 +48,16 @@ form {
 	margin-top: 0px;
 }
 
-#text {
+#search_text {
+	width: 650px;
+	height: 38px;
+	border-color: #39F;
+	border-style: solid;
+	border-width: 1px;
+	font-size: 24px;
+}
+
+#show_text {
 	width: 400px;
 	height: 38px;
 	border-color: #39F;
