@@ -1,7 +1,7 @@
 package com.yq.se.service.exception;
 
 import com.yq.se.mapper.ExceptionMapper;
-import com.yq.se.entity.Exception;
+import com.yq.se.entity.db.Exception;
 import com.yq.se.util.lucene.LuceneIndexHelper;
 import com.yq.se.util.lucene.LuceneIndexHelperSupport;
 import com.yq.se.util.mybatis.Page;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 /**

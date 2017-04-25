@@ -1,7 +1,7 @@
 package com.yq.se.service.user;
 
 import com.yq.se.mapper.UserMapper;
-import com.yq.se.entity.User;
+import com.yq.se.entity.db.User;
 import com.yq.se.util.mybatis.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

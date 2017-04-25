@@ -21,14 +21,14 @@
         #{exception.status},
         #{exception.user.id}
     </sql>
-    <resultMap id="exception_user_map" type="com.yq.se.entity.Exception">
+    <resultMap id="exception_user_map" type="com.yq.se.entity.db.Exception">
         <id column="exception_id" property="id"/>
         <result column="full_class_name" property="fullClassName"/>
         <result column="description" property="description"/>
         <result column="exception_create_date" property="createDate"/>
         <result column="exception_last_update" property="lastUpdate"/>
         <result column="exception_status" property="status"/>
-        <association property="user" javaType="com.yq.se.entity.User">
+        <association property="user" javaType="com.yq.se.entity.db.User">
             <id column="user_id" property="id"/>
             <result column="username" property="username"/>
             <result column="nickname" property="nickname"/>

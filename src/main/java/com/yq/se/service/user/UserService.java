@@ -1,6 +1,6 @@
 package com.yq.se.service.user;
 
-import com.yq.se.entity.User;
+import com.yq.se.entity.db.User;
 
 import java.util.Date;
 import java.util.List;

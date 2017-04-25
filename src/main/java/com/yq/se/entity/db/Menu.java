@@ -1,4 +1,4 @@
-package com.yq.se.entity;
+package com.yq.se.entity.db;
 
 /**
  * Created by wb264139 on 2017/4/13.

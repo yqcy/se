@@ -1,7 +1,7 @@
 package com.yq.se.controller;
 
-import com.yq.se.entity.Exception;
-import com.yq.se.entity.User;
+import com.yq.se.entity.db.Exception;
+import com.yq.se.entity.db.User;
 import com.yq.se.service.exception.ExceptionService;
 import com.yq.se.util.mybatis.Page;
 import com.yq.se.util.common.SimpleDateUtils;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.yq.se.util.common.StringSupport.*;
+import static com.yq.se.util.common.StringUtils.*;
 
 /**
  * Created by wb264139 on 2017/4/7.

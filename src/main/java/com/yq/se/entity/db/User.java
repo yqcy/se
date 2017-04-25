@@ -1,4 +1,4 @@
-package com.yq.se.entity;
+package com.yq.se.entity.db;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
