@@ -71,7 +71,8 @@ public class SwaggerConfig {
         return or(
                 regex("/user.*"),
                 regex("/exception.*"),
-                regex("/solve.*")
+                regex("/solve.*"),
+                regex("/doc.*")
         );
     }
 

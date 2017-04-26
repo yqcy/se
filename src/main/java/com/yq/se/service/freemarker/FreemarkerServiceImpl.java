@@ -12,12 +12,14 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.io.File;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -27,18 +29,22 @@ import java.util.*;
 @Service
 public class FreemarkerServiceImpl {
 
-    @Value("${project.url}")
+    @Value("${freemarker.project.url}")
     private String projectUrl;
 
-    @Value("${project.controller.path}")
+    @Value("${freemarker.controller.path}")
     private String controllerPath;
 
-    @Value("${project.ftl.path}")
+    @Value("${freemarker.ftl.path}")
     private String ftlPath;
+
+    @Value("${freemarker.doc.path}")
+    private String docPath;
 
     /**
      * 创建markdown文档
      */
+    @Async
     public void createMarkdownDocument() {
         Markdown m = new Markdown();
 //        String projectUrl = "http://localhost:9000";
@@ -120,7 +126,7 @@ public class FreemarkerServiceImpl {
                 }
                 //设置返回结果
                 String url = projectUrl + i.getPath();//拼接成http://localhost:9000/xxx的形式
-                String requestResult = "";
+                String requestResult = null;
                 //try调接口时出现的异常
                 try {
                     if (i.getRequestType() != null) {
@@ -133,17 +139,38 @@ public class FreemarkerServiceImpl {
                     }
                 } catch (Exception e) {
 //                    e.printStackTrace();//不要打印，异常信息太多
-                    i.setResult("");
                     continue method;
+                } finally {
+                    //设置接口的返回值
+                    i.setResult(requestResult);
                 }
-                //设置接口的返回值
-                i.setResult(requestResult);
             }
         }
         try {
             FreemarkerUtils.create(m);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Async
+    public void downloadMarkdown(OutputStream out) {
+        File file = new File(docPath + "/Markdown.md");
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            IOUtils.copy(fis, out);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.flush();
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
