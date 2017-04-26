@@ -131,7 +131,7 @@ public class FreemarkerServiceImpl {
                 try {
                     if (i.getRequestType() != null) {
                         if (i.getRequestType().indexOf(RequestMethod.GET.name()) != -1) {
-                            requestResult = HttpClientUtil.getHttpUrl(url, map);
+                            requestResult = HttpClientUtil.getHttpUrl(url, map);//TODO 自实现HttpClient
 
                         } else if (i.getRequestType().indexOf(RequestMethod.POST.name()) != -1) {
                             requestResult = HttpClientUtil.postHttpUrl(url, map);
