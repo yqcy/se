@@ -39,3 +39,12 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
+freemarker:
+    project:
+        url: http://localhost:9000
+    controller:
+        path: src/main/java/com/aliyun/supplychain/controller
+    ftl:
+        path: src/main/resources/ftl
+    doc:
+        path: src/main/resources/doc

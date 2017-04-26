@@ -109,7 +109,7 @@ public class ExceptionController {
 //        HttpSession session = request.getSession(true);
 //        e.setUser((User) session.getAttribute("user"));//TODO 强制登录
         User user = new User();
-        user.setId(1);
+        user.setId(1);//TODO 目前写死，以后根据登录用户动态获取
         e.setUser(user);
         Exception exception = service.add(e);
         return exception;

@@ -104,12 +104,16 @@
         t_user u
         ON
         e.user_id = u.id
-        <if test="page.sort!=null">
-            ORDER BY ${page.sort} ${page.order}
+        <if test="page!=null">
+            <if test="page.order!=null">
+                ORDER BY ${page.order}
+            </if>
         </if>
-        <if test="page.begin!=null">
-            <if test="page.size!=null">
-                LIMIT ${page.begin} , ${page.size}
+        <if test="page!=null">
+            <if test="page.begin!=null">
+                <if test="page.size!=null">
+                    LIMIT ${page.begin} , ${page.size}
+                </if>
             </if>
         </if>
     </select>
@@ -130,7 +134,8 @@
     </select>
     <select id="queryNewAdd" resultMap="exception_user_map">
         SELECT
-        e.id AS exception_id, e.full_class_name, e.description, e.create_date AS exception_create_date, e.last_update AS exception_last_update,e.s
+        e.id AS exception_id, e.full_class_name, e.description, e.create_date AS exception_create_date, e.last_update AS
+        exception_last_update,e.s
         u.id AS user_id, u.username, u.nickname, u.phone, u.create_date AS user_create_date, u.status AS user_status
         FROM
         (

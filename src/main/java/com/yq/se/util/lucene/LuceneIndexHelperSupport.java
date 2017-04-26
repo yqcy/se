@@ -75,6 +75,7 @@ public class LuceneIndexHelperSupport<T> implements LuceneIndexHelper<T> {
         String[] fields = MyReflectUtils.getFields(t.getClass());
         Query query = LuceneUtils.getMultiFieldQuery(Version.LUCENE_6_3_0, fields, this.analyzer, keyword);
         List<Object> list = LuceneUtils.search(indexSearcher,query,this.analyzer,  n, t);
+        //TODO 这里拿到的都是第一次插入的，以后插入的无法拿到，但是返回结果数量正确
         return transfer(list);
     }
 

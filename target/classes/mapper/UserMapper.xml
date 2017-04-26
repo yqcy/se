@@ -43,7 +43,7 @@
             <if test="user.username!=null">or username = #{user.username}</if>
         </where>
     </sql>
-    <resultMap id="user_map" type="com.yq.se.entity.User">
+    <resultMap id="user_map" type="com.yq.se.entity.db.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -78,7 +78,7 @@
         WHERE
         id = #{id}
     </select>
-    <select id="queryAll" resultType="com.yq.se.entity.User">
+    <select id="queryAll" resultType="com.yq.se.entity.db.User">
         SELECT
         <include refid="fields"/>
         FROM
@@ -90,10 +90,9 @@
             <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
         <if test="page!=null">
-            <if test="page.sort!=null">order by ${page.sort} ${page.order}</if>
-        </if>
-        <if test="order!=null">
-            ORDER BY ${order}
+            <if test="page.order!=null">
+                ORDER BY ${page.order}
+            </if>
         </if>
         <if test="page!=null">
             <if test="page.begin!=null">

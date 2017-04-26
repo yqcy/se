@@ -77,6 +77,6 @@ public class User {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return "nickname=" + this.nickname + "&registerDate=" + sdf.format(this.createDate);
+        return "nickname=" + this.nickname + "&createDate=" + sdf.format(this.createDate);
     }
 }

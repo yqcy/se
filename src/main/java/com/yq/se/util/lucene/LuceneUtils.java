@@ -129,13 +129,27 @@ public class LuceneUtils {
     }
 
     /**
+     * 刷新流
+     *
+     * @param iw
+     */
+    private static void flush(IndexWriter iw) {
+        try {
+            iw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 提交并关闭
      *
      * @param iw
      */
-    private static void commitAndClose(IndexWriter iw) {
+    private static void commitAndFlush(IndexWriter iw) {
+        flush(iw);
         commit(iw);
-        close(iw);
+//        close(iw);
     }
 
     /**
@@ -150,7 +164,7 @@ public class LuceneUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            commitAndClose(iw);
+            commitAndFlush(iw);
         }
     }
 
@@ -168,7 +182,7 @@ public class LuceneUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            commitAndClose(iw);
+            commitAndFlush(iw);
         }
     }
 
@@ -179,7 +193,7 @@ public class LuceneUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            commitAndClose(iw);
+            commitAndFlush(iw);
         }
     }
 
@@ -311,7 +325,7 @@ public class LuceneUtils {
                             /**
                              * 获得文档对象中的在注解中存储的键相对应的值
                              */
-                            String text = doc.get(anno.value());
+                            String text = doc.get(fieldName);
 
 
                             String value = formatter("<strong><font color='red'>", "</font></strong>", query, analyzer, fieldName, text);

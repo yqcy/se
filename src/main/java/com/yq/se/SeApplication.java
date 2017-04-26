@@ -48,6 +48,7 @@ public class SeApplication implements ApplicationListener<ApplicationReadyEvent>
      */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
+        //打印swagger的地址
         System.out.println("http://localhost:8989" + "/swagger-ui.html");
     }
 }

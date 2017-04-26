@@ -7,12 +7,14 @@ import com.yq.se.entity.ftl.Paramter;
 import com.yq.se.util.common.ReflectUtils;
 import com.yq.se.util.common.StringUtils;
 import com.yq.se.util.freemarker.FreemarkerUtils;
+import com.yq.se.util.servlet.HttpClientUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -131,10 +133,10 @@ public class FreemarkerServiceImpl {
                 try {
                     if (i.getRequestType() != null) {
                         if (i.getRequestType().indexOf(RequestMethod.GET.name()) != -1) {
-                            requestResult = HttpClientUtil.getHttpUrl(url, map);//TODO 自实现HttpClient
+                            requestResult = HttpClientUtils.doGet(url, map);
 
                         } else if (i.getRequestType().indexOf(RequestMethod.POST.name()) != -1) {
-                            requestResult = HttpClientUtil.postHttpUrl(url, map);
+                            requestResult = HttpClientUtils.doPost(url, map);
                         }
                     }
                 } catch (Exception e) {

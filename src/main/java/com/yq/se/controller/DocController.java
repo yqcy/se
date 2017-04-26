@@ -54,6 +54,5 @@ public class DocController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

@@ -90,10 +90,9 @@
             <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
         <if test="page!=null">
-            <if test="page.sort!=null">order by ${page.sort} ${page.order}</if>
-        </if>
-        <if test="order!=null">
-            ORDER BY ${order}
+            <if test="page.order!=null">
+                ORDER BY ${page.order}
+            </if>
         </if>
         <if test="page!=null">
             <if test="page.begin!=null">

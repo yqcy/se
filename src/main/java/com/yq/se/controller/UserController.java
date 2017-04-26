@@ -76,7 +76,8 @@ public class UserController {
         Page p = new Page();
         p.setIndex(page);
         p.setSize(rows);
-        List<User> users = userService.queryAllUsers(status, page, rows, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)), order);
+        p.setOrder(order);
+        List<User> users = userService.queryAllUsers(status, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)), p);
         Map map = new HashMap<>();
         map.put("total", p.getCount());
         map.put("rows", users);

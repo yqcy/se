@@ -45,10 +45,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<User> queryAllUsers(Integer status, Integer pageNum, Integer pageSize, Date beginTime, Date endTime, String order) {
+    public List<User> queryAllUsers(Integer status, Date beginTime, Date endTime, Page page) {
         int count = userMapper.count(status, beginTime, endTime);
-        Page page = new Page(pageNum, pageSize, count);
-        return userMapper.queryAll(page, status, beginTime, endTime, order);
+        page.setCount(count);
+        return userMapper.queryAll(page, status, beginTime, endTime);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     public boolean checkUsername(String username) {
         if (username == null) return false;
         User user = userMapper.queryByUsername(username);
-        if (user!=null)return false;
+        if (user != null) return false;
         return true;
     }
 }

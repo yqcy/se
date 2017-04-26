@@ -24,7 +24,7 @@ public interface UserMapper {
 
     User queryByUsername(@Param("username") String username);
 
-    List<User> queryAll(@Param("page") Page page, @Param("status") Integer status, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime, @Param("order") String order);
+    List<User> queryAll(@Param("page") Page page, @Param("status") Integer status, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
     int count(@Param("status") Integer status, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 }

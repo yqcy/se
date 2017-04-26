@@ -1,6 +1,7 @@
 package com.yq.se.service.user;
 
 import com.yq.se.entity.db.User;
+import com.yq.se.util.mybatis.Page;
 
 import java.util.Date;
 import java.util.List;
@@ -36,15 +37,14 @@ public interface UserService {
 
     /**
      * 分页查询用户
+     *
      * @param status
-     * @param pageNum
-     * @param pageSize
      * @param beginTime
      * @param endTime
-     * @param order
+     * @param page
      * @return
      */
-    List<User> queryAllUsers(Integer status, Integer pageNum, Integer pageSize, Date beginTime, Date endTime, String order);
+    List<User> queryAllUsers(Integer status, Date beginTime, Date endTime, Page page);
 
     /**
      * 查询指定ID的用户
