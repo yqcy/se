@@ -73,6 +73,7 @@ public class ExceptionServiceImpl implements ExceptionService {
         List<Exception> exceptions = new ArrayList<>();
         Map<Integer, Exception> cache = searchCache.get(keyword);
         if (cache != null && page.getCount() != null && cache.size() >= page.getCount()) {
+            if (page.getSize() > page.getCount()) page.setSize(page.getCount());
             for (int i = page.getBegin(); i < page.getSize(); i++) {
                 exceptions.add(cache.get(i));
             }
@@ -81,7 +82,7 @@ public class ExceptionServiceImpl implements ExceptionService {
         if (cache == null) cache = new LinkedHashMap<>();
         try {
             List<Exception> list = luceneIndexHelper.queryByKeyword(keyword, new Exception(), queryCount);
-            if (list == null) return null;
+            if (list == null || list.size() == 0) return null;
             page.setCount(list.size());
             for (int i = 0; i < list.size(); i++) {
                 cache.put(i, list.get(i));

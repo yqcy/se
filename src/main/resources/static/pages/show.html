@@ -10,19 +10,22 @@
 		<script src="../js/init.js"></script>
 		<script>
 			$(function() {
+				for(var i=1;i<=5;i++){
+					$('#show'+i).hide();
+				}
 				var h = window.location.href;
 				var array1 = h.split("?");
-				var array2 = array1[1].split("=");
-				var str = array2[1];
-				$.get("http://localhost:8989/exception/search?str="+str,
-						function(data){
-							$('#show_text').val(str);
-						}
-				);
-//				$.post('http://localhost:8989/user/check/login', function(data) {
-//					console.log(data);
-//					
-//				});
+				if(array1.length>1){
+					var array2 = array1[1].split("=");
+					var keyName = array2[0];
+					if(keyName=="search"){
+						var str = array2[1];
+						$('#show_text').val(str);
+						clickShow();
+					}
+				}
+				
+				
 			});
 		</script>
 	</head>
@@ -33,8 +36,8 @@
 			<div style="float: left;width:800px;">
 				<img src="../images/logo1.jpg" height="60px" width="200px" style="float: left;margin-top: 15px;" />
 				<form style="width: 500px;margin-top: 15px;margin-left: 10px;float: left;">
-						<input name="show_text" type="text" id="show_text" value="" maxlength="100">
-						<input id="button" name="baidu" type="submit" title="搜搜" value="搜搜">
+						<input id="show_text" type="text" maxlength="100">
+						<input id="button" type="button" value="搜搜" onclick="clickShow()">
 				</form>
 			</div>
 			<!--表头右侧登录菜单-->
@@ -49,33 +52,62 @@
 		<div style="margin-top: 30px;">
 				<!--左侧搜索结果展示-->
 				<div style="float: left;width: 65%;">
-					<div style="padding-bottom: 50px;padding-left: 10px;height: 120px;">
-						标题1<br />
-						正文<br />
-						创建者  时间  标签
+					<div id="show1" style="padding-bottom: 60px;padding-left: 10px;height: 120px;">
+						异常名：<span id="title1"></span><br />
+						<p />
+						异常描述：<span id="desc1"></span><br />
+						<p />
+						创建用户：<span id="user1"></span> <br />
+						<p />
+						用户注册时间：<span id="time1"></span>
+						<p />
+						<hr  />
 					</div>
-					<div style="padding-bottom: 50px;padding-left: 10px;height: 120px;">
-						标题2<br />
-						正文<br />
-						创建者  时间  标签
+					<div id="show2" style="padding-bottom: 60px;padding-left: 10px;height: 120px;">
+						异常名：<span id="title2"></span><br />
+						<p />
+						异常描述：<span id="desc2"></span><br />
+						<p />
+						创建用户：<span id="user2"></span> <br />
+						<p />
+						用户注册时间：<span id="time2"></span>
+						<p />
+						<hr  />
 					</div>
-					<div style="padding-bottom: 50px;padding-left: 10px;height: 120px;">
-						标题3<br />
-						正文<br />
-						创建者  时间  标签
+					<div id="show3" style="padding-bottom: 60px;padding-left: 10px;height: 120px;">
+						异常名：<span id="title3"></span><br />
+						<p />
+						异常描述：<span id="desc3"></span><br />
+						<p />
+						创建用户：<span id="user3"></span> <br />
+						<p />
+						用户注册时间：<span id="time3"></span>
+						<p />
+						<hr  />
 					</div>
-					<div style="padding-bottom: 50px;padding-left: 10px;height: 120px;">
-						标题4<br />
-						正文<br />
-						创建者  时间  标签
+					<div  id="show4" style="padding-bottom: 60px;padding-left: 10px;height: 120px;">
+						异常名：<span id="title4"></span><br />
+						<p />
+						异常描述：<span id="desc4"></span><br />
+						<p />
+						创建用户：<span id="user4"></span> <br />
+						<p />
+						用户注册时间：<span id="time4"></span>
+						<p />
+						<hr  />
 					</div>
-					<div style="padding-bottom: 15px;padding-left: 10px;height: 120px;">
-						标题5<br />
-						正文<br />
-						创建者  时间  标签
+					<div id="show5" style="padding-bottom: 15px;padding-left: 10px;height: 120px;">
+						异常名：<span id="title5"></span><br />
+						<p />
+						异常描述：<span id="desc5"></span><br />
+						<p />
+						创建用户：<span id="user5"></span> <br />
+						<p />
+						用户注册时间：<span id="time5"></span>
+						<p />
 					</div>
 					<!--分页-->
-					<div style="padding-bottom: 30px;">
+					<div style="padding-bottom: 20px;">
 						<a href="#">首页</a>
 						<a href="#">上一页</a>
 						<a href="#">1</a>

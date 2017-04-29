@@ -82,7 +82,10 @@ public class ExceptionController {
     public Object search(String str, Integer index) {
         Page page = new Page(index, 5);
         List<Exception> exceptions = service.search(str, page);
-        return exceptions;
+        Map map = new HashMap();
+        map.put("total", page.getCount());
+        map.put("rows", exceptions);
+        return map;
 
     }
 

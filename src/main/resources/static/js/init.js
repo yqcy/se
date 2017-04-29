@@ -198,15 +198,36 @@ function checkRegister() {
 				$('#username_register').val('');
 				$('#username_register').attr('placeholder', '该邮箱已经被注册,请选择其它或找回!');
 			}
-		},'json');
+		}, 'json');
 	}
 }
 /*
  * 从search.html跳转到show.html页面，中间携带参数
  */
-function skipToShow(){
+function skipToShow() {
 	var str = $('#search_text').val();
-	window.location.href="http://localhost:8989/pages/show.html?str="+str;
+	window.location.href = "http://localhost:8989/pages/show.html?search=" + str;
 }
-
-	
+/*
+ * 在show.html页面点击搜索
+ */
+function clickShow() {
+	var str = $('#show_text').val();
+	//这里目前是假数据，需要改成成态获取分页点击
+	var index = 1
+	$.get("http://localhost:8989/exception/search?str=" + str+"&index="+index,
+		function(data) {
+			//填充左侧的异常div
+			var rows = data.rows;
+			var total = data.total;
+			$.each(rows, function(i, n) {
+				var num = i + 1;
+				$('#show'+num).show();
+				$('#title'+num).html(n.fullClassName);
+				$('#desc'+num).html(n.description);
+				$('#user'+num).html(n.user.nickname);
+				$('#time'+num).html(n.user.createDate);
+			});
+		}
+	);
+}

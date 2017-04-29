@@ -103,7 +103,7 @@ public class Page {
     public Page(Integer index, Integer size, Integer count, String order) {
         this.index = (index == null || "".equals(index)) ? 1 : index;
         this.size = (size == null || "".equals(size)) ? 5 : size;
-        this.count = (count == null || "".equals(count)) ? 10 : count;
+        this.count = ("".equals(count)) ? null : count;
         this.order = ("".equals(order)) ? null : order;
     }
 
