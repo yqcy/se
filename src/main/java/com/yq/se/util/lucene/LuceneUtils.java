@@ -2,6 +2,7 @@ package com.yq.se.util.lucene;
 
 import com.yq.se.anno.lucene.ToDocTag;
 import com.yq.se.util.common.MyReflectUtils;
+import com.yq.se.util.common.ReflectUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -20,6 +21,7 @@ import org.apache.lucene.util.Version;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -204,12 +206,12 @@ public class LuceneUtils {
      * @param obj   目标对象的类对象
      * @return
      */
-    public static List<Object> search(IndexSearcher is, Query query, Analyzer analyzer, int n, Object obj) {
+    public static List<Object> search(IndexSearcher is, Query query, Analyzer analyzer, int n, Object obj) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         TopDocs ts = getTopDocs(is, query, n);
 
         List<Document> list = getDocuments(is, ts);
 
-        List transfer = transfer(obj, query, analyzer, list.toArray(new Document[0]));
+        List transfer = transfer(obj.getClass(), query, analyzer, list.toArray(new Document[list.size()]));
 
         return transfer;
 
@@ -247,29 +249,19 @@ public class LuceneUtils {
 
     }
 
-    public static TopDocs getTopDocs(IndexSearcher is, Query query, int n) {
-        try {
-            TopDocs topDocs = is.search(query, n);
-            return topDocs;
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    public static TopDocs getTopDocs(IndexSearcher is, Query query, int n) throws IOException {
+        TopDocs topDocs = is.search(query, n);
+        return topDocs;
     }
 
-    public static List<Document> getDocuments(IndexSearcher is, TopDocs ts) {
+    public static List<Document> getDocuments(IndexSearcher is, TopDocs ts) throws IOException {
         ScoreDoc[] scoreDocs = ts.scoreDocs;
 
         List<Document> list = new ArrayList<>(scoreDocs.length);
         for (ScoreDoc s : scoreDocs) {
             int i = s.doc;
-            try {
-                Document doc = is.doc(i);
-                list.add(doc);
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
+            Document doc = is.doc(i);
+            list.add(doc);
         }
         return list;
     }
@@ -278,38 +270,36 @@ public class LuceneUtils {
      * 进行格式化对象
      * 属性上有highlight注解的需要高亮处理
      *
-     * @param obj
+     * @param clz
      * @param query
      * @param analyzer
      * @param docs
      * @return
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
      */
-    private static List<Object> transfer(Object obj, Query query, Analyzer analyzer, Document... docs) {
+    private static List<Object> transfer(Class clz, Query query, Analyzer analyzer, Document... docs) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        //初始化容器集合
         List list = new ArrayList();
         if (docs != null) {
             for (int i = 0; i < docs.length; i++) {
+                //添加创建的对象到集合中
+                Object obj = ReflectUtils.getObjectByClass(clz);
+                list.add(obj);
+
                 Document doc = docs[i];
 
+                Field[] declaredFields = clz.getDeclaredFields();
 
-                Field[] declaredFields = obj.getClass().getDeclaredFields();
-
-                /**
-                 * 遍历对象的属性
-                 */
                 for (Field fd : declaredFields) {
                     fd.setAccessible(true);
 
-                    /**
-                     * 拿到属性上的注解，分两种情况
-                     * 1 有注解
-                     * 2 为空
-                     */
+                    //拿属性上面的标志注解
                     ToDocTag anno = fd.getAnnotation(ToDocTag.class);
 
-                    /**
-                     * 判断属性上方是否有注解
-                     * 如果有则反射对对象进行赋值
-                     */
+                    //判断属性上方是否有注解
+                    //如果有则反射对对象进行赋值
                     if (anno != null) {
 
                         /**
@@ -322,16 +312,12 @@ public class LuceneUtils {
                                 fieldName = fd.getName();
                             }
 
-                            /**
-                             * 获得文档对象中的在注解中存储的键相对应的值
-                             */
+                            //获得文档对象中的在注解中存储的键相对应的值
                             String text = doc.get(fieldName);
 
 
                             String value = formatter("<strong><font color='red'>", "</font></strong>", query, analyzer, fieldName, text);
-                            /**
-                             * 判断是否需要进行高亮显示
-                             */
+                            //判断是否需要进行高亮显示
                             if (!query.getClass().equals(MatchAllDocsQuery.class) && anno.highlight()) {//需要高亮显示的情况
                                 if (anno.isId() || value == null) {
                                     value = text;
@@ -339,25 +325,12 @@ public class LuceneUtils {
                             } else {//不需要高亮显示的情况
                                 value = text;
                             }
-                            /**
-                             * 反射进行为对象赋值
-                             */
                             String methodName = MyReflectUtils.setMethodName(fd.getName());
-                            try {
-                                Method method = obj.getClass().getDeclaredMethod(methodName, String.class);
-                                method.invoke(obj, value);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                throw new RuntimeException(e);
-                            }
+                            Method method = obj.getClass().getDeclaredMethod(methodName, String.class);
+                            method.invoke(obj, value);
                         }
                     }
-
                 }
-                /**
-                 * 添加对象到集合中
-                 */
-                list.add(obj);
             }
         }
         /**
@@ -373,14 +346,8 @@ public class LuceneUtils {
      * @return
      */
 
-    public static IndexReader getIndexReader(Directory dir) {
-
-        try {
-            return DirectoryReader.open(dir);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    public static IndexReader getIndexReader(Directory dir) throws IOException {
+        return DirectoryReader.open(dir);
     }
 
     /**
@@ -399,22 +366,12 @@ public class LuceneUtils {
      * @param path
      * @return
      */
-    public static Directory getDirectory(String path) {
-        try {
-            return FSDirectory.open(Paths.get(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    public static Directory getDirectory(String path) throws IOException {
+        return FSDirectory.open(Paths.get(path));
     }
 
-    public static IndexWriter getIndexWriter(String path, Analyzer analyzer) {
-        try {
-            return new IndexWriter(getDirectory(path), new IndexWriterConfig(analyzer));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    public static IndexWriter getIndexWriter(String path, Analyzer analyzer) throws IOException {
+        return new IndexWriter(getDirectory(path), new IndexWriterConfig(analyzer));
     }
 
     /**
@@ -426,13 +383,8 @@ public class LuceneUtils {
      * @param keyword
      * @return
      */
-    public static Query getMultiFieldQuery(Version v, String[] fields, Analyzer analyzer, String keyword) {
-        try {
-            return new MultiFieldQueryParser(fields, analyzer).parse(keyword);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    public static Query getMultiFieldQuery(Version v, String[] fields, Analyzer analyzer, String keyword) throws ParseException {
+        return new MultiFieldQueryParser(fields, analyzer).parse(keyword);
     }
 
     /**
@@ -442,27 +394,19 @@ public class LuceneUtils {
      * @param analyzer
      * @param text
      */
-    public static void printAnalyzerValue(Analyzer analyzer, String text) {
+    public static void printAnalyzerValue(Analyzer analyzer, String text) throws IOException {
         TokenStream tokenStream = analyzer.tokenStream("test", text);
 
         tokenStream.addAttribute(CharTermAttribute.class);
 
-        System.out.println("这里使用的分词器是：\t" + analyzer.getClass().getSimpleName());
-        try {
+        tokenStream.reset();
 
-            tokenStream.reset();
+        while (tokenStream.incrementToken()) {
 
-            while (tokenStream.incrementToken()) {
+            CharTermAttribute charTermAttribute = tokenStream.getAttribute(CharTermAttribute.class);
 
-                CharTermAttribute charTermAttribute = tokenStream.getAttribute(CharTermAttribute.class);
+            System.out.println(charTermAttribute.toString());
 
-                System.out.println(charTermAttribute.toString());
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
-
     }
 }

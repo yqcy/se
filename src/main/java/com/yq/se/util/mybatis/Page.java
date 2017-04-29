@@ -2,7 +2,6 @@ package com.yq.se.util.mybatis;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class Page {
     /***********************************************************************************
      * 属性
@@ -78,19 +77,17 @@ public class Page {
         this.order = order;
     }
 
+
     /************************************************************************************
      * 构造方法
      ************************************************************************************/
+
     public Page() {
-        this(1, 1, 1, null);
+        this(null, null);
     }
 
-    public Page(Integer index) {
-        this(index, 5, 5, null);
-    }
-
-    public Page(Integer index, Integer count) {
-        this(index, 5, count, null);
+    public Page(Integer index, Integer size) {
+        this(index, size, null, null);
     }
 
     public Page(Integer index, Integer size, Integer count) {
@@ -104,10 +101,10 @@ public class Page {
      * @param order 排序的字段和规则
      */
     public Page(Integer index, Integer size, Integer count, String order) {
-        this.index = index;
-        this.size = size;
-        this.count = count;
-        this.order = order;
+        this.index = (index == null || "".equals(index)) ? 1 : index;
+        this.size = (size == null || "".equals(size)) ? 5 : size;
+        this.count = (count == null || "".equals(count)) ? 10 : count;
+        this.order = ("".equals(order)) ? null : order;
     }
 
     /**************************************************************************************

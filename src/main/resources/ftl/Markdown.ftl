@@ -18,7 +18,11 @@
 *   无
 </#if>
 ####返回结果
+<#if interface.result?exists>
 ${interface.result}
+<#else>
+*没有返回值或接口调用失败*
+</#if>
 </#list>
 ##
 </#list>

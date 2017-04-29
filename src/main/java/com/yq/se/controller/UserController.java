@@ -73,9 +73,7 @@ public class UserController {
     )
     @RequestMapping(value = "/show", method = {RequestMethod.GET})
     public Object show(@RequestParam(required = false) Integer status, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows, @RequestParam(required = false) String order) {
-        Page p = new Page();
-        p.setIndex(page);
-        p.setSize(rows);
+        Page p = new Page(page, rows);
         p.setOrder(order);
         List<User> users = userService.queryAllUsers(status, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)), p);
         Map map = new HashMap<>();

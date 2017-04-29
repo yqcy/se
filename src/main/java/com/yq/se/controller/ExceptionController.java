@@ -53,9 +53,7 @@ public class ExceptionController {
     public Object show(@RequestParam(required = false) String id, @RequestParam(required = false) String fullClassName, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer userId, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows) {
         Exception e = new Exception();
         User user = new User();
-        Page p = new Page();
-        p.setIndex(page);
-        p.setSize(rows);
+        Page p = new Page(page, rows);
         user.setId(userId);
         e.setId(id);
         e.setFullClassName(fullClassName);
@@ -71,6 +69,7 @@ public class ExceptionController {
     @ApiOperation(value = "首页模糊查询", notes = "支持GET方式", response = String.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "str", value = "str", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "index", value = "index", dataType = "Int", paramType = "query"),
     })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "请求已完成"),
@@ -80,11 +79,9 @@ public class ExceptionController {
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public Object search(String str) {
-        /*
-        TODO 使用Lucene进行全文检索
-         */
-        List<Exception> exceptions = service.search(str, 5);
+    public Object search(String str, Integer index) {
+        Page page = new Page(index, 5);
+        List<Exception> exceptions = service.search(str, page);
         return exceptions;
 
     }

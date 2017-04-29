@@ -1,5 +1,7 @@
 /.idea/
 /se.iml
-*.project
+target
 /target/
+/target/classes/
 /lucene_local_repository/
+*.project

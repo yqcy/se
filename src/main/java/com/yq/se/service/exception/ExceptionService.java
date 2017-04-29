@@ -21,6 +21,6 @@ public interface ExceptionService {
 
     List<Exception> queryAll(Exception e, Page page, Date beginTime, Date endTime);
 
-    List<Exception> search(String keyword, int count);
+    List<Exception> search(String keyword, Page page);
 
 }

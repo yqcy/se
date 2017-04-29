@@ -1,5 +1,9 @@
 package com.yq.se.util.lucene;
 
+import org.apache.lucene.queryparser.classic.ParseException;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -13,9 +17,9 @@ public interface LuceneIndexHelper<T> {
 
     public void delete(String id);
 
-    public List<T> queryByKeyword(String keyword, T t, int n);
+    public List<T> queryByKeyword(String keyword, T t, int n) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, ParseException;
 
-    public List<T> queryAll(T t, int i);
+    public List<T> queryAll(T t, int i) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
 
 

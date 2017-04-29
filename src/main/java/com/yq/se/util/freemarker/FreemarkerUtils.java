@@ -29,7 +29,16 @@ public class FreemarkerUtils {
         cfg.setDirectoryForTemplateLoading(new File(ftlPath));
         Template template = cfg.getTemplate(classSimpleName + ".ftl");
         //获得输出文件流
-        FileOutputStream fos = new FileOutputStream(FileUtils.getFile(new File(docPath), classSimpleName + ".md"));//存放文件的路径
+
+        File directory = new File(docPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        File file = FileUtils.getFile(directory, classSimpleName + ".md");
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        FileOutputStream fos = new FileOutputStream(file);//存放文件的路径
         BufferedOutputStream bos = new BufferedOutputStream(fos);//缓存流
         Writer out = new OutputStreamWriter(bos);
         Map<String, Object> root = new HashMap<>();
