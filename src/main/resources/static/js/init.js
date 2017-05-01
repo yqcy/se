@@ -157,7 +157,23 @@ function userSearch(data) {
  * 多条件查询异常
  */
 function exceptionSearch() {
-
+	//获得开始时间
+	var beginTime = $('#beginTime').datebox('getValue');
+	//获得结束时间
+	var endTime = $('#endTime').datebox('getValue');
+	//获得提供者
+	var provider = $('#provider').combobox('getValue');
+	//获得异常名
+	var exceptionName = $('#exception').textbox('getValue');
+	//获得解决状态
+	var status = $('#status_exception').combobox('getValue');
+	$('#dg_exception').datagrid('load',{
+		'fullClassName':exceptionName,
+		'status':status,
+		'userId':provider,
+		'beginTime':beginTime,
+		'endTime':endTime
+	});
 }
 /*
  * 比较两次密码是否一致
@@ -214,7 +230,7 @@ function skipToShow() {
 function clickShow() {
 	var str = $('#show_text').val();
 	//这里目前是假数据，需要改成成态获取分页点击
-	var index = 1
+	var index = 1;
 	$.get("http://localhost:8989/exception/search?str=" + str+"&index="+index,
 		function(data) {
 			//填充左侧的异常div
@@ -228,6 +244,91 @@ function clickShow() {
 				$('#user'+num).html(n.user.nickname);
 				$('#time'+num).html(n.user.createDate);
 			});
+			paging(index,5,rows.length);
 		}
 	);
+}
+//超链接点击执行的事件
+function linkClickShow(a) {
+	var str = $('#show_text').val();
+	var text = a.text;
+	console.log(text);
+	//这里目前是假数据，需要改成成态获取分页点击
+	var index = a.id.slice(1);
+	console.log(index);
+	$.get("http://localhost:8989/exception/search?str=" + str+"&index="+index,
+		function(data) {
+			//填充左侧的异常div
+			var rows = data.rows;
+			var total = data.total;
+			$.each(rows, function(i, n) {
+				var num = i + 1;
+				$('#show'+num).show();
+				$('#title'+num).html(n.fullClassName);
+				$('#desc'+num).html(n.description);
+				$('#user'+num).html(n.user.nickname);
+				$('#time'+num).html(n.user.createDate);
+			});
+			paging(index,5,rows.length);
+		}
+	);
+}
+//分页
+//page页号
+//size每页的条数
+//total总条数
+function paging(page,size,total){
+	if(page == 1){
+//		$('#previous_page').attr('style','text-decoration:none;color:black;');
+		$('#previous_page').removeAttr('href');
+		$('#previous_page').removeAttr('onClick');
+	}
+	//当前的页号
+	var nowPage = page;
+	//前3页的页号
+	var previousPage = nowPage - 3 ;
+	//后3页的页号
+	var nextPage = nowPage + 3 ;
+	//计算总页数
+	var totalPage = 0;
+	if(total%size==0){
+		totalPage = total / size;
+	}else{
+		totalPage = total / size + 1;
+	}
+	if(totalPage == page){
+//		$('#final_page').attr('style','text-decoration:none;color:black;');
+		$('#final_page').removeAttr('href');
+		$('#final_page').removeAttr('onClick');
+	}
+	//计算需要显示的页号
+	var beginPage = 0;
+	var endPage = 0;
+	if(previousPage <= 0){
+		beginPage = 1;
+	}else{
+		beginPage = previousPage;
+	}
+	if(nextPage > totalPage){
+		endPage = totalPage;
+	}else{
+		endPage = nextPage;
+	}
+	for (var i = beginPage; i <= endPage; i++) {
+		var num = i % 7;
+		if(num == 0){
+			num = 7;
+		}
+		//当前页高亮显示
+		var linkA = $('#a'+num);
+		linkA.show();
+		linkA.html(beginPage);
+		linkA.attr('onClick','linkClickShow(this)');
+		if(beginPage == page){
+//			linkA.attr('href','javascript:void(0);');
+			linkA.attr('style','text-decoration:none;color:black;');
+			linkA.removeAttr('href');
+			linkA.removeAttr('onClick');
+		}
+	}
 }

@@ -18,7 +18,7 @@
 	</head>
 
 	<body class="easyui-layout">
-		<table class="easyui-datagrid" data-options="url:'http://localhost:8989/exception/show',
+		<table id="dg_exception" class="easyui-datagrid" data-options="url:'http://localhost:8989/exception/getAll',method:'GET',
 				toolbar:'#tl',checkOnSelect:false,onLoadSuccess:loadSuccess,idField:'id',
 				sortName:'createDate',sortOrder:'DESC',striped:true,multiSort:true,pageSize:5,pageList:[5,10,15],pagination:true,
 				frozenColumns:[[
@@ -55,12 +55,13 @@
 			<input class="easyui-combobox" name="provider" id="provider" data-options="prompt:'请选择提供者进行查询',url:'http://localhost:8989/user/show?page=1&rows=10&order=id DESC',valueField:'id',textField:'nickname',editable:false" /> 
 			&nbsp; 异常名：
 			<input class="easyui-textbox" name="exception" id="exception" data-options="prompt:'请选择异常进行查询',width:180" /> &nbsp; 解决状态：
-			<input class="easyui-combobox" name="status" id="status" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,
+			<input class="easyui-combobox" name="status_exception" id="status_exception" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,
 				textField:'text',valueField:'value',data:[
 				{value:'',text:'不限'},
-				{value:'1',text:'已解决'},
-				{value:'0',text:'未解决'}
+				{value:'1',text:'审核通过'},
+				{value:'0',text:'审核'}
 			]" />&nbsp;
+			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:80,plain:true" onclick="exceptionSearch();">查询</a><br />
 		</div>
 	</body>
 

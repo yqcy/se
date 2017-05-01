@@ -3,6 +3,7 @@ package com.yq.se.controller;
 import com.yq.se.entity.db.Exception;
 import com.yq.se.entity.db.User;
 import com.yq.se.service.exception.ExceptionService;
+import com.yq.se.util.common.StringUtils;
 import com.yq.se.util.mybatis.Page;
 import com.yq.se.util.common.SimpleDateUtils;
 import io.swagger.annotations.*;
@@ -41,6 +42,8 @@ public class ExceptionController {
             @ApiImplicitParam(name = "endTime", value = "endTime", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "page", value = "page", dataType = "Int", paramType = "query"),
             @ApiImplicitParam(name = "rows", value = "rows", dataType = "Int", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "sort", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "order", value = "order", dataType = "String", paramType = "query"),
     })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "请求已完成"),
@@ -50,16 +53,16 @@ public class ExceptionController {
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public Object show(@RequestParam(required = false) String id, @RequestParam(required = false) String fullClassName, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer userId, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows) {
+    public Object show(@RequestParam(required = false) String id, @RequestParam(required = false) String fullClassName, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer userId, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows, @RequestParam(required = false) String sort, @RequestParam(required = false) String order) {
         Exception e = new Exception();
         User user = new User();
         Page p = new Page(page, rows);
         user.setId(userId);
         e.setId(id);
-        e.setFullClassName(fullClassName);
+        e.setFullClassName(StringUtils.isNull(fullClassName));
         e.setStatus(status);
         e.setUser(user);
-        List<Exception> exceptions = service.queryAll(e, p, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)));
+        List<Exception> exceptions = service.queryAll(e, p, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)), sort, order);
         Map map = new HashMap<>();
         map.put("total", p.getCount());
         map.put("rows", exceptions);

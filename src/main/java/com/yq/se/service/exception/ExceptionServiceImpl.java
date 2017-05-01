@@ -2,6 +2,7 @@ package com.yq.se.service.exception;
 
 import com.yq.se.entity.db.Exception;
 import com.yq.se.mapper.ExceptionMapper;
+import com.yq.se.util.common.StringUtils;
 import com.yq.se.util.lucene.LuceneIndexHelper;
 import com.yq.se.util.lucene.LuceneIndexHelperSupport;
 import com.yq.se.util.mybatis.Page;
@@ -57,9 +58,14 @@ public class ExceptionServiceImpl implements ExceptionService {
     }
 
     @Override
-    public List<Exception> queryAll(Exception e, Page page, Date beginTime, Date endTime) {
+    public List<Exception> queryAll(Exception e, Page page, Date beginTime, Date endTime, String sort, String order) {
         int count = mapper.count(e, beginTime, endTime);
         page.setCount(count);
+        if (sort != null && !sort.equals("")) {
+            if (order != null && !order.equals("")) {
+                page.setOrder(StringUtils.changeToDBName(sort) + " " + order);
+            }
+        }
         List<Exception> exceptions = mapper.queryAll(e, page, beginTime, endTime);
         return exceptions;
     }

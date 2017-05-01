@@ -96,8 +96,8 @@
             <if test="exception.fullClassName!=null">AND full_class_name = #{exception.fullClassName}</if>
             <if test="exception.status!=null">AND status = #{exception.status}</if>
             <if test="exception.user.id!=null">AND user_id = #{exception.user.id}</if>
-            <if test="beginTime!=null">AND ${dateType} &gt; #{beginTime}</if>
-            <if test="endTime!=null">AND ${dateType} &lt; #{endTime}</if>
+            <if test="beginTime!=null">AND create_date &gt; #{beginTime}</if>
+            <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
         ) e
         LEFT JOIN
@@ -106,7 +106,7 @@
         e.user_id = u.id
         <if test="page!=null">
             <if test="page.order!=null">
-                ORDER BY ${page.order}
+                ORDER BY exception_${page.order}
             </if>
         </if>
         <if test="page!=null">
@@ -128,21 +128,8 @@
             <if test="exception.fullClassName!=null">AND full_class_name = #{exception.fullClassName}</if>
             <if test="exception.status!=null">AND status = #{exception.status}</if>
             <if test="exception.user.id!=null">AND user_id = #{exception.user.id}</if>
-            <if test="beginTime!=null">AND ${dateType} &gt; #{beginTime}</if>
-            <if test="endTime!=null">AND ${dateType} &lt; #{endTime}</if>
+            <if test="beginTime!=null">AND create_date &gt; #{beginTime}</if>
+            <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
-    </select>
-    <select id="queryNewAdd" resultMap="exception_user_map">
-        SELECT
-        e.id AS exception_id, e.full_class_name, e.description, e.create_date AS exception_create_date, e.last_update AS
-        exception_last_update,e.s
-        u.id AS user_id, u.username, u.nickname, u.phone, u.create_date AS user_create_date, u.status AS user_status
-        FROM
-        (
-        SELECT * FROM t_exception
-        WHERE id = (SELECT MAX(id) FROM t_exception)
-        ) e
-        LEFT JOIN t_user u
-        ON e.user_id = u.id
     </select>
 </mapper>

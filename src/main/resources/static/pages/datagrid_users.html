@@ -21,7 +21,7 @@
 	</head>
 
 	<body class="easyui-layout">
-		<table id="ut" class="easyui-datagrid" data-options="url:'http://localhost:8989/user/show',
+		<table id="ut" class="easyui-datagrid" data-options="url:'http://localhost:8989/user/getAll',method:'GET',
 				toolbar:'#tl',checkOnSelect:false,onLoadSuccess:loadSuccess,idField:'id',
 				sortName:'createDate',sortOrder:'DESC',striped:true,multiSort:true,pageSize:5,pageList:[5,10,15],pagination:true,
 				frozenColumns:[[
@@ -50,7 +50,7 @@
 		</table>
 		<div id="tl">
 			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime" data-options="prompt:'选择开始时间',editable:false,width:120,onSelect:userSearch" /> &nbsp; 到 <input class="easyui-datebox" name="endTime" id="endTime" data-options="prompt:'选择结束时间',editable:false,width:120,onSelect:userSearch" /> &nbsp; 审核状态：
-			<input class="easyui-combobox" name="status" id="status" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,onChange:userSearch,
+			<input class="easyui-combobox" name="status_exception" id="status_exception" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,onChange:userSearch,
 				textField:'text',valueField:'value',data:[
 				{value:'',text:'不限'},
 				{value:'0',text:'审核中'},

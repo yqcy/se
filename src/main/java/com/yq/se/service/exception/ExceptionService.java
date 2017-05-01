@@ -19,7 +19,7 @@ public interface ExceptionService {
 
     Exception queryById(String id);
 
-    List<Exception> queryAll(Exception e, Page page, Date beginTime, Date endTime);
+    List<Exception> queryAll(Exception e, Page page, Date beginTime, Date endTime, String sort, String order);
 
     List<Exception> search(String keyword, Page page);
 

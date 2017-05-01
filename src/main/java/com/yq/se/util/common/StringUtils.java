@@ -1,5 +1,8 @@
 package com.yq.se.util.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by wb264139 on 2017/3/9.
  */
@@ -146,5 +149,26 @@ public class StringUtils {
         String firstWord = string.substring(0, 1);
         String lowerCase = firstWord.toLowerCase();
         return string.replaceFirst(firstWord, lowerCase);
+    }
+
+    /**
+     * 把类似于craeteDate转变为数据库的字段名create_date
+     */
+    public static String changeToDBName(String string) {
+        Map<Character, String> keyCache = new HashMap<>();
+        for (int i = 'A'; i <= 'Z'; i++) {
+            keyCache.put((char) i, "_" + (char) (i + 32));
+        }
+        if (string == null) return null;
+        char[] chars = string.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (char aChar : chars) {
+            if (keyCache.containsKey(aChar)) {
+                sb.append(keyCache.get(aChar));
+            } else {
+                sb.append(aChar);
+            }
+        }
+        return sb.toString();
     }
 }

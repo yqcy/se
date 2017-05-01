@@ -13,19 +13,30 @@
 				for(var i=1;i<=5;i++){
 					$('#show'+i).hide();
 				}
-				var h = window.location.href;
+//				var h = window.location.href;
+				//对url进行解码
+				var h = decodeURIComponent(window.location.href);
+				console.log(h);
 				var array1 = h.split("?");
 				if(array1.length>1){
 					var array2 = array1[1].split("=");
 					var keyName = array2[0];
 					if(keyName=="search"){
 						var str = array2[1];
+						console.log(str);
 						$('#show_text').val(str);
 						clickShow();
 					}
 				}
-				
-				
+				//新的解析方法
+//				var myurl=new LG.URL(window.location.href);//js封装的url操作函数
+//				$("#show_text").val(decodeURIComponent(myurl.get("search")));//jquery解码函数
+//				clickShow();
+				//把所有的a标签隐藏
+					for (var i = 1; i <= 7; i++) {
+						var linkA = $('#a'+i);
+						linkA.hide();
+					}
 			});
 		</script>
 	</head>
@@ -108,12 +119,15 @@
 					</div>
 					<!--分页-->
 					<div style="padding-bottom: 20px;">
-						<a href="#">首页</a>
-						<a href="#">上一页</a>
-						<a href="#">1</a>
-						<a href="#">2</a>
-						<a href="#">下一页</a>
-						<a href="#">尾页</a>
+						<a href="javascript:void(0);" id="home_page">首页</a>
+						<a href="javascript:void(0);" id="a1" onclick="linkClickShow(this)">1</a>
+						<a href="javascript:void(0);" id="a2" onclick="linkClickShow(this)">2</a>
+						<a href="javascript:void(0);" id="a3" onclick="linkClickShow(this)">3</a>
+						<a href="javascript:void(0);" id="a4" onclick="linkClickShow(this)">4</a>
+						<a href="javascript:void(0);" id="a5" onclick="linkClickShow(this)">5</a>
+						<a href="javascript:void(0);" id="a6" onclick="linkClickShow(this)">6</a>
+						<a href="javascript:void(0);" id="a7" onclick="linkClickShow(this)">7</a>
+						<a href="javascript:void(0);" id="final_page">尾页</a>
 					</div>
 			</div>
 			<!--右侧排行榜单-->
