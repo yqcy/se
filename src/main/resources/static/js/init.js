@@ -332,3 +332,23 @@ function paging(page,size,total){
 		}
 	}
 }
+/**
+ * 在异常页当点击行时触发
+ */
+var globalIndex = null;
+function exceptionClickRow(index,row){
+	var dg = $('#dg_exception');
+	if(globalIndex == null){
+		globalIndex = index;
+	}else{
+		dg.datagrid('endEdit',globalIndex);
+		globalIndex=index;
+	}
+	dg.datagrid('beginEdit',index);
+}
+/**
+ * 在异常页结束编辑后
+ */
+function exceptionEndEdit(index, row, changes){
+	//发送请求到服务器
+}
