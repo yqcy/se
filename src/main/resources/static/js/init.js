@@ -335,14 +335,14 @@ function paging(page,size,total){
 /**
  * 在异常页当点击行时触发
  */
-var globalIndex = null;
+var exceptionGlobalIndex = null;
 function exceptionClickRow(index,row){
 	var dg = $('#dg_exception');
-	if(globalIndex == null){
-		globalIndex = index;
+	if(exceptionGlobalIndex == null){
+		exceptionGlobalIndex = index;
 	}else{
-		dg.datagrid('endEdit',globalIndex);
-		globalIndex=index;
+		dg.datagrid('endEdit',exceptionGlobalIndex);
+		exceptionGlobalIndex=index;
 	}
 	dg.datagrid('beginEdit',index);
 }
@@ -350,5 +350,22 @@ function exceptionClickRow(index,row){
  * 在异常页结束编辑后
  */
 function exceptionEndEdit(index, row, changes){
+	//发送请求到服务器
+}
+var userGlobalIndex = null;
+function userClickRow(index,row){
+	var dg = $('#dg_user');
+	if(userGlobalIndex == null){
+		userGlobalIndex = index;
+	}else{
+		dg.datagrid('endEdit',userGlobalIndex);
+		userGlobalIndex=index;
+	}
+	dg.datagrid('beginEdit',index);
+}
+/**
+ * 在异常页结束编辑后
+ */
+function userEndEdit(index, row, changes){
 	//发送请求到服务器
 }

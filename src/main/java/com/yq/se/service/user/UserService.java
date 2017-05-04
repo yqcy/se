@@ -42,9 +42,10 @@ public interface UserService {
      * @param beginTime
      * @param endTime
      * @param page
-     * @return
+     * @param sort
+     *@param order @return
      */
-    List<User> queryAllUsers(Integer status, Date beginTime, Date endTime, Page page);
+    List<User> queryAllUsers(Integer status, Date beginTime, Date endTime, Page page, String sort, String order);
 
     /**
      * 查询指定ID的用户

@@ -62,6 +62,7 @@ public class UserController {
             @ApiImplicitParam(name = "endTime", value = "endTime", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "page", value = "page", dataType = "Int", paramType = "query"),
             @ApiImplicitParam(name = "rows", value = "rows", dataType = "Int", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "sort", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "order", value = "order", dataType = "String", paramType = "query"),
     })
     @ApiResponses(value = {
@@ -71,11 +72,10 @@ public class UserController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/show", method = {RequestMethod.GET})
-    public Object show(@RequestParam(required = false) Integer status, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows, @RequestParam(required = false) String order) {
+    @RequestMapping(value = "/getAll", method = {RequestMethod.GET})
+    public Object getAll(@RequestParam(required = false) Integer status, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows, @RequestParam(required = false) String sort, @RequestParam(required = false) String order) {
         Page p = new Page(page, rows);
-        p.setOrder(order);
-        List<User> users = userService.queryAllUsers(status, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)), p);
+        List<User> users = userService.queryAllUsers(status, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)), p, sort, order);
         Map map = new HashMap<>();
         map.put("total", p.getCount());
         map.put("rows", users);

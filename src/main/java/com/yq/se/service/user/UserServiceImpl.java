@@ -45,8 +45,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.NEVER, readOnly = true)
-    public List<User> queryAllUsers(Integer status, Date beginTime, Date endTime, Page page) {
+    public List<User> queryAllUsers(Integer status, Date beginTime, Date endTime, Page page, String sort, String order) {
         int count = userMapper.count(status, beginTime, endTime);
+        if (sort != null && order != null) page.setOrder(sort + " " + order);
         page.setCount(count);
         return userMapper.queryAll(page, status, beginTime, endTime);
     }
