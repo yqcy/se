@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface ExceptionService {
 
-    Exception add(Exception e);
+    Exception add(Exception e, float boost);
 
     Exception delete(String id);
 
-    Exception update(Exception e);
+    Exception update(Exception e, float boost);
 
     Exception queryById(String id);
 

@@ -27,7 +27,7 @@ public class Page {
     }
 
     public Integer getEnd() {
-        end = index * size;
+        end = index * size - 1;
         return end;
     }
 

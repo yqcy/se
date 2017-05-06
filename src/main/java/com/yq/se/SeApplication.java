@@ -3,12 +3,14 @@ package com.yq.se;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationListener;
 
 /**
  * Created by 晴 on 2017/2/26.
  */
 @SpringBootApplication
+@ServletComponentScan
 public class SeApplication implements ApplicationListener<ApplicationReadyEvent> {
 
     public static void main(String[] args) {

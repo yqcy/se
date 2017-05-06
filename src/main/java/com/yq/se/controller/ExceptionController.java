@@ -114,7 +114,7 @@ public class ExceptionController {
         User user = new User();
         user.setId(1);//TODO 目前写死，以后根据登录用户动态获取
         e.setUser(user);
-        Exception exception = service.add(e);
+        Exception exception = service.add(e, 1);
         return exception;
     }
 

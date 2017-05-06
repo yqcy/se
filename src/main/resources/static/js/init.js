@@ -369,3 +369,19 @@ function userClickRow(index,row){
 function userEndEdit(index, row, changes){
 	//发送请求到服务器
 }
+/**
+ * 用户页面的多条件查询
+ */
+function userSearch(){
+	var datebox_begin_time = $("#beginTime_user");
+	var datebox_end_time = $("#endTime_user");
+	var combobox_status = $("#status_user");
+	var begin_time = datebox_begin_time.datebox("getValue");
+	var end_time = datebox_end_time.datebox("getValue");
+	var status = combobox_status.combobox("getValue");
+	$("#dg_user").datagrid("load",{
+		beginTime:begin_time,
+		endTime:end_time,
+		status:status
+	});
+}

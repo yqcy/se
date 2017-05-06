@@ -38,7 +38,7 @@
 						<font color="#D84F4B"><strong>手机号</strong></font>
 					</th>
 					<th data-options="field:'status',width:80,resizable:false,halign:'center',align:'center',formatter:statusFormatter,
-						editor:{type:'combobox',options:{valueField:'value',textField:'text',data:[{value:'0',text:'不通过'},{value:'1',text:'通过'}]}},">
+						editor:{type:'combobox',options:{editable:false,valueField:'value',textField:'text',data:[{value:'0',text:'不通过'},{value:'1',text:'通过'}]}},">
 						<font color="#D84F4B"><strong>状态</strong></font>
 					</th>
 					<th data-options="field:'createDate',width:150,sortable:true,resizable:false,halign:'center',align:'center'">
@@ -49,14 +49,13 @@
 			</thead>
 		</table>
 		<div id="tl">
-			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime" data-options="prompt:'选择开始时间',editable:false,width:120,onSelect:userSearch" /> &nbsp; 到 <input class="easyui-datebox" name="endTime" id="endTime" data-options="prompt:'选择结束时间',editable:false,width:120,onSelect:userSearch" /> &nbsp; 审核状态：
-			<input class="easyui-combobox" name="status_exception" id="status_exception" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,onChange:userSearch,
+			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime_user" data-options="prompt:'选择开始时间',editable:false,width:120,onChange:userSearch" /> &nbsp; 到 <input class="easyui-datebox" name="endTime" id="endTime_user" data-options="prompt:'选择结束时间',editable:false,width:120,onChange:userSearch" /> &nbsp; 审核状态：
+			<input class="easyui-combobox" name="status_exception" id="status_user" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,onChange:userSearch,
 				textField:'text',valueField:'value',data:[
 				{value:'',text:'不限'},
 				{value:'0',text:'审核中'},
 				{value:'1',text:'审核通过'}
 			]" />&nbsp;
-			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:80,plain:true">查询</a><br />
 		</div>
 	</body>
 

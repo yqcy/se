@@ -19,27 +19,38 @@
 
 	<body class="easyui-layout">
 		<div data-options="region:'north',width:800,height:100">
-			<h1>异常管理系统</h1></div>
+			<!--开头的大LOGO图案-->
+			<img src="../images/bug-logo.jpg"  style="width: 100px;height: 90px;"/>
+			<span><font style="font-family: '微软雅黑'; color: black;font-size: x-large;">异常管理系统</font></span>
+			<span style="float: right;padding-top: 80px;padding-right: 50px;"><font style="color: red;">欢迎使用,Admin!</font></span>
+		</div>
 		<div data-options="region:'west',width:300,height:640">
 			<center>
 				<!--左侧菜单开始-->
 				<div id="accordion" class="easyui-accordion" style="width:290px;height:639px;">
-					<div title="异常菜单" data-options="iconCls:'icon-save',selected:true" style="overflow:auto;padding:10px;">
+					<div title="异常菜单" data-options="iconCls:'icon-reload',selected:true" style="overflow:auto;padding:10px;">
 						<center>
-							<a href="#" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('所有异常','datagrid_exceptions.html')">查看所有</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('所有异常','datagrid_exceptions.html')">查看所有</a>
 						</center>
 					</div>
 					<div title="用户信息" data-options="iconCls:'icon-reload'" style="padding:10px;">
 						<center>
-							<a href="#" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('所有用户','datagrid_users.html')">查看所有</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('所有用户','datagrid_users.html')">查看所有</a>
 						</center>
 					</div>
 					<div title="解决方案" data-options="iconCls:'icon-reload',selected:true" style="padding:10px;">
 						查看所有
 					</div>
-					<div title="功能设置">
+					<div title="功能设置" data-options="iconCls:'icon-reload'">
 						左侧菜单<br /> 身份资源
 						<br /> 用户授权
+					</div>
+					<div title="开发者功能" data-options="iconCls:'icon-reload'" style="padding:10px;">
+						<center>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('SwaggerUI','http://localhost:8989/swagger-ui.html')">SwaggerUI</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('Druid-Monitor','http://localhost:8989/druid')">Druid-Monitor</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('Project-Logs','http://localhost:8989/druid')">Project-Logs</a>
+						</center>
 					</div>
 				</div>
 

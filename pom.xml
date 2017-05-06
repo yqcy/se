@@ -13,34 +13,34 @@
         <junit-version>4.7</junit-version>
         <mybatis-spring-boot-version>1.2.0</mybatis-spring-boot-version>
         <mysql-connector-version>5.1.39</mysql-connector-version>
-        <druid-version>1.0.26</druid-version>
+        <druid-version>1.0.29</druid-version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.1.RELEASE</version>
+        <version>${spring-boot-parent-version}</version>
     </parent>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>1.5.1.RELEASE</version>
+            <version>${spring-boot-parent-version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>1.5.1.RELEASE</version>
+            <version>${spring-boot-parent-version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>1.5.1.RELEASE</version>
+            <version>${spring-boot-parent-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>1.5.1.RELEASE</version>
+            <version>${spring-boot-parent-version}</version>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -50,19 +50,18 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.0.26</version>
-            <scope>runtime</scope>
+            <version>${druid-version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.39</version>
+            <version>${mysql-connector-version}</version>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>

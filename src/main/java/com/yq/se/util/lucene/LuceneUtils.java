@@ -39,7 +39,7 @@ public class LuceneUtils {
      * @param o 要转换的实体对象
      * @return
      */
-    public static Document toDoc(Object o) {
+    public static Document toDoc(Object o, float boost) {
 
         Document doc = new Document();
 
@@ -63,7 +63,7 @@ public class LuceneUtils {
                     if (value == null || value.equals("")) {
                         value = f.getName();
                     }
-                    doc.add(getIndexableField(anno.type(), value, f.get(o).toString(), anno.store(), anno.boost()));
+                    doc.add(getIndexableField(anno.type(), value, f.get(o).toString(), anno.store(), boost));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -151,7 +151,7 @@ public class LuceneUtils {
     private static void commitAndFlush(IndexWriter iw) {
         flush(iw);
         commit(iw);
-//        close(iw);
+        close(iw);
     }
 
     /**
@@ -165,6 +165,7 @@ public class LuceneUtils {
             iw.addDocument(doc);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             commitAndFlush(iw);
         }
@@ -183,6 +184,7 @@ public class LuceneUtils {
             iw.updateDocument(term, doc);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             commitAndFlush(iw);
         }
@@ -194,6 +196,7 @@ public class LuceneUtils {
             iw.deleteDocuments(term);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             commitAndFlush(iw);
         }
@@ -206,10 +209,16 @@ public class LuceneUtils {
      * @param obj   目标对象的类对象
      * @return
      */
-    public static List<Object> search(IndexSearcher is, Query query, Analyzer analyzer, int n, Object obj) throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public static List<Object> search(IndexSearcher is, Query query, Analyzer analyzer, int n, Object obj) {
         TopDocs ts = getTopDocs(is, query, n);
 
-        List<Document> list = getDocuments(is, ts);
+        List<Document> list = null;
+        try {
+            list = getDocuments(is, ts);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
 
         List transfer = transfer(obj.getClass(), query, analyzer, list.toArray(new Document[list.size()]));
 
@@ -238,7 +247,7 @@ public class LuceneUtils {
         String value = null;
 
         try {
-            value = highlighter.getBestFragment(analyzer, fieldName, text);//TODO 这里text会报空指针
+            value = highlighter.getBestFragment(analyzer, fieldName, text);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InvalidTokenOffsetsException e) {
@@ -249,8 +258,14 @@ public class LuceneUtils {
 
     }
 
-    public static TopDocs getTopDocs(IndexSearcher is, Query query, int n) throws IOException {
-        TopDocs topDocs = is.search(query, n);
+    public static TopDocs getTopDocs(IndexSearcher is, Query query, int n) {
+        TopDocs topDocs = null;
+        try {
+            topDocs = is.search(query, n);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
         return topDocs;
     }
 
@@ -279,7 +294,7 @@ public class LuceneUtils {
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
-    private static List<Object> transfer(Class clz, Query query, Analyzer analyzer, Document... docs) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private static List<Object> transfer(Class clz, Query query, Analyzer analyzer, Document... docs) {
         //初始化容器集合
         List list = new ArrayList();
         if (docs != null) {
@@ -326,8 +341,13 @@ public class LuceneUtils {
                                 value = text;
                             }
                             String methodName = MyReflectUtils.setMethodName(fd.getName());
-                            Method method = obj.getClass().getDeclaredMethod(methodName, String.class);
-                            method.invoke(obj, value);
+                            try {
+                                Method method = obj.getClass().getDeclaredMethod(methodName, String.class);
+                                method.invoke(obj, value);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                 }
@@ -346,8 +366,13 @@ public class LuceneUtils {
      * @return
      */
 
-    public static IndexReader getIndexReader(Directory dir) throws IOException {
-        return DirectoryReader.open(dir);
+    public static IndexReader getIndexReader(Directory dir) {
+        try {
+            return DirectoryReader.open(dir);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -366,12 +391,22 @@ public class LuceneUtils {
      * @param path
      * @return
      */
-    public static Directory getDirectory(String path) throws IOException {
-        return FSDirectory.open(Paths.get(path));
+    public static Directory getDirectory(String path) {
+        try {
+            return FSDirectory.open(Paths.get(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
-    public static IndexWriter getIndexWriter(String path, Analyzer analyzer) throws IOException {
-        return new IndexWriter(getDirectory(path), new IndexWriterConfig(analyzer));
+    public static IndexWriter getIndexWriter(String path, Analyzer analyzer) {
+        try {
+            return new IndexWriter(getDirectory(path), new IndexWriterConfig(analyzer));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -383,8 +418,13 @@ public class LuceneUtils {
      * @param keyword
      * @return
      */
-    public static Query getMultiFieldQuery(Version v, String[] fields, Analyzer analyzer, String keyword) throws ParseException {
-        return new MultiFieldQueryParser(fields, analyzer).parse(keyword);
+    public static Query getMultiFieldQuery(Version v, String[] fields, Analyzer analyzer, String keyword) {
+        try {
+            return new MultiFieldQueryParser(fields, analyzer).parse(keyword);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -394,19 +434,24 @@ public class LuceneUtils {
      * @param analyzer
      * @param text
      */
-    public static void printAnalyzerValue(Analyzer analyzer, String text) throws IOException {
+    public static void printAnalyzerValue(Analyzer analyzer, String text) {
         TokenStream tokenStream = analyzer.tokenStream("test", text);
 
         tokenStream.addAttribute(CharTermAttribute.class);
 
-        tokenStream.reset();
+        try {
+            tokenStream.reset();
 
-        while (tokenStream.incrementToken()) {
+            while (tokenStream.incrementToken()) {
 
-            CharTermAttribute charTermAttribute = tokenStream.getAttribute(CharTermAttribute.class);
+                CharTermAttribute charTermAttribute = tokenStream.getAttribute(CharTermAttribute.class);
 
-            System.out.println(charTermAttribute.toString());
+                System.out.println(charTermAttribute.toString());
 
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

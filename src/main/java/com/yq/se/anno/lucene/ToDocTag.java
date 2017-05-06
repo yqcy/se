@@ -51,12 +51,4 @@ public @interface ToDocTag {
      * @return
      */
     boolean isId() default false;
-
-    /**
-     * 设置权重值
-     *
-     * @return
-     */
-    float boost() default 1f;
-
 }

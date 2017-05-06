@@ -6,12 +6,9 @@ import com.yq.se.util.common.StringUtils;
 import com.yq.se.util.lucene.LuceneIndexHelper;
 import com.yq.se.util.lucene.LuceneIndexHelperSupport;
 import com.yq.se.util.mybatis.Page;
-import org.apache.lucene.queryparser.classic.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -24,16 +21,14 @@ public class ExceptionServiceImpl implements ExceptionService {
 
     private final LuceneIndexHelper<Exception> luceneIndexHelper = new LuceneIndexHelperSupport<>();
 
-    private final Map<String, Map<Integer, Exception>> searchCache = new HashMap<>();
-
     @Override
-    public Exception add(Exception e) {
+    public Exception add(Exception e, float boost) {
         e.setStatus(0);
         e.setId(UUID.randomUUID().toString());
         e.setCreateDate(new Date());
         mapper.add(e);
         Exception exception = mapper.queryById(e.getId());
-        luceneIndexHelper.add(exception);
+        luceneIndexHelper.add(exception, boost);
         return exception;
     }
 
@@ -45,9 +40,10 @@ public class ExceptionServiceImpl implements ExceptionService {
     }
 
     @Override
-    public Exception update(Exception e) {
+    public Exception update(Exception e, float boost) {
         Exception exception = mapper.queryById(e.getId());
         mapper.modify(e);
+        luceneIndexHelper.modify(exception, boost);
         return exception;
     }
 
@@ -76,37 +72,16 @@ public class ExceptionServiceImpl implements ExceptionService {
     }
 
     public List<Exception> search(String keyword, Page page, int queryCount) {
-        List<Exception> exceptions = new ArrayList<>();
-        Map<Integer, Exception> cache = searchCache.get(keyword);
-        if (cache != null && page.getCount() != null && cache.size() >= page.getCount()) {
-            if (page.getSize() > page.getCount()) page.setSize(page.getCount());
-            for (int i = page.getBegin(); i < page.getSize(); i++) {
-                exceptions.add(cache.get(i));
-            }
-            return exceptions;
+        if (page.getEnd() >= queryCount) search(keyword, page, queryCount * 10);
+        List<Exception> list = luceneIndexHelper.queryByKeyword(keyword, new Exception(), queryCount);
+        if (list == null || list.size() == 0) return null;
+        page.setCount(list.size());
+        List<Exception> result = new ArrayList<>(page.getSize());
+        for (int i = page.getBegin(); i <= page.getEnd(); i++) {
+            if (i < list.size()) result.add(list.get(i));
+            else break;
         }
-        if (cache == null) cache = new LinkedHashMap<>();
-        try {
-            List<Exception> list = luceneIndexHelper.queryByKeyword(keyword, new Exception(), queryCount);
-            if (list == null || list.size() == 0) return null;
-            page.setCount(list.size());
-            for (int i = 0; i < list.size(); i++) {
-                cache.put(i, list.get(i));
-            }
-            searchCache.put(keyword, cache);
-            return search(keyword, page, queryCount + 100);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return result;
     }
 
 }
