@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.yq.se.mapper.ExceptionClickMapper">
+    <insert id="insert">
+        INSERT INTO t_exception_click
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            exception_id,
+            create_date,
+            <if test="click.userId!=null">exception_id,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{click.exceptionId},
+            #{click.createDate},
+            <if test="click.userId!=null">#{click.userId},</if>
+        </trim>
+    </insert>
+</mapper>

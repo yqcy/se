@@ -19,13 +19,33 @@
 				console.log(h);
 				var array1 = h.split("?");
 				if(array1.length>1){
-					var array2 = array1[1].split("=");
+					var right = array1[1].split("&");
+					var array2 = right[0].split("=");
+					var array3 = right[1].split("=");
 					var keyName = array2[0];
 					if(keyName=="search"){
 						var str = array2[1];
 						console.log(str);
 						$('#show_text').val(str);
-						clickShow();
+						var index = array3[1];
+						$.get("http://localhost:8989/exception/search?str=" + str+"&index="+index,
+							function(data) {
+								//填充左侧的异常div
+								var rows = data.rows;
+								var total = data.total;
+								var total_page = data.total_page;
+								var index = data.index;
+								$.each(rows, function(i, n) {
+									var num = i + 1;
+									$('#show'+num).show();
+									$('#title'+num).html(n.fullClassName);
+									$('#desc'+num).html(n.description);
+									$('#user'+num).html(n.user.nickname);
+									$('#time'+num).html(n.user.createDate);
+								});
+								paging(index,5,total_page);
+							}
+						);
 					}
 				}
 				//新的解析方法
@@ -48,7 +68,7 @@
 				<img src="../images/logo1.jpg" height="60px" width="200px" style="float: left;margin-top: 15px;" />
 				<form style="width: 500px;margin-top: 15px;margin-left: 10px;float: left;">
 						<input id="show_text" type="text" maxlength="100">
-						<input id="button" type="button" value="搜搜" onclick="clickShow()">
+						<input id="button" type="button" value="搜搜" onclick="clickShow(1)">
 				</form>
 			</div>
 			<!--表头右侧登录菜单-->
@@ -63,71 +83,69 @@
 		<div style="margin-top: 30px;">
 				<!--左侧搜索结果展示-->
 				<div style="float: left;width: 65%;">
+					<hr  />
 					<div id="show1" style="padding-bottom: 60px;padding-left: 10px;height: 120px;">
-						异常名：<span id="title1"></span><br />
+						异常名：<a href="javascript:void(0);"><span id="title1"></span><br /></a>
 						<p />
 						异常描述：<span id="desc1"></span><br />
 						<p />
-						创建用户：<span id="user1"></span> <br />
+						创建用户：<a href="javascript:void(0);"><span id="user1"></span></a><br />
 						<p />
 						用户注册时间：<span id="time1"></span>
 						<p />
 						<hr  />
 					</div>
 					<div id="show2" style="padding-bottom: 60px;padding-left: 10px;height: 120px;">
-						异常名：<span id="title2"></span><br />
+						异常名：<a href="javascript:void(0);"><span id="title2"></span></a><br />
 						<p />
 						异常描述：<span id="desc2"></span><br />
 						<p />
-						创建用户：<span id="user2"></span> <br />
+						创建用户：<a href="javascript:void(0);"><span id="user2"></span></a><br />
 						<p />
 						用户注册时间：<span id="time2"></span>
 						<p />
 						<hr  />
 					</div>
 					<div id="show3" style="padding-bottom: 60px;padding-left: 10px;height: 120px;">
-						异常名：<span id="title3"></span><br />
+						异常名：<a href="javascript:void(0);"><span id="title3"></span></a><br />
 						<p />
 						异常描述：<span id="desc3"></span><br />
 						<p />
-						创建用户：<span id="user3"></span> <br />
+						创建用户：<a href="javascript:void(0);"><span id="user3"></span></a><br />
 						<p />
 						用户注册时间：<span id="time3"></span>
 						<p />
 						<hr  />
 					</div>
 					<div  id="show4" style="padding-bottom: 60px;padding-left: 10px;height: 120px;">
-						异常名：<span id="title4"></span><br />
+						异常名：<a href="javascript:void(0);"><span id="title4"></span></a><br />
 						<p />
 						异常描述：<span id="desc4"></span><br />
 						<p />
-						创建用户：<span id="user4"></span> <br />
+						创建用户：<a href="javascript:void(0);"><span id="user4"></span></a><br />
 						<p />
 						用户注册时间：<span id="time4"></span>
 						<p />
 						<hr  />
 					</div>
 					<div id="show5" style="padding-bottom: 15px;padding-left: 10px;height: 120px;">
-						异常名：<span id="title5"></span><br />
+						异常名：<a href="javascript:void(0);"><span id="title5"></span></a><br />
 						<p />
 						异常描述：<span id="desc5"></span><br />
 						<p />
-						创建用户：<span id="user5"></span> <br />
+						创建用户：<a href="javascript:void(0);"><span id="user5"></span></a><br />
 						<p />
 						用户注册时间：<span id="time5"></span>
 						<p />
 					</div>
+					<hr  />
 					<!--分页-->
 					<div style="padding-bottom: 20px;">
-						<a href="javascript:void(0);" id="home_page">首页</a>
-						<a href="javascript:void(0);" id="a1" onclick="linkClickShow(this)">1</a>
-						<a href="javascript:void(0);" id="a2" onclick="linkClickShow(this)">2</a>
-						<a href="javascript:void(0);" id="a3" onclick="linkClickShow(this)">3</a>
-						<a href="javascript:void(0);" id="a4" onclick="linkClickShow(this)">4</a>
-						<a href="javascript:void(0);" id="a5" onclick="linkClickShow(this)">5</a>
-						<a href="javascript:void(0);" id="a6" onclick="linkClickShow(this)">6</a>
-						<a href="javascript:void(0);" id="a7" onclick="linkClickShow(this)">7</a>
-						<a href="javascript:void(0);" id="final_page">尾页</a>
+						<a href="javascript:void(0);" id="page_home">首页</a>
+						<a href="javascript:void(0);" id="page_previous">上一页</a>
+						<span id="page_now"></span>
+						<a href="javascript:void(0);" id="page_next">下一页</a>
+						<a href="javascript:void(0);" id="page_end">尾页</a>
 					</div>
 			</div>
 			<!--右侧排行榜单-->

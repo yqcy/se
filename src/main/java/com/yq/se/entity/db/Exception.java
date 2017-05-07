@@ -13,7 +13,7 @@ import java.util.List;
 public class Exception {
     @ToDocTag(type = "string")
     private String id;
-    @ToDocTag()
+    @ToDocTag
     private String fullClassName;//异常全限定名
     @ToDocTag
     private String description;//描述信息
@@ -95,8 +95,8 @@ public class Exception {
         if (str != null) {
             String[] ss1 = str.split("&");
             if (ss1 != null) {
-                String[] ss2 = ss1[0].split("=");//nickname=明天丶天晴
-                String[] ss3 = ss1[1].split("=");//registerDate=2017-04-23
+                String[] ss2 = ss1[0].split("=",2);//nickname=明天丶天晴
+                String[] ss3 = ss1[1].split("=",2);//registerDate=2017-04-23
                 String nicknameValue = ss2[1];
                 String createDateValue = ss3[1];
                 this.user = new User();

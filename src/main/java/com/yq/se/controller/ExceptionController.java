@@ -88,6 +88,8 @@ public class ExceptionController {
         Map map = new HashMap();
         map.put("total", page.getCount());
         map.put("rows", exceptions);
+        map.put("total_page", (page.getCount() % page.getSize() == 0) ? page.getCount() / page.getSize() : page.getCount() / page.getSize() + 1);
+        map.put("index", index);
         return map;
 
     }

@@ -222,31 +222,16 @@ function checkRegister() {
  */
 function skipToShow() {
 	var str = $('#search_text').val();
-	window.location.href = "http://localhost:8989/pages/show.html?search=" + str;
+	window.location.href = "http://localhost:8989/pages/show.html?search=" + str+"&index=1";
 }
 /*
  * 在show.html页面点击搜索
  */
-function clickShow() {
+function clickShow(page) {
 	var str = $('#show_text').val();
 	//这里目前是假数据，需要改成成态获取分页点击
-	var index = 1;
-	$.get("http://localhost:8989/exception/search?str=" + str+"&index="+index,
-		function(data) {
-			//填充左侧的异常div
-			var rows = data.rows;
-			var total = data.total;
-			$.each(rows, function(i, n) {
-				var num = i + 1;
-				$('#show'+num).show();
-				$('#title'+num).html(n.fullClassName);
-				$('#desc'+num).html(n.description);
-				$('#user'+num).html(n.user.nickname);
-				$('#time'+num).html(n.user.createDate);
-			});
-			paging(index,5,rows.length);
-		}
-	);
+	var index = page;
+	document.location.href="http://localhost:8989/pages/show.html?search=" + str+"&index="+index;
 }
 //超链接点击执行的事件
 function linkClickShow(a) {
@@ -277,60 +262,32 @@ function linkClickShow(a) {
 //page页号
 //size每页的条数
 //total总条数
-function paging(page,size,total){
-	if(page == 1){
-//		$('#previous_page').attr('style','text-decoration:none;color:black;');
-		$('#previous_page').removeAttr('href');
-		$('#previous_page').removeAttr('onClick');
-	}
-	//当前的页号
-	var nowPage = page;
-	//前3页的页号
-	var previousPage = nowPage - 3 ;
-	//后3页的页号
-	var nextPage = nowPage + 3 ;
-	//计算总页数
-	var totalPage = 0;
-	if(total%size==0){
-		totalPage = total / size;
+function paging(index,size,total_page){
+	var home = $("#page_home");
+	var end = $("#page_end");
+	var previous = $("#page_previous");
+	var next = $("#page_next");
+	var now = $("#page_now");
+	if (index == 1){
+		previous.removeAttr("href");
+		previous.removeAttr("onClick");
 	}else{
-		totalPage = total / size + 1;
+		previous.attr("href","javascript:void(0);");
+		previous.attr("onClick","clickShow("+(index - 1)+");");
 	}
-	if(totalPage == page){
-//		$('#final_page').attr('style','text-decoration:none;color:black;');
-		$('#final_page').removeAttr('href');
-		$('#final_page').removeAttr('onClick');
-	}
-	//计算需要显示的页号
-	var beginPage = 0;
-	var endPage = 0;
-	if(previousPage <= 0){
-		beginPage = 1;
+	if(total_page==index){
+		next.removeAttr("href");
+		next.removeAttr("onClick");
 	}else{
-		beginPage = previousPage;
+		next.attr("href","javascript:void(0);");
+		next.attr("onClick","clickShow("+(index + 1)+");");
 	}
-	if(nextPage > totalPage){
-		endPage = totalPage;
-	}else{
-		endPage = nextPage;
-	}
-	for (var i = beginPage; i <= endPage; i++) {
-		var num = i % 7;
-		if(num == 0){
-			num = 7;
-		}
-		//当前页高亮显示
-		var linkA = $('#a'+num);
-		linkA.show();
-		linkA.html(beginPage);
-		linkA.attr('onClick','linkClickShow(this)');
-		if(beginPage == page){
-//			linkA.attr('href','javascript:void(0);');
-			linkA.attr('style','text-decoration:none;color:black;');
-			linkA.removeAttr('href');
-			linkA.removeAttr('onClick');
-		}
-	}
+	now.html("当前所在第<font style='color:red;'>"+index+"</font>页，共<font style='color:red;'>"+total_page+"</font>页");
+	home.attr("href","javascript:void(0);");
+	home.attr("onClick","clickShow(1);");
+	end.attr("href","javascript:void(0);");
+	end.attr("onClick","clickShow("+total_page+");");
+	
 }
 /**
  * 在异常页当点击行时触发
