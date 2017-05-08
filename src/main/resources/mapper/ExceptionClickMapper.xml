@@ -6,7 +6,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             exception_id,
             create_date,
-            <if test="click.userId!=null">exception_id,</if>
+            <if test="click.userId!=null">user_id,</if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -15,4 +15,18 @@
             <if test="click.userId!=null">#{click.userId},</if>
         </trim>
     </insert>
+    <select id="selectClickTop" resultType="com.yq.se.entity.db.ExceptionClick">
+        SELECT * FROM(
+        SELECT
+        exception_id AS exceptionId,
+        COUNT(exception_id) AS clickCount
+        FROM
+        t_exception_click
+        GROUP BY exception_id
+        )
+        ORDER BY count DESC
+        <if test="num!=null">
+            LIMIT 0 , #{num}
+        </if>
+    </select>
 </mapper>

@@ -10,6 +10,7 @@ public class ExceptionClick {
     private String exceptionId;
     private Date createDate;
     private Integer userId;
+    private Integer clickCount;
 
     public Integer getId() {
         return id;
@@ -41,5 +42,13 @@ public class ExceptionClick {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getClickCount() {
+        return clickCount;
+    }
+
+    public void setClickCount(Integer clickCount) {
+        this.clickCount = clickCount;
     }
 }
