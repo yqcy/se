@@ -1,6 +1,10 @@
 package com.yq.se.service.exception;
 
 import com.yq.se.entity.db.Exception;
+import com.yq.se.entity.db.ExceptionClick;
+import com.yq.se.entity.db.User;
+import com.yq.se.filter.LoginFilter;
+import com.yq.se.mapper.ExceptionClickMapper;
 import com.yq.se.mapper.ExceptionMapper;
 import com.yq.se.util.common.StringUtils;
 import com.yq.se.util.lucene.LuceneIndexHelper;
@@ -9,7 +13,10 @@ import com.yq.se.util.mybatis.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by wb264139 on 2017/4/7.
@@ -17,7 +24,11 @@ import java.util.*;
 @Service
 public class ExceptionServiceImpl implements ExceptionService {
     @Autowired
-    private ExceptionMapper mapper;
+    private ExceptionMapper exceptionMapper;
+    @Autowired
+    private ExceptionClickMapper clickMapper;
+    @Autowired
+    private LoginFilter loginFilter;
 
     private final LuceneIndexHelper<Exception> luceneIndexHelper = new LuceneIndexHelperSupport<>();
 
@@ -26,43 +37,51 @@ public class ExceptionServiceImpl implements ExceptionService {
         e.setStatus(0);
         e.setId(UUID.randomUUID().toString());
         e.setCreateDate(new Date());
-        mapper.add(e);
-        Exception exception = mapper.queryById(e.getId());
+        exceptionMapper.add(e);
+        Exception exception = exceptionMapper.queryById(e.getId());
         luceneIndexHelper.add(exception, boost);
         return exception;
     }
 
     @Override
     public Exception delete(String id) {
-        Exception exception = mapper.queryById(id);
-        mapper.delete(id);
+        Exception exception = exceptionMapper.queryById(id);
+        exceptionMapper.delete(id);
         return exception;
     }
 
     @Override
     public Exception update(Exception e, float boost) {
-        Exception exception = mapper.queryById(e.getId());
-        mapper.modify(e);
+        Exception exception = exceptionMapper.queryById(e.getId());
+        exceptionMapper.modify(e);
         luceneIndexHelper.modify(exception, boost);
         return exception;
     }
 
     @Override
     public Exception queryById(String id) {
-        Exception exception = mapper.queryById(id);
+        Exception exception = exceptionMapper.queryById(id);
+        if (exception != null) {
+            ExceptionClick click = new ExceptionClick();
+            click.setCreateDate(new Date());
+            click.setExceptionId(id);
+            User loginUser = loginFilter.loginUser;
+            if (loginUser != null) click.setUserId(loginUser.getId());
+            clickMapper.insert(click);
+        }
         return exception;
     }
 
     @Override
     public List<Exception> queryAll(Exception e, Page page, Date beginTime, Date endTime, String sort, String order) {
-        int count = mapper.count(e, beginTime, endTime);
+        int count = exceptionMapper.count(e, beginTime, endTime);
         page.setCount(count);
         if (sort != null && !sort.equals("")) {
             if (order != null && !order.equals("")) {
                 page.setOrder(StringUtils.changeToDBName(sort) + " " + order);
             }
         }
-        List<Exception> exceptions = mapper.queryAll(e, page, beginTime, endTime);
+        List<Exception> exceptions = exceptionMapper.queryAll(e, page, beginTime, endTime);
         return exceptions;
     }
 
@@ -78,8 +97,16 @@ public class ExceptionServiceImpl implements ExceptionService {
         page.setCount(list.size());
         List<Exception> result = new ArrayList<>(page.getSize());
         for (int i = page.getBegin(); i <= page.getEnd(); i++) {
-            if (i < list.size()) result.add(list.get(i));
-            else break;
+            if (i < list.size()) {
+                Exception e = list.get(i);
+                result.add(e);
+                ExceptionClick click = new ExceptionClick();
+                User loginUser = loginFilter.loginUser;
+                click.setUserId(loginUser.getId());
+                click.setExceptionId(e.getId());
+                click.setCreateDate(new Date());
+                clickMapper.insert(click);
+            } else break;
         }
         return result;
     }
