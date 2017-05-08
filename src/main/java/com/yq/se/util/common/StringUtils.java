@@ -1,5 +1,7 @@
 package com.yq.se.util.common;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -170,5 +172,19 @@ public class StringUtils {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 获得本机用户名
+     *
+     * @return
+     */
+    private String getHostname() {
+        try {
+            String hostName = InetAddress.getLocalHost().getHostName();
+            return hostName;
+        } catch (UnknownHostException e) {
+            return "[unknown]";
+        }
     }
 }
