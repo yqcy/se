@@ -70,7 +70,7 @@
         WHERE
         id = #{id}
     </delete>
-    <select id="queryById" resultMap="user_map">
+    <select id="selectById" resultMap="user_map">
         SELECT
         <include refid="fields"/>
         FROM
@@ -78,7 +78,7 @@
         WHERE
         id = #{id}
     </select>
-    <select id="queryAll" resultType="com.yq.se.entity.db.User">
+    <select id="selectAll" resultType="com.yq.se.entity.db.User">
         SELECT
         <include refid="fields"/>
         FROM
@@ -114,7 +114,10 @@
             <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
     </select>
-    <select id="queryByUsername" resultMap="user_map">
+    <select id="selectByUsername" resultMap="user_map">
         SELECT * FROM t_user WHERE username = #{username}
+    </select>
+    <select id="selectCountForEveryMonth" resultType="com.yq.se.entity.dto.MonthCount">
+        SELECT DATE_FORMAT(create_date,&apos;%m&apos;) AS month,COUNT(id) AS count FROM t_user GROUP BY DATE_FORMAT(create_date,&apos;%m&apos;)
     </select>
 </mapper>

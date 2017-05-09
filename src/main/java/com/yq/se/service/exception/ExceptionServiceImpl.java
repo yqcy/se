@@ -3,6 +3,7 @@ package com.yq.se.service.exception;
 import com.yq.se.entity.db.Exception;
 import com.yq.se.entity.db.ExceptionClick;
 import com.yq.se.entity.db.User;
+import com.yq.se.entity.dto.MonthCount;
 import com.yq.se.filter.LoginFilter;
 import com.yq.se.mapper.ExceptionClickMapper;
 import com.yq.se.mapper.ExceptionMapper;
@@ -111,4 +112,21 @@ public class ExceptionServiceImpl implements ExceptionService {
         return result;
     }
 
+    @Override
+    public List<Integer> queryEveryMonthClickCount() {
+
+        List<MonthCount> monthCounts = clickMapper.selectClickCountForEveryMonth();
+        List<Integer> result = new ArrayList<>(12);
+        out:
+        for (int i = 1; i <= 12; i++) {
+            for (MonthCount monthCount : monthCounts) {
+                if (monthCount.getMonth() == i) {
+                    result.add(monthCount.getCount());
+                    continue out;
+                }
+            }
+            result.add(0);
+        }
+        return result;
+    }
 }

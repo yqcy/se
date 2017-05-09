@@ -23,4 +23,6 @@ public interface ExceptionService {
 
     List<Exception> search(String keyword, Page page);
 
+    List<Integer> queryEveryMonthClickCount();
+
 }

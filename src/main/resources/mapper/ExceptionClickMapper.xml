@@ -29,4 +29,7 @@
             LIMIT 0 , #{num}
         </if>
     </select>
+    <select id="selectClickCountForEveryMonth" resultType="com.yq.se.entity.dto.MonthCount">
+        SELECT DATE_FORMAT(create_date,&apos;%m&apos;) AS month,COUNT(id) AS count FROM t_exception_click GROUP BY DATE_FORMAT(create_date,&apos;%m&apos;)
+    </select>
 </mapper>

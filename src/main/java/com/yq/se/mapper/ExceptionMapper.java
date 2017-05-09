@@ -25,5 +25,4 @@ public interface ExceptionMapper {
     List<Exception> queryAll(@Param("exception") Exception e, @Param("page") Page page, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
     int count(@Param("exception") Exception e, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
-
 }

@@ -57,4 +57,6 @@ public interface UserService {
 
     boolean checkUsername(String username);
 
+    List<Integer> queryCreateCountForEveryMonth();
+
 }
