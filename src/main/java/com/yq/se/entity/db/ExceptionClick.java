@@ -9,7 +9,7 @@ public class ExceptionClick {
     private Integer id;
     private String exceptionId;
     private Date createDate;
-    private Integer userId;
+    private String userId;
     private Integer clickCount;
 
     public Integer getId() {
@@ -36,11 +36,11 @@ public class ExceptionClick {
         this.createDate = createDate;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

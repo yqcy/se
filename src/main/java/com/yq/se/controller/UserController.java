@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.yq.se.util.common.StringUtils.*;
@@ -120,9 +121,42 @@ public class UserController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/charts/query", method = {RequestMethod.GET})
-    public Object queryMonthCreateCount() {
-        return userService.queryCreateCountForEveryMonth();
+    @RequestMapping(value = "/charts/query/register", method = {RequestMethod.GET})
+    public Object queryMonthRegisterCount() {
+        return userService.queryRegisterCountForEveryMonth();
     }
 
+    @ApiOperation(value = "用户登录", notes = "支持POST方式", response = String.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "username", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "password", value = "password", dataType = "String", paramType = "query"),
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "请求已完成"),
+            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求"),
+            @ApiResponse(code = 401, message = "未授权客户机访问数据"),
+            @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
+            @ApiResponse(code = 500, message = "服务器不能完成请求")}
+    )
+    @RequestMapping(value = "/login", method = {RequestMethod.POST})
+    public Object login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request) {
+        User user = userService.login(username, password);
+        if (user == null) return null;
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user", user);
+        return user;
+    }
+
+    @ApiOperation(value = "查询12个月的注册量", notes = "支持GET方式", response = String.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "请求已完成"),
+            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求"),
+            @ApiResponse(code = 401, message = "未授权客户机访问数据"),
+            @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
+            @ApiResponse(code = 500, message = "服务器不能完成请求")}
+    )
+    @RequestMapping(value = "/charts/query/login", method = {RequestMethod.GET})
+    public Object queryMonthLoginCount() {
+        return userService.queryLoginCountForEveryMonth();
+    }
 }

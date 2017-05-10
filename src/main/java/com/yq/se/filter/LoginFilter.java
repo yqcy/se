@@ -18,7 +18,7 @@ import java.io.IOException;
 @Order(1)
 public class LoginFilter implements Filter {
 
-    public User loginUser;
+    public static User loginUser;//TODO 假数据
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
         loginUser = (User) session.getAttribute("user");
         if (loginUser == null) {
             loginUser = new User();
-            loginUser.setId(1);
+            loginUser.setId("1");
             loginUser.setStatus(1);
             loginUser.setPhone("18730032506");
             loginUser.setUsername("111@q.com");

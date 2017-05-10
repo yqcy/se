@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by 晴 on 2017/3/4.
  */
 public class User {
-    private Integer id;
+    private String id;
     private String username;
     private String password;
     private String nickname;
@@ -18,11 +18,11 @@ public class User {
     private Date createDate;
     private Integer status;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -25,7 +25,7 @@ public interface UserService {
      * @param id
      * @return
      */
-    int deleteById(Integer id);
+    int deleteById(String id);
 
     /**
      * 修改用户个人信息
@@ -43,7 +43,7 @@ public interface UserService {
      * @param endTime
      * @param page
      * @param sort
-     *@param order @return
+     * @param order     @return
      */
     List<User> queryAllUsers(Integer status, Date beginTime, Date endTime, Page page, String sort, String order);
 
@@ -53,10 +53,14 @@ public interface UserService {
      * @param id
      * @return
      */
-    User queryById(Integer id);
+    User queryById(String id);
 
     boolean checkUsername(String username);
 
-    List<Integer> queryCreateCountForEveryMonth();
+    List<Integer> queryRegisterCountForEveryMonth();
+
+    User login(String username, String password);
+
+    List<Integer> queryLoginCountForEveryMonth();
 
 }

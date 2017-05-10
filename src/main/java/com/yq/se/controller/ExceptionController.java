@@ -2,6 +2,7 @@ package com.yq.se.controller;
 
 import com.yq.se.entity.db.Exception;
 import com.yq.se.entity.db.User;
+import com.yq.se.filter.LoginFilter;
 import com.yq.se.service.exception.ExceptionService;
 import com.yq.se.util.common.StringUtils;
 import com.yq.se.util.mybatis.Page;
@@ -29,7 +30,7 @@ import static com.yq.se.util.common.StringUtils.*;
 public class ExceptionController {
 
     @Autowired
-    private ExceptionService service;
+    private ExceptionService exceptionService;
 
 
     @ApiOperation(value = "查询异常", notes = "支持GET方式", response = String.class)
@@ -53,7 +54,7 @@ public class ExceptionController {
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public Object show(@RequestParam(required = false) String id, @RequestParam(required = false) String fullClassName, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer userId, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows, @RequestParam(required = false) String sort, @RequestParam(required = false) String order) {
+    public Object show(@RequestParam(required = false) String id, @RequestParam(required = false) String fullClassName, @RequestParam(required = false) Integer status, @RequestParam(required = false) String userId, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows, @RequestParam(required = false) String sort, @RequestParam(required = false) String order) {
         Exception e = new Exception();
         User user = new User();
         Page p = new Page(page, rows);
@@ -62,7 +63,7 @@ public class ExceptionController {
         e.setFullClassName(StringUtils.isNull(fullClassName));
         e.setStatus(status);
         e.setUser(user);
-        List<Exception> exceptions = service.queryAll(e, p, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)), sort, order);
+        List<Exception> exceptions = exceptionService.queryAll(e, p, SimpleDateUtils.parse(isNull(beginTime)), SimpleDateUtils.parse(isNull(endTime)), sort, order);
         Map map = new HashMap<>();
         map.put("total", p.getCount());
         map.put("rows", exceptions);
@@ -84,7 +85,7 @@ public class ExceptionController {
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public Object search(String str, Integer index) {
         Page page = new Page(index, 5);
-        List<Exception> exceptions = service.search(str, page);
+        List<Exception> exceptions = exceptionService.search(str, page);
         Map map = new HashMap();
         map.put("total", page.getCount());
         map.put("rows", exceptions);
@@ -113,10 +114,9 @@ public class ExceptionController {
         e.setDescription(description);
 //        HttpSession session = request.getSession(true);
 //        e.setUser((User) session.getAttribute("user"));//TODO 强制登录
-        User user = new User();
-        user.setId(1);//TODO 目前写死，以后根据登录用户动态获取
+        User user = LoginFilter.loginUser;//TODO 动态获取登录用户
         e.setUser(user);
-        Exception exception = service.add(e, 1);
+        Exception exception = exceptionService.add(e, 1);
         return exception;
     }
 
@@ -128,9 +128,9 @@ public class ExceptionController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/charts/query", method = RequestMethod.GET)
+    @RequestMapping(value = "/charts/query/click", method = RequestMethod.GET)
     public Object queryClickCountForCharts() {
-        return service.queryEveryMonthClickCount();
+        return exceptionService.queryEveryMonthClickCount();
     }
 
 

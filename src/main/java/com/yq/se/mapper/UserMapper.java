@@ -19,9 +19,9 @@ public interface UserMapper {
 
     int modify(@Param("user") User user);
 
-    int delete(@Param("id") Integer id);
+    int delete(@Param("id") String id);
 
-    User selectById(@Param("id") Integer id);
+    User selectById(@Param("id") String id);
 
     User selectByUsername(@Param("username") String username);
 
@@ -29,5 +29,5 @@ public interface UserMapper {
 
     int count(@Param("status") Integer status, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
-    List<MonthCount> selectCountForEveryMonth();
+    List<MonthCount> selectRegisterCountForEveryMonth();
 }

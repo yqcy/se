@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : CentOS7
-Source Server Version : 50635
-Source Host           : 10.63.64.129:3306
+Source Server         : mysql
+Source Server Version : 50717
+Source Host           : localhost:3306
 Source Database       : se
 
 Target Server Type    : MYSQL
-Target Server Version : 50635
+Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-04-13 17:03:15
+Date: 2017-05-10 22:58:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,3 +26,7 @@ CREATE TABLE `t_menu` (
   `pid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_menu
+-- ----------------------------

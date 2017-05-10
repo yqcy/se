@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.yq.se.mapper.UserLoginMapper">
+    <insert id="insert">
+        INSERT INTO t_user_login
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            user_id,
+            login_time,
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{userLogin.userId},
+            #{userLogin.loginTime},
+        </trim>
+    </insert>
+
+    <select id="selectLoginCountForEveryMonth" resultType="com.yq.se.entity.dto.MonthCount">
+        SELECT DATE_FORMAT(login_time,&apos;%m&apos;) AS month,COUNT(id) AS count FROM t_user_login GROUP BY
+        DATE_FORMAT(login_time,&apos;%m&apos;)
+    </select>
+</mapper>

@@ -14,20 +14,20 @@
 		<script type="text/javascript">
 			$(function() {
 				//查询12个月来异常访问量的变化情况
-				$.get("http://localhost:8989/user/charts/query", function(result) {
+				$.get("http://localhost:8989/exception/charts/query/click", function(result) {
 					Highcharts.chart('container', {
 						chart: {
 							type: 'line'
 						},
 						title: {
-							text: 'Monthly Total Register Count'
+							text: 'Monthly Total Click Count'
 						},
 						xAxis: {
 							categories: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
 						},
 						yAxis: {
 							title: {
-								text: 'Register (人)'
+								text: 'ExceptionClick (次)'
 							}
 						},
 						plotOptions: {
@@ -39,12 +39,11 @@
 							}
 						},
 						series: [{
-							name: 'Create',
+							name: 'Click',
 							data: result
 						}]
 					});
-				})
-
+				});
 			});
 		</script>
 	</head>

@@ -18,24 +18,22 @@
 	</head>
 
 	<body class="easyui-layout">
-		<div data-options="region:'north',width:800,height:100">
+		<div data-options="region:'north',width:800,height:60">
 			<!--开头的大LOGO图案-->
-			<img src="../images/bug-logo.jpg"  style="width: 100px;height: 90px;"/>
+			<img src="../images/bug-logo.jpg"  style="width: 40px;height: 40px;"/>
 			<span><font style="font-family: '微软雅黑'; color: black;font-size: x-large;">异常管理系统</font></span>
-			<span style="float: right;padding-top: 80px;padding-right: 50px;"><font style="color: red;">欢迎使用,Admin!</font></span>
+			<span style="float: right;padding-top: 30px;padding-right: 50px;"><font style="color: red;">欢迎使用,Admin!</font></span>
 		</div>
-		<div data-options="region:'west',width:300,height:640">
+		<div data-options="region:'west',width:200,height:540">
 			<center>
 				<!--左侧菜单开始-->
-				<div id="accordion" class="easyui-accordion" style="width:290px;height:639px;">
+				<div id="accordion" class="easyui-accordion" style="width:200px;height:540px;">
 					<div title="异常菜单" data-options="iconCls:'icon-reload',selected:true" style="overflow:auto;padding:10px;">
-						<center>
-							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('所有异常','datagrid_exceptions.html')">查看所有</a>
-						</center>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:150,plain:true,iconCls:'icon-search'" onclick="addTab('所有异常','datagrid_exceptions.html')">查看所有</a>
 					</div>
 					<div title="用户信息" data-options="iconCls:'icon-reload'" style="padding:10px;">
 						<center>
-							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('所有用户','datagrid_users.html')">查看所有</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:150,plain:true,iconCls:'icon-search'" onclick="addTab('所有用户','datagrid_users.html')">查看所有</a>
 						</center>
 					</div>
 					<div title="解决方案" data-options="iconCls:'icon-reload',selected:true" style="padding:10px;">
@@ -47,10 +45,10 @@
 					</div>
 					<div title="开发者功能" data-options="iconCls:'icon-reload'" style="padding:10px;">
 						<center>
-							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('SwaggerUI','http://localhost:8989/swagger-ui.html')">SwaggerUI</a>
-							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('Druid-Monitor','http://localhost:8989/druid')">Druid-Monitor</a>
-							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('Query-Charts','http://localhost:8989/pages/exception_query.html')">Query-Charts</a>
-							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:270,plain:true,iconCls:'icon-search'" onclick="addTab('Register-Charts','http://localhost:8989/pages/user_create.html')">Register-Charts</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:150,plain:true,iconCls:'icon-search'" onclick="addTab('SwaggerUI','http://localhost:8989/swagger-ui.html')">SwaggerUI</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:150,plain:true,iconCls:'icon-search'" onclick="addTab('Druid-Monitor','http://localhost:8989/druid')">Druid-Monitor</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:150,plain:true,iconCls:'icon-search'" onclick="addTab('Exception-Charts','http://localhost:8989/pages/exception_click_charts.html')">Exception-Charts</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:150,plain:true,iconCls:'icon-search'" onclick="addTab('User-Charts','http://localhost:8989/pages/user_register_charts.html')">User-Charts</a>
 						</center>
 					</div>
 				</div>
@@ -58,8 +56,8 @@
 				<!--左侧菜单结束-->
 			</center>
 		</div>
-		<div data-options="region:'center',width:1100,height:640">
-			<div id="tt" class="easyui-tabs" style="width:1100px;height:640px;">
+		<div data-options="region:'center',width:1200,height:540">
+			<div id="tt" class="easyui-tabs" style="width:1150px;height:540px;">
 				<!--添加tab-->
 			</div>
 		</div>

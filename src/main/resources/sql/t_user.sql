@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-04-19 23:56:08
+Date: 2017-05-10 22:59:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(64) CHARACTER SET utf8 NOT NULL,
   `username` varchar(32) CHARACTER SET utf8 NOT NULL,
   `password` varchar(12) CHARACTER SET utf8 NOT NULL,
   `nickname` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
@@ -29,4 +29,9 @@ CREATE TABLE `t_user` (
   `status` tinyint(2) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_username` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of t_user
+-- ----------------------------
+INSERT INTO `t_user` VALUES ('1', '111@q.com', '123456', '明天丶天晴', '18730032506', '2017-05-10 22:13:20', '1');
