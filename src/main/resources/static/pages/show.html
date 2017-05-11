@@ -6,7 +6,9 @@
 		<title>异常搜索</title>
 		<base target="_blank" />
 		<link href="../css/baidu.css" type="text/css" rel="stylesheet" />
+		<link href="../css/bootstrap/bootstrap.min.css" type="text/css" rel="stylesheet" />
 		<script src="../js/easyui/jquery.min.js"></script>
+		<script src="../js/bootstrap/bootstrap.min.js"></script>
 		<script src="../js/init.js"></script>
 		<script>
 			$(function() {
@@ -26,7 +28,7 @@
 					if(keyName=="search"){
 						var str = array2[1];
 						console.log(str);
-						$('#show_text').val(str);
+						$('#show_input').val(str);
 						var index = array3[1];
 						$.get("http://localhost:8989/exception/search?str=" + str+"&index="+index,
 							function(data) {
@@ -66,10 +68,16 @@
 			<!--表头左侧LOGO和搜索框-->
 			<div style="float: left;width:800px;">
 				<img src="../images/logo1.jpg" height="60px" width="200px" style="float: left;margin-top: 15px;" />
-				<form style="width: 500px;margin-top: 15px;margin-left: 10px;float: left;">
+				<!--<form style="width: 500px;margin-top: 15px;margin-left: 10px;float: left;">
 						<input id="show_text" type="text" maxlength="100">
 						<input id="button" type="button" value="搜搜" onclick="clickShow(1)">
-				</form>
+				</form>-->
+				<form class="form-group-lg" style="margin-left: 200px;margin-right: 200px;margin-top: 30px;">
+				<div class="input-group input-group-sm">
+					<input id="show_input" type="text" class="form-control" placeholder="请输入查询信息">
+					<span class="input-group-addon" onclick="clickShow(1)">搜搜</span>
+				</div>
+			</form>
 			</div>
 			<!--表头右侧登录菜单-->
 			<div style="float: right;">

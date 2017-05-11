@@ -221,21 +221,21 @@ function checkRegister() {
  * 从search.html跳转到show.html页面，中间携带参数
  */
 function skipToShow() {
-	var str = $('#search_text').val();
+	var str = $('#search_input').val();
 	window.location.href = "http://localhost:8989/pages/show.html?search=" + str+"&index=1";
 }
 /*
  * 在show.html页面点击搜索
  */
 function clickShow(page) {
-	var str = $('#show_text').val();
+	var str = $('#show_input').val();
 	//这里目前是假数据，需要改成成态获取分页点击
 	var index = page;
 	document.location.href="http://localhost:8989/pages/show.html?search=" + str+"&index="+index;
 }
 //超链接点击执行的事件
 function linkClickShow(a) {
-	var str = $('#show_text').val();
+	var str = $('#show_input').val();
 	var text = a.text;
 	console.log(text);
 	//这里目前是假数据，需要改成成态获取分页点击

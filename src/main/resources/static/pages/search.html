@@ -1,11 +1,14 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<title>异常搜索</title>
 		<base target="_blank" />
 		<link href="../css/baidu.css" type="text/css" rel="stylesheet" />
+		<link href="../css/bootstrap/bootstrap.min.css" type="text/css" rel="stylesheet" />
 		<script src="../js/easyui/jquery.min.js"></script>
+		<script src="../js/bootstrap/bootstrap.min.js"></script>
 		<script src="../js/init.js"></script>
 	</head>
 
@@ -25,12 +28,14 @@
 				<img src="../images/logo_full.jpg" alt="" width="270" height="129" id="baiduimage" />
 			</div>
 			<!--搜索框和搜索按钮-->
-			<div>
-				<form>
-					<input name="search_text" type="text" id="search_text" value="" maxlength="100">
-					<input id="button" name="baidu" type="button" title="搜搜" value="搜搜" onclick="skipToShow();">
-				</form>
-			</div>
+			<!--<input name="search_text" type="text" id="search_text" value="" maxlength="100">-->
+			<!--<input id="button" name="baidu" type="button" title="搜搜" value="搜搜" onclick="skipToShow();">-->
+			<form class="form-group-lg" style="margin-left: 200px;margin-right: 200px;">
+				<div class="input-group input-group-lg">
+					<input id="search_input" type="text" class="form-control" placeholder="请输入查询信息">
+					<span class="input-group-addon" onclick="skipToShow()">搜搜</span>
+				</div>
+			</form>
 		</div>
 		<!--尾部注册商标信息-->
 		<div>

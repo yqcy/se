@@ -15,21 +15,41 @@
 		<script type="text/javascript" src="../js/kindeditor/kindeditor-min.js"></script>
 		<script type="text/javascript" src="../js/kindeditor/zh_CN.js"></script>
 		<script type="text/javascript" src="../js/init.js"></script>
+		<script>
+			$(function() {
+				var h = decodeURIComponent(window.location.href);
+				var arrayPath = h.split("?");
+				if(arrayPath != null && arrayPath.length > 1) {
+					var arrayParam = arrayPath[1].split("=");
+					var userId = arrayParam[1];
+					$.get("http://localhost:8989/user/get", {
+						'id': userId
+					}, function(user) {
+						if(user == undefined) {
+							$("#span1").html("<font style='color: green;'>欢迎使用," + user.nickname + "</font>");
+						} else {
+							$("#span1").html("<font style='color: red;'>自动进入游客模式</font>");
+						}
+					});
+				}
+
+			});
+		</script>
 	</head>
 
 	<body class="easyui-layout">
 		<div data-options="region:'north',width:800,height:60">
 			<!--开头的大LOGO图案-->
-			<img src="../images/bug-logo.jpg"  style="width: 40px;height: 40px;"/>
+			<img src="../images/bug-logo.jpg" style="width: 40px;height: 40px;" />
 			<span><font style="font-family: '微软雅黑'; color: black;font-size: x-large;">异常管理系统</font></span>
-			<span style="float: right;padding-top: 30px;padding-right: 50px;"><font style="color: red;">欢迎使用,Admin!</font></span>
+			<span id="span1" style="float: right;padding-top: 30px;padding-right: 50px;"></span>
 		</div>
 		<div data-options="region:'west',width:200,height:540">
 			<center>
 				<!--左侧菜单开始-->
 				<div id="accordion" class="easyui-accordion" style="width:200px;height:540px;">
 					<div title="异常菜单" data-options="iconCls:'icon-reload',selected:true" style="overflow:auto;padding:10px;">
-							<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:150,plain:true,iconCls:'icon-search'" onclick="addTab('所有异常','datagrid_exceptions.html')">查看所有</a>
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="width:150,plain:true,iconCls:'icon-search'" onclick="addTab('所有异常','datagrid_exceptions.html')">查看所有</a>
 					</div>
 					<div title="用户信息" data-options="iconCls:'icon-reload'" style="padding:10px;">
 						<center>
@@ -52,60 +72,30 @@
 						</center>
 					</div>
 				</div>
-
 				<!--左侧菜单结束-->
 			</center>
 		</div>
 		<div data-options="region:'center',width:1200,height:540">
 			<div id="tt" class="easyui-tabs" style="width:1150px;height:540px;">
 				<!--添加tab-->
+				<div title="welcome" style="padding:20px;display:none;closable:true" data-options="closable:true">
+					<p style="padding-top: 30px;">
+						<font style="font-family: '楷体';size: 16;" size="5">欢迎使用</font>
+					</p>
+					<p style="padding-top: 50px;">
+						<br /><font style="font-family: '楷体';size: 16;" size="3">1、生活是一面镜子。你对它笑，它就对你笑；你对它哭，它也对你哭。</font>
+						<br /><font style="font-family: '楷体';size: 16;" size="3"> 2、活着一天，就是有福气，就该珍惜。当我哭泣我没有鞋子穿的时候，我发现有人却没有脚。</font>
+						<br /><font style="font-family: '楷体';size: 16;" size="3"> 3、人生是个圆，有的人走了一辈子也没有走出命运画出的圆圈，其实，圆上的每一个点都有一条腾飞的切线。 </font>
+						<br /><font style="font-family: '楷体';size: 16;" size="3"> 4、千万别迷恋网络游戏，要玩就玩好人生这场大游戏。</font> 
+						<br /> <font style="font-family: '楷体';size: 16;" size="3">5、命运负责洗牌，但是玩牌的是我们自己！</font>
+						<br /> <font style="font-family: '楷体';size: 16;" size="3">6、我们心中的恐惧，永远比真正的危险巨大的多。</font>
+						<br /> <font style="font-family: '楷体';size: 16;" size="3">7、命运掌握在自己手中。要么你驾驭生命，要么生命驾驭你，你的心态决定你是坐骑还是骑手。</font>
+						<br /> <font style="font-family: '楷体';size: 16;" size="3">8、宁愿做过了后悔，也不要错过了后悔。</font>
+						<br /> <font style="font-family: '楷体';size: 16;" size="3">9、不要拿小人的错误来惩罚自己，不要在这些微不足道的事情上折磨浪费自己的宝贵时间。</font>
+						<br /> <font style="font-family: '楷体';size: 16;" size="3">10、如果我们都去做自己能力做得到的事，我们会让自己大吃一惊。</font>
+					</p>
+				</div>
 			</div>
-		</div>
-		<div id="dl">
-			<center>
-				<form id="f">
-					<table border="0" style="width: 760px;height: 400px;">
-						<tr>
-							<td><strong><font color="black" style="font-family: 微软雅黑;">异常名：</font></strong></td>
-							<td>
-								<input type="text" name="fullClassName" id="fullClassName" style="width: 430px;height: 25px;" />
-								<i><font color="black" style="font-family: '微软雅黑';">请输入这个异常的全限定名,严格区分大小写</font></i>
-							</td>
-						</tr>
-						<tr>
-							<td><strong><font color="black" style="font-family: 微软雅黑;">异常描述：</font></strong></td>
-							<td>
-								<!--
-								<input class="easyui-textbox" name="description" id="description" 
-								data-options="prompt:'请输入你是如何遇到这个异常的'" />
-								-->
-								<textarea style="width:678px;height: 145px;resize: none;"></textarea>
-							</td>
-						</tr>
-						<tr>
-							<td><strong><font color="black" style="font-family: '微软雅黑';">解决方案：</font></strong></td>
-							<td>
-								<!--
-								<input class="easyui-textbox" name="solution" id="solution" 
-								data-options="prompt:'请输入解决方案,如果不能解决可以为空'" />
-								-->
-								<textarea style="width:678px;height: 145px;resize: none;"></textarea>
-							</td>
-						</tr>
-						<tr>
-							<td><strong><font color="black" style="font-family: '微软雅黑';">提供者：</font></strong></td>
-							<td>
-								<input type="text" name="provider" id="provider" style="width: 400px;height: 25px;" />
-								<i><font color="black" style="font-family: '微软雅黑';">请输入你的大名,这将会在数据库中保留您的信息</font></i>
-							</td>
-						</tr>
-					</table>
-				</form>
-			</center>
-		</div>
-		<div id="btns">
-			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" onclick="reset();">重置</a>
-			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="submit();">提交</a>
 		</div>
 	</body>
 
