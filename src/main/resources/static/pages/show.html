@@ -67,14 +67,14 @@
 		<div>
 			<!--表头左侧LOGO和搜索框-->
 			<div style="float: left;width:800px;">
-				<img src="../images/logo1.jpg" height="60px" width="200px" style="float: left;margin-top: 15px;" />
+				<!--<img src="../images/logo1.jpg" height="60px" width="200px" style="float: left;margin-top: 15px;" />-->
 				<!--<form style="width: 500px;margin-top: 15px;margin-left: 10px;float: left;">
 						<input id="show_text" type="text" maxlength="100">
 						<input id="button" type="button" value="搜搜" onclick="clickShow(1)">
 				</form>-->
-				<form class="form-group-lg" style="margin-left: 200px;margin-right: 200px;margin-top: 30px;">
-				<div class="input-group input-group-sm">
-					<input id="show_input" type="text" class="form-control" placeholder="请输入查询信息">
+				<form class="form-group-lg" style="margin-left: 0px;margin-right: 300px;margin-top: 30px;">
+				<div class="input-group input-group">
+					<input id="show_input" type="text" class="form-control" placeholder="请输入查询信息" onchange="clickShow(1)">
 					<span class="input-group-addon" onclick="clickShow(1)">搜搜</span>
 				</div>
 			</form>
