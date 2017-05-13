@@ -1,24 +1,27 @@
 package com.yq.se.entity.db;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
  * Created by 晴 on 2017/3/4.
  */
 public class Solve {
-    private Integer id;
+    private String id;
     private Exception exception;
     private User user;
     private String solution;//解决方法
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
-    private Integer score;
+    private Integer score;//赞同的数量
     private Integer status;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

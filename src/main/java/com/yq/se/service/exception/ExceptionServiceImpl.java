@@ -7,6 +7,7 @@ import com.yq.se.entity.dto.MonthCount;
 import com.yq.se.filter.LoginFilter;
 import com.yq.se.mapper.ExceptionClickMapper;
 import com.yq.se.mapper.ExceptionMapper;
+import com.yq.se.service.solve.SolveService;
 import com.yq.se.util.common.StringUtils;
 import com.yq.se.util.lucene.LuceneIndexHelper;
 import com.yq.se.util.lucene.LuceneIndexHelperSupport;
@@ -32,6 +33,8 @@ public class ExceptionServiceImpl implements ExceptionService {
     private ExceptionClickMapper clickMapper;
     @Autowired
     private LoginFilter loginFilter;
+    @Autowired
+    private SolveService solveService;
 
     private final LuceneIndexHelper<Exception> luceneIndexHelper = new LuceneIndexHelperSupport<>();
 
@@ -64,14 +67,14 @@ public class ExceptionServiceImpl implements ExceptionService {
     @Override
     public Exception queryById(String id) {
         Exception exception = exceptionMapper.queryById(id);
-        if (exception != null) {
-            ExceptionClick click = new ExceptionClick();
-            click.setCreateDate(new Date());
-            click.setExceptionId(id);
-            User loginUser = loginFilter.loginUser;
-            if (loginUser != null) click.setUserId(loginUser.getId());
-            clickMapper.insert(click);
-        }
+        if (exception == null) return null;
+        ExceptionClick click = new ExceptionClick();
+        click.setCreateDate(new Date());
+        click.setExceptionId(id);
+        User loginUser = loginFilter.loginUser;
+        if (loginUser != null) click.setUserId(loginUser.getId());
+        clickMapper.insert(click);
+
         return exception;
     }
 

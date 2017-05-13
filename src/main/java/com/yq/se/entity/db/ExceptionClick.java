@@ -1,5 +1,7 @@
 package com.yq.se.entity.db;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Date;
 public class ExceptionClick {
     private Integer id;
     private String exceptionId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private String userId;
     private Integer clickCount;

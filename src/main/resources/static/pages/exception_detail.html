@@ -23,78 +23,118 @@
 		<script type="text/javascript" src="../kindeditor-4.1.7/lang/zh_CN.js"></script>
 		<script>
 			$(function() {
-
+					KindEditor.ready(function(K) {
+					K.each({
+						'plug-align': {
+							name: '对齐方式',
+							method: {
+								'justifyleft': '左对齐',
+								'justifycenter': '居中对齐',
+								'justifyright': '右对齐'
+							}
+						},
+						'plug-order': {
+							name: '编号',
+							method: {
+								'insertorderedlist': '数字编号',
+								'insertunorderedlist': '项目编号'
+							}
+						},
+						'plug-indent': {
+							name: '缩进',
+							method: {
+								'indent': '向右缩进',
+								'outdent': '向左缩进'
+							}
+						}
+					}, function(pluginName, pluginData) {
+						var lang = {};
+						lang[pluginName] = pluginData.name;
+						KindEditor.lang(lang);
+						KindEditor.plugin(pluginName, function(K) {
+							var self = this;
+							self.clickToolbar(pluginName, function() {
+								var menu = self.createMenu({
+									name: pluginName,
+									width: pluginData.width || 100
+								});
+								K.each(pluginData.method, function(i, v) {
+									menu.addItem({
+										title: v,
+										checked: false,
+										iconClass: pluginName + '-' + i,
+										click: function() {
+											self.exec(i).hideMenu();
+										}
+									});
+								})
+							});
+						});
+					});
+					K.create('#contentqq', {
+						themeType: 'qq',
+						items: [
+							'bold', 'italic', 'underline', 'fontname', 'fontsize', 'forecolor', 'hilitecolor', 'plug-align', 'plug-order', 'plug-indent', 'link'
+						]
+					});
+				});
 			});
 
-			function jumpPanelToEdit() {
-				$('#panel1').panel({
-					width: 1300,
-					height: 250,
-					title: 'My Panel',
-					tools: [{
-						iconCls: 'icon-save',
-						handler: function() {
-							alert('save')
-						}
-					}]
-				});
-
-			}
 		</script>
 	</head>
 
 	<body>
-		<!--头-->
-		<div>
-			<div style="float: right;">
-				<img src="../images/logo_header.jpg" height="60" width="60" />
-				<a href="javascript:void(0)">登录</a>&nbsp;
-				<a href="javascript:void(0)">退出</a>&nbsp;
-				<a href="javascript:void(0)">个人中心</a>&nbsp;
-			</div>
-		</div>
-		<!--内容-->
-		<!--异常的标题和描述-->
-		<div style="float: left;margin-top: 60px;width: 100%;">
-			<hr />
+		<div id="out_panel" class="easyui-panel" data-options="noheader:true,border:false">
+			<!--头-->
 			<div>
-				<p>
-					<font style="font-family: 楷体;">标题:</font>java.lang.Exception</p>
+				<div style="float: right;">
+					<img src="../images/logo_header.jpg" height="60" width="60" />
+					<a href="javascript:void(0)">登录</a>&nbsp;
+					<a href="javascript:void(0)">退出</a>&nbsp;
+					<a href="javascript:void(0)">个人中心</a>&nbsp;
+				</div>
 			</div>
-			<div>
-				<p>
-					<font style="font-family: 楷体;">提供者:</font>隔壁老王</p>
+			<!--内容-->
+			<!--异常的标题和描述-->
+			<div style="float: left;margin-top: 60px;width: 100%;">
+				<hr />
+				<div>
+					<p>
+						<font style="font-family: 楷体;">标题:</font>java.lang.Exception</p>
+				</div>
+				<div>
+					<p>
+						<font style="font-family: 楷体;">提供者:</font>隔壁老王</p>
+				</div>
+				<div>
+					<p>
+						<font style="font-family: 楷体;">描述:</font>这个异常很神奇，从来没有见过</p>
+				</div>
+				<hr />
 			</div>
-			<div>
-				<p>
-					<font style="font-family: 楷体;">描述:</font>这个异常很神奇，从来没有见过</p>
+			<!--异常的解析方案solve-->
+			<div style="padding-top: 100px;">
+				<div id="p1" class="easyui-panel" title="明天丶天晴1的回答，赞同人数：110" style="width:100%;height:120px;padding:10px;background:#fafafa;" data-options="collapsible:true,collapsed:true">
+					<div>&nbsp;&nbsp;这个异常出现的原因十分诡异，也说不准是什么原因，很有可能是空指针异常</div>
+					<div style="float:right;width:10%;margin-right: 5px;margin-top: 25px;"><input class="easyui-switchbutton" data-options="onText:'踩',offText:'顶'"></div>
+				</div>
+				<br />
+				<div id="p2" class="easyui-panel" title="明天丶天晴2的回答，赞同人数：108" style="width:100%;height:120px;padding:10px;background:#fafafa;" data-options="collapsible:true,collapsed:true">
+					<div>&nbsp;&nbsp;这个异常出现的原因十分诡异，也说不准是什么原因，很有可能是空指针异常</div>
+					<div style="float:right;width:10%;margin-right: 5px;margin-top: 25px;"><input class="easyui-switchbutton" data-options="onText:'踩',offText:'顶'"></div>
+				</div>
+				<br />
+				<div id="p3" class="easyui-panel" title="明天丶天晴3的回答，赞同人数：10" style="width:100%;height:120px;padding:10px;background:#fafafa;" data-options="collapsible:true,collapsed:true">
+					<div>&nbsp;&nbsp;这个异常出现的原因十分诡异，也说不准是什么原因，很有可能是空指针异常</div>
+					<div style="float:right;width:10%;margin-right: 5px;margin-top: 25px;"><input class="easyui-switchbutton" data-options="onText:'踩',offText:'顶'"></div>
+				</div>
+				<br />
 			</div>
-			<hr />
 		</div>
-		<!--异常的解析方案solve-->
-		<div style="padding-top: 300px;">
-			<div id="p1" class="easyui-panel" title="明天丶天晴1的回答，赞同人数：110" style="width:600px;height:120px;padding:10px;background:#fafafa;" data-options="collapsible:true,collapsed:true">
-				<div>&nbsp;&nbsp;这个异常出现的原因十分诡异，也说不准是什么原因，很有可能是空指针异常</div>
-				<div style="float:right;width:10%;margin-right: 5px;margin-top: 25px;"><input class="easyui-switchbutton" data-options="onText:'踩',offText:'顶'"></div>
-			</div>
-			<br />
-			<div id="p2" class="easyui-panel" title="明天丶天晴2的回答，赞同人数：108" style="width:600px;height:120px;padding:10px;background:#fafafa;" data-options="collapsible:true,collapsed:true">
-				<div>&nbsp;&nbsp;这个异常出现的原因十分诡异，也说不准是什么原因，很有可能是空指针异常</div>
-				<div style="float:right;width:10%;margin-right: 5px;margin-top: 25px;"><input class="easyui-switchbutton" data-options="onText:'踩',offText:'顶'"></div>
-			</div>
-			<br />
-			<div id="p3" class="easyui-panel" title="明天丶天晴3的回答，赞同人数：10" style="width:600px;height:120px;padding:10px;background:#fafafa;" data-options="collapsible:true,collapsed:true">
-				<div>&nbsp;&nbsp;这个异常出现的原因十分诡异，也说不准是什么原因，很有可能是空指针异常</div>
-				<div style="float:right;width:10%;margin-right: 5px;margin-top: 25px;"><input class="easyui-switchbutton" data-options="onText:'踩',offText:'顶'"></div>
-			</div>
-			<br />
-		</div>
-		<!--Button提供自己解决方案-->
-		<a id="btn" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',onClick:jumpPanelToEdit">提供我的解析方案</a>
-		<!--这里使用富文本编辑器进行编辑-->
-		<div id="panel1" style="float:left;margin-bottom: 50px;">
-			<!--<textarea id="contentqq" name="content" style="width:700px;height:200px;visibility:hidden;"></textarea>-->
-		</div>
+		<label><font style="font-family: 楷体;">在这里提供我的解决方案:</font></label>
+		<textarea id="contentqq" name="content" style="width:100%;height:200px;visibility:hidden;"></textarea>
+		<a class="easyui-linkbutton">确认提交</a>
+
 	</body>
 
 </html>

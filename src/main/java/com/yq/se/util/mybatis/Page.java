@@ -90,6 +90,10 @@ public class Page {
         this(index, size, null, null);
     }
 
+    public Page(Integer index, Integer size, String order) {
+        this(index, size, null, order);
+    }
+
     public Page(Integer index, Integer size, Integer count) {
         this(index, size, count, null);
     }
