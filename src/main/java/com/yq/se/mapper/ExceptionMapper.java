@@ -14,15 +14,15 @@ import java.util.List;
 @Mapper
 public interface ExceptionMapper {
 
-    int add(@Param("exception") Exception e);
+    int insert(@Param("exception") Exception e);
 
     int delete(@Param("id") String id);
 
-    int modify(@Param("exception") Exception e);
+    int update(@Param("exception") Exception e);
 
-    Exception queryById(@Param("id") String id);
+    Exception selectById(@Param("id") String id);
 
-    List<Exception> queryAll(@Param("exception") Exception e, @Param("page") Page page, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
+    List<Exception> selectAll(@Param("exception") Exception e, @Param("page") Page page, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
     int count(@Param("exception") Exception e, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 }

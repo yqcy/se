@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="../wangEditor/dist/css/wangEditor.min.css">
 		<style type="text/css">
 			#editor-trigger {
-				height: 200px;
+				height: 350px;
 				/*max-height: 500px;*/
 			}
 			
@@ -26,53 +26,18 @@
 		<script type="text/javascript" src="../wangEditor/dist/js/lib/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="../wangEditor/dist/js/wangEditor.min.js"></script>
 		<script>
-			var editor = new wangEditor('editor-trigger');
-			$(function() {
-				//在这里对异常的ID和用户ID进行初始化放入<input type='hidden' />中
-				var exceptionId = "1";
-				var userId = "1";
-				$("#exceptionId").val(exceptionId);
-				$("#userId").val(userId);
-				//拿到排名前3的解决方案填充
-				var rows = 3; //这里可以修改一页的显示条数
-				$.get("http://localhost:8989/solve/query", {
-					"exceptionId": exceptionId,
-					"userId": userId,
-					"sort": "score",
-					"order": "DESC",
-					"page": 1,
-					"rows": rows
-				}, function(data) {
-					//开始遍历填充
-					$.each(data, function(i, e) {
-//						$("#p" + i).panel("setTitle", {title:e.user.nickname + "的回答，赞同人数：" + e.score});
-						console.log(i);
-						console.log(e);
-//						$("#p"+i).attr("title",e.user.nickname + "的回答，赞同人数：" + e.score);
-						$("#s" + i).html(e.solution);
-						//$("#p"+i).panel({"title":"测试专用"});
-						//初始化富文本编辑器要展示的内容
-					});
-				});
-			});
-
-			function submit() {
-				var html = editor.$txt.html();
-				var exceptionId = $("#exceptionId").val();
-				var userId = $("#userId").val();
-				$.post("http://localhost:8989/solve/create", {
-					"exceptionId": exceptionId,
-					"userId": userId,
-					"solution": html
-				}, function(data) {
-					if(data != null) {
-						alert("添加成功！");
-					} else {
-						alert("添加失败！");
-					}
-
-				});
-			}
+			$(function(){
+				//解析请求路径
+				var href = decodeURIComponent(window.location.href);
+				var array_href = href.split("?");//以?为分隔
+				//拿右边的exceptionId=1
+				var kv = array_href[1];//exceptionId=1
+				var array_kv = kv.split("=");
+				var v = array_kv[1];
+				$("#exceptionId").val(v);
+				//目前用户主键为假数据
+				$("#userId").val("1");
+			})
 		</script>
 	</head>
 
@@ -106,34 +71,7 @@
 				<hr />
 			</div>
 			<!--异常的解析方案solve-->
-			<div style="padding-top: 100px;">
-				<div id="p0" class="easyui-panel" title="明天丶天晴1的回答，赞同人数：110" style="width:100%;height:120px;padding:10px;background:#fafafa;" data-options="collapsible:true,collapsed:true,tools:[
-				{
-					iconCls:'icon-add',
-					handler:function(){alert('add')}
-				}]">
-					<span id="s0">
-						&nbsp;&nbsp;这个异常出现的原因十分诡异，也说不准是什么原因，很有可能是空指针异常
-					</span>
-				</div>
-				<br />
-				<div id="p1" class="easyui-panel" title="明天丶天晴2的回答，赞同人数：101" style="width:100%;height:120px;padding:10px;background:#fafafa;" data-options="collapsible:true,collapsed:true,tools:[
-				{
-					iconCls:'icon-add',
-					handler:function(){alert('add')}
-				}]">
-					<span id="s1">&nbsp;&nbsp;这个异常出现的原因十分诡异，也说不准是什么原因，很有可能是空指针异常</span>
-				</div>
-				<br />
-				<div id="p2" class="easyui-panel" title="明天丶天晴3的回答，赞同人数：10" style="width:100%;height:120px;padding:10px;background:#fafafa;" data-options="collapsible:true,collapsed:true,tools:[
-				{
-					iconCls:'icon-add',
-					handler:function(){alert('add')}
-				}]">
-					<span id="s2">&nbsp;&nbsp;这个异常出现的原因十分诡异，也说不准是什么原因，很有可能是空指针异常</span>
-				</div>
-				<br />
-			</div>
+			<iframe src="detail.html" style="border: none;width: 100%;height: 300px;"></iframe>
 		</div>
 		<div id="editor-container" class="container">
 			<div id="editor-trigger">
@@ -258,6 +196,24 @@
 			//     selected: '<button style="font-size:20px; margin-top:5px;"><i>I</i></button>'
 			// };
 			editor.create();
+
+			function submit() {
+				var html = editor.$txt.html();
+				var exceptionId = $("#exceptionId").val();
+				var userId = $("#userId").val();
+				$.post("http://localhost:8989/solve/create", {
+					"exceptionId": exceptionId,
+					"userId": userId,
+					"solution": html
+				}, function(data) {
+					if(data != null) {
+						alert("添加成功！");
+					} else {
+						alert("添加失败！");
+					}
+
+				});
+			}
 		</script>
 	</body>
 

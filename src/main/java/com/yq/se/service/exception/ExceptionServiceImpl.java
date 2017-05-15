@@ -14,8 +14,6 @@ import com.yq.se.util.lucene.LuceneIndexHelperSupport;
 import com.yq.se.util.mybatis.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,30 +41,30 @@ public class ExceptionServiceImpl implements ExceptionService {
         e.setStatus(0);
         e.setId(UUID.randomUUID().toString());
         e.setCreateDate(new Date());
-        exceptionMapper.add(e);
-        Exception exception = exceptionMapper.queryById(e.getId());
+        exceptionMapper.insert(e);
+        Exception exception = exceptionMapper.selectById(e.getId());
         luceneIndexHelper.add(exception, boost);
         return exception;
     }
 
     @Override
     public Exception delete(String id) {
-        Exception exception = exceptionMapper.queryById(id);
+        Exception exception = exceptionMapper.selectById(id);
         exceptionMapper.delete(id);
         return exception;
     }
 
     @Override
     public Exception update(Exception e, float boost) {
-        Exception exception = exceptionMapper.queryById(e.getId());
-        exceptionMapper.modify(e);
+        Exception exception = exceptionMapper.selectById(e.getId());
+        exceptionMapper.update(e);
         luceneIndexHelper.modify(exception, boost);
         return exception;
     }
 
     @Override
     public Exception queryById(String id) {
-        Exception exception = exceptionMapper.queryById(id);
+        Exception exception = exceptionMapper.selectById(id);
         if (exception == null) return null;
         ExceptionClick click = new ExceptionClick();
         click.setCreateDate(new Date());
@@ -87,7 +85,7 @@ public class ExceptionServiceImpl implements ExceptionService {
                 page.setOrder(StringUtils.changeToDBName(sort) + " " + order);
             }
         }
-        List<Exception> exceptions = exceptionMapper.queryAll(e, page, beginTime, endTime);
+        List<Exception> exceptions = exceptionMapper.selectAll(e, page, beginTime, endTime);
         return exceptions;
     }
 

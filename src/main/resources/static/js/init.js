@@ -167,12 +167,12 @@ function exceptionSearch() {
 	var exceptionName = $('#exception').textbox('getValue');
 	//获得解决状态
 	var status = $('#status_exception').combobox('getValue');
-	$('#dg_exception').datagrid('load',{
-		'fullClassName':exceptionName,
-		'status':status,
-		'userId':provider,
-		'beginTime':beginTime,
-		'endTime':endTime
+	$('#dg_exception').datagrid('load', {
+		'fullClassName': exceptionName,
+		'status': status,
+		'userId': provider,
+		'beginTime': beginTime,
+		'endTime': endTime
 	});
 }
 /*
@@ -222,7 +222,7 @@ function checkRegister() {
  */
 function skipToShow() {
 	var str = $('#search_input').val();
-	window.location.href = "http://localhost:8989/pages/show.html?search=" + str+"&index=1";
+	window.location.href = "http://localhost:8989/pages/show.html?search=" + str + "&index=1";
 }
 /*
  * 在show.html页面点击搜索
@@ -231,7 +231,7 @@ function clickShow(page) {
 	var str = $('#show_input').val();
 	//这里目前是假数据，需要改成成态获取分页点击
 	var index = page;
-	document.location.href="http://localhost:8989/pages/show.html?search=" + str+"&index="+index;
+	document.location.href = "http://localhost:8989/pages/show.html?search=" + str + "&index=" + index;
 }
 //超链接点击执行的事件
 function linkClickShow(a) {
@@ -241,20 +241,20 @@ function linkClickShow(a) {
 	//这里目前是假数据，需要改成成态获取分页点击
 	var index = a.id.slice(1);
 	console.log(index);
-	$.get("http://localhost:8989/exception/search?str=" + str+"&index="+index,
+	$.get("http://localhost:8989/exception/search?str=" + str + "&index=" + index,
 		function(data) {
 			//填充左侧的异常div
 			var rows = data.rows;
 			var total = data.total;
 			$.each(rows, function(i, n) {
 				var num = i + 1;
-				$('#show'+num).show();
-				$('#title'+num).html(n.fullClassName);
-				$('#desc'+num).html(n.description);
-				$('#user'+num).html(n.user.nickname);
-				$('#time'+num).html(n.user.createDate);
+				$('#show' + num).show();
+				$('#title' + num).html(n.fullClassName);
+				$('#desc' + num).html(n.description);
+				$('#user' + num).html(n.user.nickname);
+				$('#time' + num).html(n.user.createDate);
 			});
-			paging(index,5,rows.length);
+			paging(index, 5, rows.length);
 		}
 	);
 }
@@ -262,83 +262,89 @@ function linkClickShow(a) {
 //page页号
 //size每页的条数
 //total总条数
-function paging(index,size,total_page){
+function paging(index, size, total_page) {
 	var home = $("#page_home");
 	var end = $("#page_end");
 	var previous = $("#page_previous");
 	var next = $("#page_next");
 	var now = $("#page_now");
-	if (index == 1){
+	if(index == 1) {
 		previous.removeAttr("href");
 		previous.removeAttr("onClick");
-	}else{
-		previous.attr("href","javascript:void(0);");
-		previous.attr("onClick","clickShow("+(index - 1)+");");
+	} else {
+		previous.attr("href", "javascript:void(0);");
+		previous.attr("onClick", "clickShow(" + (index - 1) + ");");
 	}
-	if(total_page==index){
+	if(total_page == index) {
 		next.removeAttr("href");
 		next.removeAttr("onClick");
-	}else{
-		next.attr("href","javascript:void(0);");
-		next.attr("onClick","clickShow("+(index + 1)+");");
+	} else {
+		next.attr("href", "javascript:void(0);");
+		next.attr("onClick", "clickShow(" + (index + 1) + ");");
 	}
-	now.html("当前所在第<font style='color:red;'>"+index+"</font>页，共<font style='color:red;'>"+total_page+"</font>页");
-	home.attr("href","javascript:void(0);");
-	home.attr("onClick","clickShow(1);");
-	end.attr("href","javascript:void(0);");
-	end.attr("onClick","clickShow("+total_page+");");
-	
+	now.html("当前所在第<font style='color:red;'>" + index + "</font>页，共<font style='color:red;'>" + total_page + "</font>页");
+	home.attr("href", "javascript:void(0);");
+	home.attr("onClick", "clickShow(1);");
+	end.attr("href", "javascript:void(0);");
+	end.attr("onClick", "clickShow(" + total_page + ");");
+
 }
 /**
  * 在异常页当点击行时触发
  */
 var exceptionGlobalIndex = null;
-function exceptionClickRow(index,row){
+
+function exceptionClickRow(index, row) {
 	var dg = $('#dg_exception');
-	if(exceptionGlobalIndex == null){
+	if(exceptionGlobalIndex == null) {
 		exceptionGlobalIndex = index;
-	}else{
-		dg.datagrid('endEdit',exceptionGlobalIndex);
-		exceptionGlobalIndex=index;
+	} else {
+		dg.datagrid('endEdit', exceptionGlobalIndex);
+		exceptionGlobalIndex = index;
 	}
-	dg.datagrid('beginEdit',index);
+	dg.datagrid('beginEdit', index);
 }
 /**
  * 在异常页结束编辑后
  */
-function exceptionEndEdit(index, row, changes){
+function exceptionEndEdit(index, row, changes) {
 	//发送请求到服务器
 }
 var userGlobalIndex = null;
-function userClickRow(index,row){
+
+function userClickRow(index, row) {
 	var dg = $('#dg_user');
-	if(userGlobalIndex == null){
+	if(userGlobalIndex == null) {
 		userGlobalIndex = index;
-	}else{
-		dg.datagrid('endEdit',userGlobalIndex);
-		userGlobalIndex=index;
+	} else {
+		dg.datagrid('endEdit', userGlobalIndex);
+		userGlobalIndex = index;
 	}
-	dg.datagrid('beginEdit',index);
+	dg.datagrid('beginEdit', index);
 }
 /**
  * 在异常页结束编辑后
  */
-function userEndEdit(index, row, changes){
+function userEndEdit(index, row, changes) {
 	//发送请求到服务器
 }
 /**
  * 用户页面的多条件查询
  */
-function userSearch(){
+function userSearch() {
 	var datebox_begin_time = $("#beginTime_user");
 	var datebox_end_time = $("#endTime_user");
 	var combobox_status = $("#status_user");
 	var begin_time = datebox_begin_time.datebox("getValue");
 	var end_time = datebox_end_time.datebox("getValue");
 	var status = combobox_status.combobox("getValue");
-	$("#dg_user").datagrid("load",{
-		beginTime:begin_time,
-		endTime:end_time,
-		status:status
+	$("#dg_user").datagrid("load", {
+		beginTime: begin_time,
+		endTime: end_time,
+		status: status
 	});
+}
+//跳到异常详情页
+function skipToDetail(exceptionId) {
+	document.location.href = "http://localhost:8989/pages/exception_detail.html?exceptionId=" + exceptionId;
 }

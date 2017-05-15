@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/easyui/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/icon.css" />
+		<script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
+		<script>
+			$(function() {
+				//解析请求路径
+				var href = decodeURIComponent(window.location.href);
+				var array_href = href.split("?"); //以?为分隔
+				//拿右边的exceptionId=1
+				var kv = array_href[1]; //exceptionId=1
+				var array_kv = kv.split("=");
+				var v = array_kv[1];
+				var exceptionId = v;
+				var userId = "1"; //后面需要根据上个页面传过来的值进行填充
+				var sort = "score";
+				var order = "DESC";
+				var page = 1;
+				var rows = 5;
+				$.get("http://localhost:8989/solve/query", {
+					'exceptionId': exceptionId,
+					'userId': userId,
+					'sort': sort,
+					'order': order,
+					'page': page,
+					'rows': rows
+				}, function(data) {
+					console.log(data);
+					if(data == null || data.length == 0) {
+							$("#empty").append("<img src='../images/nobody-answer.jpg' />");
+					} else {
+						//进行填充panel
+						$.each(data, function(i, e) {
+							$("#p" + i).panel({
+								title: "来自" + e.user.nickname + "的回答，赞同人数：" + e.score + "个",
+								tools: [{
+									iconCls: 'icon-add',
+									handler: function() {
+										//异步发送请求
+										$.post("http://localhost:8989/solve/agree", {
+											'solveId': e.id,
+											'userId': e.user.id
+										}, function(data) {
+											//跳出提示框：点赞成功
+											$.messager.show({
+												title: '我的消息',
+												msg: '恭喜您点赞成功！5秒后将自动关闭',
+												timeout: 5000,
+												showType: 'slide'
+											});
+											$("#p" + i).panel("setTitle", "来自" + e.user.nickname + "的回答，赞同人数：" + data.score + "个");
+										});
+									}
+								}],
+								collapsible: true,
+								collapsed: true,
+								width: 1300,
+								height: 150,
+								content: e.solution
+							});
+						});
+					}
+				});
+			})
+		</script>
+	</head>
+
+	<body>
+		<div id="p0"></div>
+		<div id="p1"></div>
+		<div id="p2"></div>
+		<div id="p3"></div>
+		<div id="p4"></div>
+		<div id="empty"></div>
+	</body>
+
+</html>

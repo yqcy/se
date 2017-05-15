@@ -75,4 +75,24 @@ public class SolveController {
         Solve insert = solveService.insert(solve);
         return insert;
     }
+
+    @ApiOperation(value = "用户点击赞", notes = "支持POST方式", response = String.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "solveId", value = "解决方案的主键", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "userId", value = "点击用户的主键", required = false, dataType = "String", paramType = "query"),
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "请求已完成"),
+            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求"),
+            @ApiResponse(code = 401, message = "未授权客户机访问数据"),
+            @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
+            @ApiResponse(code = 500, message = "服务器不能完成请求")}
+    )
+    @RequestMapping(value = "/agree", method = RequestMethod.POST)
+    public Object agree(@RequestParam("solveId") String solveId, @RequestParam(value = "userId", required = false) String userId) {
+        //TODO 预留用户主键
+        Solve solve = solveService.addScore(solveId);
+        return solve;
+    }
+
 }

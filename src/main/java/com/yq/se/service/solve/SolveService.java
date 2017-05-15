@@ -14,4 +14,6 @@ public interface SolveService {
     Solve selectById(String id);
 
     List<Solve> select(String exceptionId, String userId, Page page);
+
+    Solve addScore(String id);
 }

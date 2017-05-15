@@ -23,6 +23,15 @@
             #{solve.status},
         </trim>
     </insert>
+    <update id="update">
+        UPDATE t_solve
+        <set>
+            <if test="solve.solution!=null">solution = #{solve.solution},</if>
+            <if test="solve.score!=null">score = #{solve.score},</if>
+            <if test="solve.status!=null">status = #{solve.status}</if>
+        </set>
+        WHERE id = #{solve.id}
+    </update>
     <select id="selectById" resultMap="solveMapping">
         SELECT * FROM t_solve WHERE id = #{id}
     </select>

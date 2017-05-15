@@ -43,7 +43,7 @@ public class SolveServiceImpl implements SolveService {
         Exception exception = solve.getException();
         User user = solve.getUser();
         if (exception != null) {
-            Exception queryException = exceptionMapper.queryById(exception.getId());
+            Exception queryException = exceptionMapper.selectById(exception.getId());
             solve.setException(queryException);
         }
         if (user != null) {
@@ -63,11 +63,25 @@ public class SolveServiceImpl implements SolveService {
         for (Solve solve : solves) {
             String eId = solve.getException().getId();
             String uId = solve.getUser().getId();
-            Exception exception = exceptionMapper.queryById(eId);
+            Exception exception = exceptionMapper.selectById(eId);
             User user = userMapper.selectById(uId);
             solve.setException(exception);
             solve.setUser(user);
         }
         return solves;
+    }
+
+    @Override
+    public Solve addScore(String id) {
+        if (id == null) return null;
+        Solve result = solveMapper.selectById(id);
+        if (result == null) return null;
+        result.setScore(result.getScore() + 1);
+        solveMapper.update(result);
+        Exception exception = exceptionMapper.selectById(result.getException().getId());
+        User user = userMapper.selectById(result.getUser().getId());
+        result.setException(exception);
+        result.setUser(user);
+        return result;
     }
 }

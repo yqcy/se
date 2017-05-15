@@ -37,13 +37,13 @@
             <result column="user_status" property="status"/>
         </association>
     </resultMap>
-    <insert id="add">
+    <insert id="insert">
         INSERT INTO
         t_exception
         (<include refid="fields"/>)
         VALUES(<include refid="values"/>)
     </insert>
-    <update id="modify">
+    <update id="update">
         UPDATE
         t_exception
         <set>
@@ -62,7 +62,7 @@
         <include refid="table_name"/>
         WHERE id = #{id}
     </delete>
-    <select id="queryById" resultMap="exception_user_map">
+    <select id="selectById" resultMap="exception_user_map">
         SELECT
         e.*,u.username,u.nickname,u.phone,u.create_date AS user_create_date,u.status AS user_status
         FROM
@@ -80,7 +80,7 @@
         ON
         e.user_id = u.id
     </select>
-    <select id="queryAll" resultMap="exception_user_map">
+    <select id="selectAll" resultMap="exception_user_map">
         SELECT
         e.*,u.username,u.nickname,u.phone,u.create_date AS user_create_date,u.status AS user_status
         FROM

@@ -20,5 +20,6 @@ public interface SolveMapper {
 
     int count(@Param("exceptionId") String exceptionId, @Param("userId") String userId);
 
+    void update(@Param("solve")Solve solve);
 
 }
