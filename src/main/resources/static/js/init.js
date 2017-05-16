@@ -344,7 +344,3 @@ function userSearch() {
 		status: status
 	});
 }
-//跳到异常详情页
-function skipToDetail(exceptionId) {
-	document.location.href = "http://localhost:8989/pages/exception_detail.html?exceptionId=" + exceptionId;
-}

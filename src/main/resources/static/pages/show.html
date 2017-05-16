@@ -39,7 +39,7 @@
 								$.each(rows, function(i, n) {
 									var num = i + 1;
 									$('#show' + num).show();
-									$('#link' + num).attr('onClick', "skipToDetail(" + n.id + ");");
+									$('#link' + num).attr('href', "http://localhost:8989/pages/exception_detail.html?exceptionId=" + n.id);
 									$('#title' + num).html(n.fullClassName);
 									$('#desc' + num).html(n.description);
 									$('#user' + num).html(n.user.nickname);

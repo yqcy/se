@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-05-10 22:58:48
+Date: 2017-05-16 22:19:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `t_user_login` (
   `user_id` varchar(255) NOT NULL,
   `login_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user_login
@@ -32,3 +32,4 @@ CREATE TABLE `t_user_login` (
 INSERT INTO `t_user_login` VALUES ('1', '1', '2017-05-10 22:31:47');
 INSERT INTO `t_user_login` VALUES ('2', '1', '2017-05-10 22:33:10');
 INSERT INTO `t_user_login` VALUES ('3', '1', '2017-05-10 22:42:38');
+INSERT INTO `t_user_login` VALUES ('4', '1', '2017-05-11 21:09:42');
