@@ -132,4 +132,7 @@
             <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
     </select>
+    <select id="selectAllFullClassName" resultType="java.lang.String">
+        SELECT full_class_name FROM t_exception
+    </select>
 </mapper>

@@ -144,10 +144,25 @@ public class ExceptionController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/query/id", method = RequestMethod.GET)
-    public Object queryExceptionById(@RequestParam("id") String id) {
+    @RequestMapping(value = "/get/id", method = RequestMethod.GET)
+    public Object getExceptionById(@RequestParam("id") String id) {
         Exception exception = exceptionService.queryById(id);
         return exception;
+    }
+
+    @ApiOperation(value = "查询所有异常的全限定名", notes = "支持GET方式", response = String.class)
+    @ApiImplicitParams({})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "请求已完成"),
+            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求"),
+            @ApiResponse(code = 401, message = "未授权客户机访问数据"),
+            @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
+            @ApiResponse(code = 500, message = "服务器不能完成请求")}
+    )
+    @RequestMapping(value = "/name/getAll", method = RequestMethod.GET)
+    public Object getAllExceptionName() {
+        List<String> strings = exceptionService.queryAllExceptionName();
+        return strings;
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -28,6 +29,7 @@ public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(true);
         loginUser = (User) session.getAttribute("user");
         if (loginUser == null) {
@@ -39,7 +41,9 @@ public class LoginFilter implements Filter {
             loginUser.setNickname("明天丶天晴");
         }
         if (loginUser != null) {
-            filterChain.doFilter(servletRequest, servletResponse);
+            filterChain.doFilter(request, response);
+        } else {
+            response.sendRedirect("http://localhost:8989/pages/login_register_test.html");
         }
 //        HttpServletResponse response = (HttpServletResponse) servletResponse;
 //        response.sendRedirect("http://localhost:8989/pages/login.html");

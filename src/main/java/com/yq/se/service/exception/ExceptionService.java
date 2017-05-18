@@ -25,4 +25,6 @@ public interface ExceptionService {
 
     List<Integer> queryEveryMonthClickCount();
 
+    List<String> queryAllExceptionName();
+
 }

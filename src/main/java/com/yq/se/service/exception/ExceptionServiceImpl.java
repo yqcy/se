@@ -132,4 +132,9 @@ public class ExceptionServiceImpl implements ExceptionService {
         }
         return result;
     }
+
+    @Override
+    public List<String> queryAllExceptionName() {
+        return exceptionMapper.selectAllFullClassName();
+    }
 }

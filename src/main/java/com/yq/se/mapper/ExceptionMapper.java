@@ -25,4 +25,6 @@ public interface ExceptionMapper {
     List<Exception> selectAll(@Param("exception") Exception e, @Param("page") Page page, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
     int count(@Param("exception") Exception e, @Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
+
+    List<String> selectAllFullClassName();
 }
