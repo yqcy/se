@@ -97,7 +97,10 @@ public class ExceptionServiceImpl implements ExceptionService {
     public List<Exception> search(String keyword, Page page, int queryCount) {
         if (page.getEnd() >= queryCount) search(keyword, page, queryCount * 10);
         List<Exception> list = luceneIndexHelper.queryByKeyword(keyword, new Exception(), queryCount);
-        if (list == null || list.size() == 0) return null;
+        if (list == null || list.size() == 0) {
+            page.setCount(0);
+            return null;
+        }
         page.setCount(list.size());
         List<Exception> result = new ArrayList<>(page.getSize());
         for (int i = page.getBegin(); i <= page.getEnd(); i++) {

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户个人主页</title>
+		<link rel="stylesheet" type="text/css" href="../css/easyui/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/icon.css" />
+		<script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
+		<script>
+			function userModify() {
+				var userId = 1; //假数据
+				$.get("http://localhost:8989/user/get?id=" + userId, function(data) {
+					$("#dialog").dialog({
+						title: '修改信息',
+						width: 600,
+						height: 300,
+						closed: false,
+						cache: false,
+						//					href: 'http://localhost:8989/user/get?id=1',
+						modal: true,
+						content: '<iframe src="user_property_grid.html" frameborder="0" width="100%" height="90%"></iframe>',
+					});
+				});
+
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="cc" class="easyui-layout" style="width:100%;height:600px;">
+			<div data-options="region:'north',title:'North Title',split:true,noheader:true" style="height:100px;">
+				<!--这里放用户的头像-->
+				<div style="float: left;">
+					<img src="../images/logo_header.jpg" style="width: 90px;height: 90px;" />
+				</div>
+				<!--这里是用户显示的昵称-->
+				<div style="float: left;padding-left: 30px;padding-top: 60px;">
+					当前用户昵称：<span><font style="color: red;font-family: '微软雅黑';"><strong>明天丶天晴</strong></font></span>
+				</div>
+				<div style="float: right;padding-right: 30px;padding-top: 60px;">
+					<a href="javascript:void(0);" onclick="userModify();">点击修改个人信息</a>
+				</div>
+			</div>
+			<div data-options="region:'south',title:'South Title',split:true,noheader:true" style="height:100px;"></div>
+			<div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true,noheader:true" style="width:100px;"></div>
+			<div data-options="region:'west',title:'West',split:true,noheader:true" style="width:100px;"></div>
+			<div data-options="region:'center',title:'center title',noheader:true" style="padding:5px;background:#eee;"></div>
+		</div>
+		<!--弹出的dialog-->
+		<div id="dialog">
+		</div>
+		<table id="pg" class="easyui-propertygrid" style="width:300px" data-options="showGroup:true,scrollbarSize:0,
+			data:[{'name':'用户名','value':'111@q.com','group':'can not edit','editor':'text'},
+			{'name':'创建时间','value':'2017-05-19','group':'can not edit','editor':'text'},
+			{'name':'昵称','value':'明天丶天晴','group':'can edit','editor':'text'},
+			{'name':'密码','value':'******','group':'can edit','editor':'text'}
+			]"></table>
+	</body>
+
+</html>

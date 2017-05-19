@@ -23,7 +23,7 @@
 					$.get("http://localhost:8989/user/get", {
 						'id': userId
 					}, function(user) {
-						if(user == undefined) {
+						if(user != undefined && user != null && user != "") {
 							$("#span1").html("<font style='color: green;'>欢迎使用," + user.nickname + "</font>");
 						} else {
 							$("#span1").html("<font style='color: red;'>自动进入游客模式</font>");
