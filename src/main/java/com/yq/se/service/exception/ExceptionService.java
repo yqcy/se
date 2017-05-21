@@ -27,4 +27,6 @@ public interface ExceptionService {
 
     List<String> queryAllExceptionName();
 
+    List<Exception> queryAll(String userId, Page page, Date beginTime, Date endTime, String sort, String order);
+
 }

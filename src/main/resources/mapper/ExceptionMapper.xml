@@ -135,4 +135,36 @@
     <select id="selectAllFullClassName" resultType="java.lang.String">
         SELECT full_class_name FROM t_exception
     </select>
+    <select id="selectAllByIds" resultMap="exception_user_map">
+        SELECT
+        e.*,u.username,u.nickname,u.phone,u.create_date AS user_create_date,u.status AS user_status
+        FROM
+        (
+        SELECT
+        id as exception_id , full_class_name , description , create_date as exception_create_date,
+        last_update as exception_last_update , status as exception_status , user_id
+        FROM
+        t_exception
+        WHERE id IN
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+        ) e
+        LEFT JOIN
+        t_user u
+        ON
+        e.user_id = u.id
+        <if test="page!=null">
+            <if test="page.order!=null">
+                ORDER BY exception_${page.order}
+            </if>
+        </if>
+        <if test="page!=null">
+            <if test="page.begin!=null">
+                <if test="page.size!=null">
+                    LIMIT ${page.begin} , ${page.size}
+                </if>
+            </if>
+        </if>
+    </select>
 </mapper>

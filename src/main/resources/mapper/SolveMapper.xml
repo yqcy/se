@@ -56,6 +56,10 @@
             <if test="userId!=null">AND user_id = #{userId}</if>
         </where>
     </select>
+    <select id="selectALLExceptionIdForProvider" resultType="java.lang.String">
+        SELECT exception_id FROM t_solve
+        WHERE user_id = #{userId}
+    </select>
     <resultMap id="solveMapping" type="com.yq.se.entity.db.Solve">
         <id column="id" property="id"/>
         <result column="solution" property="solution"/>

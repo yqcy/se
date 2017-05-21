@@ -10,6 +10,10 @@
 		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
 		<script>
+			function watch() {
+				$("#iframe").attr("src", "backend_login.html");
+			}
+
 			function userModify() {
 				var userId = 1; //假数据
 				$.get("http://localhost:8989/user/get?id=" + userId, function(data) {
@@ -44,20 +48,34 @@
 					<a href="javascript:void(0);" onclick="userModify();">点击修改个人信息</a>
 				</div>
 			</div>
-			<div data-options="region:'south',title:'South Title',split:true,noheader:true" style="height:100px;"></div>
-			<div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true,noheader:true" style="width:100px;"></div>
-			<div data-options="region:'west',title:'West',split:true,noheader:true" style="width:100px;"></div>
-			<div data-options="region:'center',title:'center title',noheader:true" style="padding:5px;background:#eee;"></div>
+			<div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true,noheader:true" style="width:150px;">
+				我的好友列表
+			</div>
+			<div data-options="region:'west',title:'West',split:true,noheader:true" style="width:200px;">
+				<!--手风琴-->
+				<div id="aa" class="easyui-accordion" style="width:200px;height:480px;">
+					<div title="查看我发布的异常" data-options="iconCls:'icon-lock',selected:true" style="overflow:auto;padding:10px;">
+						<!--在这里提供点击按钮-->
+						<a class="easyui-linkbutton" data-options="plain:true,width:180,height:30,onClick:watch">查看</a>
+					</div>
+					<div title="查看我解决的异常" data-options="iconCls:'icon-reload',selected:false" style="padding:10px;">
+						<!--在这里提供点击按钮-->
+						<a class="easyui-linkbutton">查看</a>
+					</div>
+					<div title="查看我点赞的异常" data-options="">
+						<!--在这里提供点击按钮-->
+						<a class="easyui-linkbutton">查看</a>
+					</div>
+				</div>
+			</div>
+			<div data-options="region:'center',title:'center title',noheader:true" style="padding:5px;background:#eee;">
+				<!--主体面板-->
+				<iframe id="iframe" src="datagrid_exceptions.html" style="width: 98%;height: 98%;" frameborder="0"></iframe>
+			</div>
 		</div>
 		<!--弹出的dialog-->
 		<div id="dialog">
 		</div>
-		<table id="pg" class="easyui-propertygrid" style="width:300px" data-options="showGroup:true,scrollbarSize:0,
-			data:[{'name':'用户名','value':'111@q.com','group':'can not edit','editor':'text'},
-			{'name':'创建时间','value':'2017-05-19','group':'can not edit','editor':'text'},
-			{'name':'昵称','value':'明天丶天晴','group':'can edit','editor':'text'},
-			{'name':'密码','value':'******','group':'can edit','editor':'text'}
-			]"></table>
 	</body>
 
 </html>

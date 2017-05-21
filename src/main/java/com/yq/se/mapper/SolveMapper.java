@@ -22,4 +22,6 @@ public interface SolveMapper {
 
     void update(@Param("solve")Solve solve);
 
+    List<String> selectALLExceptionIdForProvider(@Param("userId") String userId);
+
 }

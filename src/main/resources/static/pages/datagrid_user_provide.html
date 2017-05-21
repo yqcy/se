@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<!--远端调用-->
+		<meta http-equiv="Access-Control-Allow-Origin" Content='*'>
+		<title>异常管理系统</title>
+
+		<link rel="stylesheet" type="text/css" href="../css/easyui/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/icon.css" />
+		<script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../js/kindeditor/kindeditor-min.js"></script>
+		<script type="text/javascript" src="../js/kindeditor/zh_CN.js"></script>
+		<script>
+			var exceptionGlobalIndex = null;
+
+			function exceptionSearch() {
+				//获得开始时间
+				var beginTime = $('#beginTime').datebox('getValue');
+				//获得结束时间
+				var endTime = $('#endTime').datebox('getValue');
+				//获得解决状态
+				var status = $('#status_exception').combobox('getValue');
+				$('#dg_exception').datagrid('load', {
+					'status': status,
+					'beginTime': beginTime,
+					'endTime': endTime
+				});
+			}
+
+			function loadSuccess(data) {
+				$(".btn").linkbutton({
+					plain: true,
+					width: 120,
+					height: 23
+				});
+			}
+
+			function exceptionClickRow(index, row) {
+				var dg = $('#dg_exception');
+				if(exceptionGlobalIndex == null) {
+					exceptionGlobalIndex = index;
+				} else {
+					dg.datagrid('endEdit', exceptionGlobalIndex);
+					exceptionGlobalIndex = index;
+				}
+				dg.datagrid('beginEdit', index);
+			}
+
+			function exceptionEndEdit(index, row, changes) {
+				//发送请求到服务器
+			}
+			//类的全限定名长度超过一定时格式化
+			function classNameFormatter(value, row, index) {
+				if(value.length > 53) {
+					var begin = value.substr(0, 26);
+					var end = value.substr(value.length - 26);
+					return begin + "......" + end;
+				} else {
+					return value;
+				}
+			}
+			//异常信息描述长度超过一定时进行格式化
+			function exceptionFormatter(value, row, index) {
+				if(value.length > 22) {
+					var str = value.substr(0, 22);
+					return str + "......";
+				} else {
+					return value;
+				}
+			}
+			//异常解决方案超过一定时进行格式
+			function solutionFormatter(value, row, index) {
+				if(value.length > 22) {
+					var str = value.substr(0, 22);
+					return str + "......";
+				} else {
+					return value;
+				}
+			}
+
+			function statusFormatter(value, row, index) {
+				if(value == 0) {
+					return "审核";
+				} else if(value == 1) {
+					return "通过";
+				} else {
+					return "异常";
+				}
+			}
+
+			function userFormatter(value, row, index) {
+				return value.nickname;
+			}
+			//格式化"查看异常解决方案的按钮"
+			function btnFormatter(value, row, index) {
+				return "<a href='javascript:void(0)' class='btn' onClick=btnClick('" + row.id + "')><font color=green ><strong>查看异常详情</stong></font></a>";
+			}
+		</script>
+	</head>
+
+	<body class="easyui-layout">
+		<table id="dg_exception" class="easyui-datagrid" data-options="url:'http://localhost:8989/exception/getAll',method:'GET',
+				toolbar:'#tl',checkOnSelect:false,onLoadSuccess:loadSuccess,idField:'id',onClickRow:exceptionClickRow,onAfterEdit:exceptionEndEdit,
+				sortName:'createDate',sortOrder:'DESC',striped:true,multiSort:true,pageSize:5,pageList:[5,10,15],pagination:true,
+				frozenColumns:[[
+					{field:'checkbox',title:'选择',halign:'center',checkbox:true},
+					{field:'fullClassName',width:400,resizable:true,formatter:classNameFormatter,title:'<font color=#D84F4B><strong>类的全限定名</strong></font>',halign:'center',resizable:false}
+			]]" style="width: 100%;height: 100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'id',width:100,hidden:true">主键</th>
+					<th data-options="field:'createDate',width:150,sortable:true,resizable:false,halign:'center',
+					            	align:'center'">
+						<font color="#D84F4B"><strong>创建日期</strong></font>
+					</th>
+					<th data-options="field:'user',width:90,resizable:false,halign:'center',formatter:userFormatter,
+					            	align:'left'">
+						<font color="#D84F4B"><strong>上传用户</strong></font>
+					</th>
+					<th data-options="field:'description',width:220,resizable:false,halign:'center',
+					            	formatter:exceptionFormatter">
+						<font color="#D84F4B"><strong>异常信息描述</strong></font>
+					</th>
+					<th data-options="field:'status',width:80,resizable:false,halign:'center',align:'center',formatter:statusFormatter">
+						<font color="#D84F4B"><strong>解决状态</strong></font>
+					</th>
+					<th data-options="field:'btn1',width:120,formatter:btnFormatter,align:'center'"></th>
+					<th data-options="field:'space',width:10"></th>
+				</tr>
+			</thead>
+		</table>
+		<div id="tl">
+			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime" data-options="prompt:'选择开始时间',editable:false,width:120,onChange:exceptionSearch" /> 到 <input class="easyui-datebox" name="endTime" id="endTime" data-options="prompt:'选择结束时间',editable:false,width:120,onChange:exceptionSearch" />
+			<input class="easyui-combobox" name="status_exception" id="status_exception" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,onChange:exceptionSearch,
+				textField:'text',valueField:'value',data:[
+				{value:'',text:'不限'},
+				{value:'1',text:'审核通过'},
+				{value:'0',text:'审核'}
+			]" />&nbsp;
+		</div>
+	</body>
+
+</html>

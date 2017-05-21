@@ -7,6 +7,7 @@ import com.yq.se.entity.dto.MonthCount;
 import com.yq.se.filter.LoginFilter;
 import com.yq.se.mapper.ExceptionClickMapper;
 import com.yq.se.mapper.ExceptionMapper;
+import com.yq.se.mapper.SolveMapper;
 import com.yq.se.service.solve.SolveService;
 import com.yq.se.util.common.StringUtils;
 import com.yq.se.util.lucene.LuceneIndexHelper;
@@ -32,7 +33,7 @@ public class ExceptionServiceImpl implements ExceptionService {
     @Autowired
     private LoginFilter loginFilter;
     @Autowired
-    private SolveService solveService;
+    private SolveMapper solveMapper;
 
     private final LuceneIndexHelper<Exception> luceneIndexHelper = new LuceneIndexHelperSupport<>();
 
@@ -139,5 +140,14 @@ public class ExceptionServiceImpl implements ExceptionService {
     @Override
     public List<String> queryAllExceptionName() {
         return exceptionMapper.selectAllFullClassName();
+    }
+
+    @Override
+    public List<Exception> queryAll(String userId, Page page, Date beginTime, Date endTime, String sort, String order) {
+        List<String> exceptionIds = solveMapper.selectALLExceptionIdForProvider(userId);
+        if (exceptionIds == null) return null;
+        if (sort != null && sort.equals("") && order != null && order.equals("")) page.setOrder(sort + " " + order);
+        List<Exception> exceptions = exceptionMapper.selectAllByIds(exceptionIds, page, beginTime, endTime);
+        return exceptions;
     }
 }

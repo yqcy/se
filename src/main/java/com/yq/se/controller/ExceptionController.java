@@ -165,5 +165,29 @@ public class ExceptionController {
         return strings;
     }
 
+    @ApiOperation(value = "查询所有当前用户解决的异常信息", notes = "支持GET方式", response = String.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "当前用户的主键", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "beginTime", value = "开始时间", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "排序的字段", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "order", value = "排序的规则:DESC ASC", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "当前的页号", required = false, dataType = "Int", paramType = "query"),
+            @ApiImplicitParam(name = "rows", value = "每页显示的条数", required = false, dataType = "Int", paramType = "query")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "请求已完成"),
+            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求"),
+            @ApiResponse(code = 401, message = "未授权客户机访问数据"),
+            @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
+            @ApiResponse(code = 500, message = "服务器不能完成请求")}
+    )
+    @RequestMapping(value = "/getAll/provider", method = RequestMethod.GET)
+    public Object getAllByProvider(@RequestParam(value = "userId") String userId, @RequestParam(value = "beginTime", required = false) String beginTime, @RequestParam(value = "endTime", required = false) String endTime, @RequestParam(value = "sort", required = false) String sort, @RequestParam(value = "order", required = false) String order, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "rows", required = false) Integer rows) {
+        Page p = new Page(page, rows);
+        List<Exception> exceptions = exceptionService.queryAll(userId, p, SimpleDateUtils.parse(beginTime), SimpleDateUtils.parse(endTime), sort, order);
+        return exceptions;
+    }
+
 
 }
