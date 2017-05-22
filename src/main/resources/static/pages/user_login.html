@@ -25,34 +25,18 @@
     <script src="../KendoUI/js/kendo.all.min.js"></script>
     <script>
         $(function () {
-            $("#navigation").kendoResponsivePanel({
-                autoClose: false,
-                orientation: "top",
-                breakpoint: 1,
-                orientation: "top",
-                toggleButton: ".toggle-button",
-            });
-            //TODO 在这里的dataSource可以通过调后台接口获得
-            var dataSource = [{
-                exceptionName: "java.lang.NotpointException"
-            }, {
-                exceptionName: "java.lang.IllxxxxxxException"
-            }, {
-                exceptionName: "org.springframwork.xxxxxException"
-            }];
-            var ds = new kendo.data.DataSource({
-                transport: {
-                    read: {
-                        url: "http://localhost:8989/exception/name/getAll",
-                        dataType: "json",
-                    }
-                }
-            });
+          var ds = new kendo.data.DataSource({
+              transport: {
+                  read: {
+                      url: "http://localhost:8989/exception/name/getAll",
+                      dataType: "json",
+                  }
+              }
+          });
             $("#exceptionName").kendoAutoComplete({
                 placeholder: "请输入异常的全限定名",
-                dataSource: ds,
-                dataTextField: "exceptionName",
             });
+            $("#exceptionName").data("kendoAutoComplete").setDataSource(ds);
 
         });
     </script>
