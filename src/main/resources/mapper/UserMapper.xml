@@ -59,10 +59,12 @@
         VALUES(<include refid="values"/>)
     </insert>
     <update id="modify">
-        UPDATE
-        <include refid="table_name"/>
-        <include refid="set"/>
-        <include refid="where"/>
+        UPDATE t_user
+        <set>
+            <if test="user.nickname!=null">nickname = #{user.nickname},</if>
+            <if test="user.password!=null">password = #{user.password}</if>
+        </set>
+        WHERE id = #{user.id}
     </update>
     <delete id="delete">
         DELETE FROM
@@ -118,6 +120,7 @@
         SELECT * FROM t_user WHERE username = #{username}
     </select>
     <select id="selectRegisterCountForEveryMonth" resultType="com.yq.se.entity.dto.MonthCount">
-        SELECT DATE_FORMAT(create_date,&apos;%m&apos;) AS month,COUNT(id) AS count FROM t_user GROUP BY DATE_FORMAT(create_date,&apos;%m&apos;)
+        SELECT DATE_FORMAT(create_date,&apos;%m&apos;) AS month,COUNT(id) AS count FROM t_user GROUP BY
+        DATE_FORMAT(create_date,&apos;%m&apos;)
     </select>
 </mapper>

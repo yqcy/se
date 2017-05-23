@@ -175,4 +175,27 @@ public class UserController {
     public Object queryMonthLoginCount() {
         return userService.queryLoginCountForEveryMonth();
     }
+
+    @ApiOperation(value = "修改用户个人信息", notes = "支持POST方式", response = String.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "nickname", value = "nickname", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "password", value = "password", dataType = "String", paramType = "query"),
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "请求已完成"),
+            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求"),
+            @ApiResponse(code = 401, message = "未授权客户机访问数据"),
+            @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
+            @ApiResponse(code = 500, message = "服务器不能完成请求")}
+    )
+    @RequestMapping(value = "/modify", method = {RequestMethod.POST})
+    public Object modify(@RequestParam(value = "id", required = true) String id, @RequestParam(value = "nickname", required = false) String nickname, @RequestParam(value = "password", required = false) String password) {
+        User user = new User();
+        user.setId(id);
+        user.setNickname(nickname);
+        user.setPassword(password);
+        User modify = userService.modify(user);
+        return modify;
+    }
 }

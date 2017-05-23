@@ -10,6 +10,12 @@
 		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
 		<script>
+			var userId = 1;
+			$(function(){
+				$.get("http://localhost:8989/user/get?id=" + userId, function(data) {
+					$("#strong").html(data.nickname);
+				});
+			})
 			function watchProvider() {
 				$("#iframe").attr("src", "datagrid_user_provide.html");
 			}
@@ -23,7 +29,6 @@
 			}
 
 			function userModify() {
-				var userId = 1; //假数据
 				$.get("http://localhost:8989/user/get?id=" + userId, function(data) {
 					$("#dialog").dialog({
 						title: '修改信息',
@@ -50,7 +55,7 @@
 				</div>
 				<!--这里是用户显示的昵称-->
 				<div style="float: left;padding-left: 30px;padding-top: 60px;">
-					当前用户昵称：<span><font style="color: red;font-family: '微软雅黑';"><strong>明天丶天晴</strong></font></span>
+					当前用户昵称：<span><font style="color: red;font-family: '微软雅黑';"><strong id="strong">明天丶天晴</strong></font></span>
 				</div>
 				<div style="float: right;padding-right: 30px;padding-top: 60px;">
 					<a href="javascript:void(0);" onclick="userModify();">点击修改个人信息</a>

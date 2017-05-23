@@ -14,14 +14,26 @@
 			}
 
 			function submit() {
-				$("#pg").propertygrid("acceptChanges");
-				$.messager.show({
-					title: '我的消息',
-					msg: '修改成功，消息将在3秒后关闭。',
-					timeout: 3000,
-					showType: 'slide'
+				var changes = $("#pg").propertygrid("getChanges");
+				$.each(changes, function(i, e) {
+					var nickname = null;
+					var password = null;
+					if(e.name == "用户昵称") nickname = e.value;
+					if(e.name == "用户密码") password = e.value;
+					$.post("http://localhost:8989/user/modify", {
+						'id':1,
+						'nickname': nickname,
+						'password': password
+					}, function(data) {
+						$("#pg").propertygrid("acceptChanges");
+						$.messager.show({
+							title: '我的消息',
+							msg: '修改成功，消息将在3秒后关闭。',
+							timeout: 3000,
+							showType: 'slide'
+						});
+					});
 				});
-
 			}
 			$.get("http://localhost:8989/user/get?id=1", function(data) {
 				$("#pg").propertygrid({
@@ -58,7 +70,17 @@
 								'type': 'textbox',
 								'options': {}
 							}
-						},
+						}, {
+							'name': '用户密码',
+							'value': data.password,
+							'group': '可修改信息',
+							'editor': {
+								'type': 'textbox',
+								'options': {
+									'type': 'password'
+								}
+							}
+						}
 					],
 					toolbar: '#tb'
 				});
