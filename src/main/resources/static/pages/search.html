@@ -7,18 +7,40 @@
 		<base target="_blank" />
 		<link href="../css/baidu.css" type="text/css" rel="stylesheet" />
 		<link href="../css/bootstrap/bootstrap.min.css" type="text/css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/icon.css" />
 		<script src="../js/easyui/jquery.min.js"></script>
 		<script src="../js/bootstrap/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
 		<script src="../js/init.js"></script>
+		<script>
+			function login() {
+				$("#dialog1").dialog({
+					title: '请登录',
+					width: 550,
+					height: 560,
+					closed: false,
+					cache: false,
+					modal: true
+				});
+				$("#iframe").show();
+				$("#iframe").attr("src","login_register_test.html");
+			}
+		</script>
 	</head>
 
 	<body>
+		<div id="dialog1">
+			<iframe id="iframe" hidden="hidden" style="width: 530px;height:500px;" frameborder="0" scrolling="no"></iframe>
+		</div>
 		<!--表头右侧登录菜单-->
 		<div style="float: right;">
 			<img src="../images/logo_header.jpg" height="60" width="60" />
-			<a href="javascript:void(0)">登录</a>&nbsp;
+			<a href="javascript:void(0)" onClick="login();">登录</a>&nbsp;
 			<a href="javascript:void(0)">退出</a>&nbsp;
-			<a href="javascript:void(0)">个人中心</a>&nbsp;
+			<a href="http://localhost:8989/pages/user_detail.html">个人中心</a>&nbsp;
 		</div>
 
 		</div>

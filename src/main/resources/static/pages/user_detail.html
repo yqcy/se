@@ -10,8 +10,16 @@
 		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
 		<script>
-			function watch() {
-				$("#iframe").attr("src", "backend_login.html");
+			function watchProvider() {
+				$("#iframe").attr("src", "datagrid_user_provide.html");
+			}
+
+			function watchSolver() {
+				$("#iframe").attr("src", "datagrid_user_solve.html");
+			}
+
+			function watchAgree() {
+				$("#iframe").attr("src", "datagrid_user_agree.html");
 			}
 
 			function userModify() {
@@ -56,21 +64,21 @@
 				<div id="aa" class="easyui-accordion" style="width:200px;height:480px;">
 					<div title="查看我发布的异常" data-options="iconCls:'icon-lock',selected:true" style="overflow:auto;padding:10px;">
 						<!--在这里提供点击按钮-->
-						<a class="easyui-linkbutton" data-options="plain:true,width:180,height:30,onClick:watch">查看</a>
+						<a class="easyui-linkbutton" data-options="plain:true,width:180,height:30,onClick:watchProvider">查看</a>
 					</div>
 					<div title="查看我解决的异常" data-options="iconCls:'icon-reload',selected:false" style="padding:10px;">
 						<!--在这里提供点击按钮-->
-						<a class="easyui-linkbutton">查看</a>
+						<a class="easyui-linkbutton" data-options="plain:true,width:180,height:30,onClick:watchSolver">查看</a>
 					</div>
 					<div title="查看我点赞的异常" data-options="">
 						<!--在这里提供点击按钮-->
-						<a class="easyui-linkbutton">查看</a>
+						<a class="easyui-linkbutton" data-options="plain:true,width:180,height:30,onClick:watchAgree">查看</a>
 					</div>
 				</div>
 			</div>
 			<div data-options="region:'center',title:'center title',noheader:true" style="padding:5px;background:#eee;">
 				<!--主体面板-->
-				<iframe id="iframe" src="datagrid_exceptions.html" style="width: 98%;height: 98%;" frameborder="0"></iframe>
+				<iframe id="iframe" src="datagrid_user_provide.html" style="width: 98%;height: 98%;" frameborder="0"></iframe>
 			</div>
 		</div>
 		<!--弹出的dialog-->
