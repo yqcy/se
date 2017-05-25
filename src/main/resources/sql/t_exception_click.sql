@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-05-16 22:19:06
+Date: 2017-05-26 00:26:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE `t_exception_click` (
   `create_date` datetime NOT NULL,
   `user_id` int(11) DEFAULT NULL COMMENT '点击用户的id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=309 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_exception_click
@@ -269,3 +269,72 @@ INSERT INTO `t_exception_click` VALUES ('236', '96252be8-fa1d-4c52-8f96-2a966f7a
 INSERT INTO `t_exception_click` VALUES ('237', '8f37fc66-474e-4323-b0d8-e21962c056ca', '2017-05-16 22:13:44', '1');
 INSERT INTO `t_exception_click` VALUES ('238', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-16 22:13:44', '1');
 INSERT INTO `t_exception_click` VALUES ('239', '6bf6e8b8-a0c0-4869-a1ec-a36a10551175', '2017-05-16 22:13:44', '1');
+INSERT INTO `t_exception_click` VALUES ('240', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-18 23:27:20', '1');
+INSERT INTO `t_exception_click` VALUES ('241', '0e781fce-0eea-46ff-90bb-b11d298d2336', '2017-05-18 23:27:20', '1');
+INSERT INTO `t_exception_click` VALUES ('242', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-18 23:27:20', '1');
+INSERT INTO `t_exception_click` VALUES ('243', '8f37fc66-474e-4323-b0d8-e21962c056ca', '2017-05-18 23:27:20', '1');
+INSERT INTO `t_exception_click` VALUES ('244', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-18 23:27:20', '1');
+INSERT INTO `t_exception_click` VALUES ('245', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-18 23:28:03', '1');
+INSERT INTO `t_exception_click` VALUES ('246', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-18 23:28:03', '1');
+INSERT INTO `t_exception_click` VALUES ('247', '8f37fc66-474e-4323-b0d8-e21962c056ca', '2017-05-18 23:28:03', '1');
+INSERT INTO `t_exception_click` VALUES ('248', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-18 23:28:03', '1');
+INSERT INTO `t_exception_click` VALUES ('249', '6bf6e8b8-a0c0-4869-a1ec-a36a10551175', '2017-05-18 23:28:03', '1');
+INSERT INTO `t_exception_click` VALUES ('250', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-18 23:46:38', '1');
+INSERT INTO `t_exception_click` VALUES ('251', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-18 23:46:38', '1');
+INSERT INTO `t_exception_click` VALUES ('252', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-18 23:46:38', '1');
+INSERT INTO `t_exception_click` VALUES ('253', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-18 23:46:38', '1');
+INSERT INTO `t_exception_click` VALUES ('254', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-18 23:46:38', '1');
+INSERT INTO `t_exception_click` VALUES ('255', '6bf6e8b8-a0c0-4869-a1ec-a36a10551175', '2017-05-18 23:47:54', '1');
+INSERT INTO `t_exception_click` VALUES ('256', '0e781fce-0eea-46ff-90bb-b11d298d2336', '2017-05-18 23:47:54', '1');
+INSERT INTO `t_exception_click` VALUES ('257', 'ca1ec1e1-1b02-42a2-849c-a88eefbbde44', '2017-05-18 23:47:54', '1');
+INSERT INTO `t_exception_click` VALUES ('258', '8f37fc66-474e-4323-b0d8-e21962c056ca', '2017-05-18 23:47:54', '1');
+INSERT INTO `t_exception_click` VALUES ('259', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-18 23:48:06', '1');
+INSERT INTO `t_exception_click` VALUES ('260', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-18 23:48:06', '1');
+INSERT INTO `t_exception_click` VALUES ('261', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-18 23:48:06', '1');
+INSERT INTO `t_exception_click` VALUES ('262', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-18 23:48:06', '1');
+INSERT INTO `t_exception_click` VALUES ('263', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-18 23:48:06', '1');
+INSERT INTO `t_exception_click` VALUES ('264', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-19 22:50:22', '1');
+INSERT INTO `t_exception_click` VALUES ('265', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-19 22:50:23', '1');
+INSERT INTO `t_exception_click` VALUES ('266', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-19 22:50:23', '1');
+INSERT INTO `t_exception_click` VALUES ('267', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-19 22:50:23', '1');
+INSERT INTO `t_exception_click` VALUES ('268', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-19 22:50:23', '1');
+INSERT INTO `t_exception_click` VALUES ('269', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-20 14:15:14', '1');
+INSERT INTO `t_exception_click` VALUES ('270', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-20 14:15:14', '1');
+INSERT INTO `t_exception_click` VALUES ('271', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-20 14:15:14', '1');
+INSERT INTO `t_exception_click` VALUES ('272', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-20 14:15:14', '1');
+INSERT INTO `t_exception_click` VALUES ('273', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-20 14:15:14', '1');
+INSERT INTO `t_exception_click` VALUES ('274', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-20 14:47:40', '1');
+INSERT INTO `t_exception_click` VALUES ('275', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-20 14:47:40', '1');
+INSERT INTO `t_exception_click` VALUES ('276', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-20 14:47:40', '1');
+INSERT INTO `t_exception_click` VALUES ('277', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-20 14:47:40', '1');
+INSERT INTO `t_exception_click` VALUES ('278', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-20 14:47:40', '1');
+INSERT INTO `t_exception_click` VALUES ('279', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-20 17:40:54', '1');
+INSERT INTO `t_exception_click` VALUES ('280', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-20 17:40:54', '1');
+INSERT INTO `t_exception_click` VALUES ('281', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-20 17:40:54', '1');
+INSERT INTO `t_exception_click` VALUES ('282', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-20 17:40:54', '1');
+INSERT INTO `t_exception_click` VALUES ('283', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-20 17:40:54', '1');
+INSERT INTO `t_exception_click` VALUES ('284', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-20 17:41:04', '1');
+INSERT INTO `t_exception_click` VALUES ('285', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-20 17:41:05', '1');
+INSERT INTO `t_exception_click` VALUES ('286', '8f37fc66-474e-4323-b0d8-e21962c056ca', '2017-05-20 17:41:05', '1');
+INSERT INTO `t_exception_click` VALUES ('287', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-20 17:41:05', '1');
+INSERT INTO `t_exception_click` VALUES ('288', '6bf6e8b8-a0c0-4869-a1ec-a36a10551175', '2017-05-20 17:41:05', '1');
+INSERT INTO `t_exception_click` VALUES ('289', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-23 20:21:27', '1');
+INSERT INTO `t_exception_click` VALUES ('290', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-23 20:21:28', '1');
+INSERT INTO `t_exception_click` VALUES ('291', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-23 20:21:28', '1');
+INSERT INTO `t_exception_click` VALUES ('292', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-23 20:21:28', '1');
+INSERT INTO `t_exception_click` VALUES ('293', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-23 20:21:28', '1');
+INSERT INTO `t_exception_click` VALUES ('294', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-24 21:57:41', '1');
+INSERT INTO `t_exception_click` VALUES ('295', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-24 21:57:41', '1');
+INSERT INTO `t_exception_click` VALUES ('296', '8f37fc66-474e-4323-b0d8-e21962c056ca', '2017-05-24 21:57:41', '1');
+INSERT INTO `t_exception_click` VALUES ('297', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-24 21:57:41', '1');
+INSERT INTO `t_exception_click` VALUES ('298', '6bf6e8b8-a0c0-4869-a1ec-a36a10551175', '2017-05-24 21:57:42', '1');
+INSERT INTO `t_exception_click` VALUES ('299', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-24 21:58:02', '1');
+INSERT INTO `t_exception_click` VALUES ('300', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-24 21:58:02', '1');
+INSERT INTO `t_exception_click` VALUES ('301', '96252be8-fa1d-4c52-8f96-2a966f7aff8d', '2017-05-24 21:58:02', '1');
+INSERT INTO `t_exception_click` VALUES ('302', '593d3654-e6a4-4dc5-bab3-69fdc6e2855a', '2017-05-24 21:58:02', '1');
+INSERT INTO `t_exception_click` VALUES ('303', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-24 21:58:02', '1');
+INSERT INTO `t_exception_click` VALUES ('304', '05e99671-aa3a-4482-a381-7f5ec293ec6d', '2017-05-25 22:30:50', '1');
+INSERT INTO `t_exception_click` VALUES ('305', '0e781fce-0eea-46ff-90bb-b11d298d2336', '2017-05-25 22:30:50', '1');
+INSERT INTO `t_exception_click` VALUES ('306', '3db4eea7-bc01-4473-8ce2-a51bb53b92d0', '2017-05-25 22:30:50', '1');
+INSERT INTO `t_exception_click` VALUES ('307', '8f37fc66-474e-4323-b0d8-e21962c056ca', '2017-05-25 22:30:50', '1');
+INSERT INTO `t_exception_click` VALUES ('308', '0ac01481-35d3-47ac-a289-392192132155', '2017-05-25 22:30:50', '1');

@@ -29,7 +29,7 @@ function solutionFormatter(value, row, index) {
 
 function statusFormatter(value, row, index) {
 	if(value == 0) {
-		return "审核";
+		return "待审核";
 	} else if(value == 1) {
 		return "通过";
 	} else {
@@ -308,8 +308,28 @@ function exceptionClickRow(index, row) {
  * 在异常页结束编辑后
  */
 function exceptionEndEdit(index, row, changes) {
+	//$("#dg_exception").datagrid("acceptChanges");
 	//发送请求到服务器
+	var changes = $("#dg_exception").datagrid("getChanges");
+	$.post("http://localhost:8989/exception/modify", {
+		"changes": JSON.stringify(changes)
+	}, function(data) {
+		$.messager.show({
+			title: '我的消息',
+			msg: '修改状态成功，消息将在2秒后关闭。',
+			timeout: 2000,
+			showType: 'slide'
+		});
+
+	});
 }
+/*
+ * 异常取消编辑
+ */
+function exceptionCancelEdit() {
+	$("#dg_exception").datagrid("rejectChanges");
+}
+//点击当前行的全局全量
 var userGlobalIndex = null;
 
 function userClickRow(index, row) {

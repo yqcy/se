@@ -111,4 +111,12 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
+
+    @Override
+    public List<User> queryDataForCombobox(Page page, String sort, String order) {
+        int count = userMapper.count(1, null, null);
+        page.setCount(count);
+        if (sort != null && order != null) page.setOrder(sort + " " + order);
+        return userMapper.selectAll(page, 1, null, null);
+    }
 }

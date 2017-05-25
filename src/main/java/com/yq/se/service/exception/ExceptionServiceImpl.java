@@ -1,5 +1,6 @@
 package com.yq.se.service.exception;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yq.se.entity.db.Exception;
 import com.yq.se.entity.db.ExceptionClick;
 import com.yq.se.entity.db.User;
@@ -8,7 +9,6 @@ import com.yq.se.filter.LoginFilter;
 import com.yq.se.mapper.ExceptionClickMapper;
 import com.yq.se.mapper.ExceptionMapper;
 import com.yq.se.mapper.SolveMapper;
-import com.yq.se.service.solve.SolveService;
 import com.yq.se.util.common.StringUtils;
 import com.yq.se.util.lucene.LuceneIndexHelper;
 import com.yq.se.util.lucene.LuceneIndexHelperSupport;
@@ -61,6 +61,19 @@ public class ExceptionServiceImpl implements ExceptionService {
         exceptionMapper.update(e);
         luceneIndexHelper.modify(exception, boost);
         return exception;
+    }
+
+    @Override
+    public List<Exception> modify(String json) {
+        if (json == null) return null;
+        List<Exception> exceptions = JSONObject.parseArray(json, Exception.class);
+        List<Exception> result = new ArrayList<>();
+        for (Exception exception : exceptions) {
+            exceptionMapper.update(exception);
+            luceneIndexHelper.modify(exception, 1);
+            result.add(exceptionMapper.selectById(exception.getId()));
+        }
+        return result;
     }
 
     @Override

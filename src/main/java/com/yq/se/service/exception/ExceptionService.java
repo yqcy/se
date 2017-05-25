@@ -17,6 +17,8 @@ public interface ExceptionService {
 
     Exception update(Exception e, float boost);
 
+    List<Exception> modify(String json);
+
     Exception queryById(String id);
 
     List<Exception> queryAll(Exception e, Page page, Date beginTime, Date endTime, String sort, String order);

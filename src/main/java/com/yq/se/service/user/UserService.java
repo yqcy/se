@@ -63,4 +63,6 @@ public interface UserService {
 
     List<Integer> queryLoginCountForEveryMonth();
 
+    List<User> queryDataForCombobox(Page page, String sort, String order);
+
 }

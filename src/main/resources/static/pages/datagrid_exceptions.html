@@ -19,7 +19,7 @@
 
 	<body class="easyui-layout">
 		<table id="dg_exception" class="easyui-datagrid" data-options="url:'http://localhost:8989/exception/getAll',method:'GET',
-				toolbar:'#tl',checkOnSelect:false,onLoadSuccess:loadSuccess,idField:'id',onClickRow:exceptionClickRow,onAfterEdit:exceptionEndEdit,
+				toolbar:'#tl',checkOnSelect:false,onLoadSuccess:loadSuccess,idField:'id',onClickRow:exceptionClickRow,
 				sortName:'createDate',sortOrder:'DESC',striped:true,multiSort:true,pageSize:5,pageList:[5,10,15],pagination:true,
 				frozenColumns:[[
 					{field:'checkbox',title:'选择',halign:'center',checkbox:true},
@@ -41,7 +41,7 @@
 						<font color="#D84F4B"><strong>异常信息描述</strong></font>
 					</th>
 					<th data-options="field:'status',width:80,resizable:false,halign:'center',align:'center',formatter:statusFormatter,
-						editor:{type:'combobox',options:{editable:false,valueField:'value',textField:'text',data:[{value:'0',text:'不通过'},{value:'1',text:'通过'}]}}">
+						editor:{type:'combobox',options:{editable:false,valueField:'value',textField:'text',data:[{value:'0',text:'待审核'},{value:'1',text:'通过'}]}}">
 						<font color="#D84F4B"><strong>解决状态</strong></font>
 					</th>
 					<th data-options="field:'btn1',width:120,formatter:btnFormatter,align:'center'"></th>
@@ -53,15 +53,17 @@
 			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime" data-options="prompt:'选择开始时间',editable:false,width:120,onChange:exceptionSearch" /> 
 			到 <input class="easyui-datebox" name="endTime" id="endTime" data-options="prompt:'选择结束时间',editable:false,width:120,onChange:exceptionSearch" /> 
 			&nbsp; 提供者：
-			<input class="easyui-combobox" name="provider" id="provider" data-options="prompt:'请选择提供者进行查询',url:'http://localhost:8989/user/show?page=1&rows=10&order=id DESC',valueField:'id',textField:'nickname',editable:false,onChange:exceptionSearch," /> 
+			<input class="easyui-combobox" name="provider" id="provider" data-options="prompt:'请选择提供者进行查询',url:'http://localhost:8989/user/combobox/query?page=1&rows=5&sort=id&order=DESC',method:'get',valueField:'id',textField:'nickname',editable:false,onChange:exceptionSearch," /> 
 			&nbsp; 异常名：
 			<input class="easyui-textbox" name="exception" id="exception" data-options="prompt:'请选择异常进行查询',width:180,onChange:exceptionSearch," /> &nbsp; 解决状态：
 			<input class="easyui-combobox" name="status_exception" id="status_exception" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,onChange:exceptionSearch,
 				textField:'text',valueField:'value',data:[
 				{value:'',text:'不限'},
-				{value:'1',text:'审核通过'},
-				{value:'0',text:'审核'}
+				{value:'1',text:'通过'},
+				{value:'0',text:'待审核'}
 			]" />&nbsp;
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true,text:'保存修改',onClick:exceptionEndEdit"></a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true,text:'撤销修改',onClick:exceptionCancelEdit"></a>
 		</div>
 	</body>
 
