@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>异常搜索</title>
+		<base target="_blank" />
+		<link href="../css/baidu.css" type="text/css" rel="stylesheet" />
+		<link href="../css/bootstrap/bootstrap.min.css" type="text/css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/icon.css" />
+		<script src="../js/easyui/jquery.min.js"></script>
+		<script src="../js/bootstrap/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
+		<script src="../js/init.js"></script>
+		<script>
+			function login() {
+				$("#dialog1").dialog({
+					title: '请登录',
+					width: 550,
+					height: 560,
+					closed: false,
+					cache: false,
+					modal: true
+				});
+				$("#iframe").show();
+				$("#iframe").attr("src","login_register_test.html");
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="dialog1">
+			<iframe id="iframe" hidden="hidden" style="width: 530px;height:500px;" frameborder="0" scrolling="no"></iframe>
+		</div>
+		<!--表头右侧登录菜单-->
+		<div style="float: right;">
+			<img src="../images/logo_header.jpg" height="60" width="60" />
+			<a href="javascript:void(0)" onClick="login();">登录</a>&nbsp;
+			<a href="javascript:void(0)">退出</a>&nbsp;
+			<a href="http://localhost:8989/pages/user_detail.html">个人中心</a>&nbsp;
+		</div>
+
+		</div>
+		<div class="all">
+			<!--搜索的大LOGO-->
+			<div>
+				<img src="../images/logo_full.jpg" alt="" width="270" height="129" id="baiduimage" />
+			</div>
+			<!--搜索框和搜索按钮-->
+			<!--<input name="search_text" type="text" id="search_text" value="" maxlength="100">-->
+			<!--<input id="button" name="baidu" type="button" title="搜搜" value="搜搜" onclick="skipToShow();">-->
+			<form class="form-group-lg" style="margin-left: 200px;margin-right: 200px;">
+				<div class="input-group input-group-lg">
+					<input id="search_input" type="text" class="form-control" placeholder="请输入查询信息" onchange="skipToShow()">
+					<span class="input-group-addon" onclick="skipToShow()">搜搜</span>
+				</div>
+			</form>
+		</div>
+		<!--尾部注册商标信息-->
+		<div>
+			<footer>
+				<span>&copy;2017&nbsp;search exception&nbsp;<a href="javascript:void(0)">使用须知</a>&nbsp;京ICP证030173号<img width="13" height="16" data-loadfunc="1" src="../images/logo_footer.png" data-loaded="1"></span>
+			</footer>
+		</div>
+	</body>
+
+</html>

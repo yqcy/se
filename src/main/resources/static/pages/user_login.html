@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>个人登录页</title>
+    <link href="../KendoUI/styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../KendoUI/styles/kendo.rtl.min.css" rel="stylesheet">
+    <link href="../KendoUI/styles/kendo.default.min.css" rel="stylesheet">
+    <link href="../KendoUI/styles/kendo.default.mobile.min.css" rel="stylesheet">
+    <style type="text/css">
+        .div_input {
+            width: 1250px;
+            height: 600px;
+            margin-top: 100px;
+        }
+
+        span {
+            width: 100px;
+            color: red;
+        }
+    </style>
+    <script src="../KendoUI/js/jquery.min.js"></script>
+    <script src="../KendoUI/js/jszip.min.js"></script>
+    <script src="../KendoUI/js/kendo.all.min.js"></script>
+    <script>
+        $(function () {
+          var ds = new kendo.data.DataSource({
+              transport: {
+                  read: {
+                      url: "http://localhost:8989/exception/name/getAll",
+                      dataType: "json",
+                  }
+              }
+          });
+            $("#exceptionName").kendoAutoComplete({
+                placeholder: "请输入异常的全限定名",
+            });
+            $("#exceptionName").data("kendoAutoComplete").setDataSource(ds);
+
+        });
+    </script>
+</head>
+
+<body>
+	
+<!--注册页最外层-->
+<div class="div_input">
+    <input id="exceptionName" style="width: 300px;"/>
+</div>
+</body>
+
+</html>

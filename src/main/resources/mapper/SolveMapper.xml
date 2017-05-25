@@ -1,71 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.yq.se.mapper.SolveMapper">
-
-    <sql id="table_name">t_solve</sql>
-    <sql id="fields">
-        id,
-        exception_id,
-        user_id,
-        solution,
-        create_date,
-        score,
-        status
-    </sql>
-    <sql id="values">
-        #{solve.id},
-        #{solve.exception.id},
-        #{solve.user.id},
-        #{solve.solution},
-        #{solve.createDate},
-        #{solve.score},
-        #{solve.status}
-    </sql>
-    <sql id="set">
+    <insert id="insert">
+        INSERT INTO t_solve
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            exception_id,
+            user_id,
+            <if test="solve.solution!=null">solution,</if>
+            create_date,
+            score,
+            status
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{solve.id},
+            #{solve.exception.id},
+            #{solve.user.id},
+            <if test="solve.solution!=null">#{solve.solution},</if>
+            #{solve.createDate},
+            #{solve.score},
+            #{solve.status},
+        </trim>
+    </insert>
+    <update id="update">
+        UPDATE t_solve
         <set>
-            <if test="solve.id!=null">id=#{solve.id},</if>
-            <if test="solve.exceptionId!=null">exception_id=#{solve.exceptionId},</if>
-            <if test="solve.userId!=null">user_id=#{solve.userId},</if>
-            <if test="solve.solution!=null">solution=#{solve.solution},</if>
-            <if test="solve.createDate!=null">create_date=#{solve.createDate},</if>
-            <if test="solve.score!=null">score=#{solve.score},</if>
-            <if test="solve.status!=null">status=#{solve.status}</if>
+            <if test="solve.solution!=null">solution = #{solve.solution},</if>
+            <if test="solve.score!=null">score = #{solve.score},</if>
+            <if test="solve.status!=null">status = #{solve.status}</if>
         </set>
-    </sql>
-    <resultMap id="solve_map" type="com.yq.se.model.Solve">
+        WHERE id = #{solve.id}
+    </update>
+    <select id="selectById" resultMap="solveMapping">
+        SELECT * FROM t_solve WHERE id = #{id}
+    </select>
+    <select id="selectByExceptionAndUser" resultMap="solveMapping">
+        SELECT * FROM t_solve
+        <where>
+            status != -1
+            <if test="exceptionId!=null">AND exception_id = #{exceptionId}</if>
+            <if test="userId!=null">AND user_id = #{userId}</if>
+        </where>
+        <if test="page!=null">
+            <if test="page.order!=null">ORDER BY ${page.order}</if>
+            <if test="page.begin!=null">
+                <if test="page.size!=null">LIMIT #{page.begin} , #{page.size}</if>
+            </if>
+        </if>
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_solve
+        <where>
+            <if test="exceptionId!=null">exception_id = #{exceptionId}</if>
+            <if test="userId!=null">AND user_id = #{userId}</if>
+        </where>
+    </select>
+    <select id="selectALLExceptionIdForProvider" resultType="java.lang.String">
+        SELECT exception_id FROM t_solve
+        WHERE user_id = #{userId}
+    </select>
+    <resultMap id="solveMapping" type="com.yq.se.entity.db.Solve">
         <id column="id" property="id"/>
-        <result column="exception_id" property="exception.id"/>
-        <result column="user_id" property="user.id"/>
         <result column="solution" property="solution"/>
         <result column="create_date" property="createDate"/>
         <result column="score" property="score"/>
         <result column="status" property="status"/>
+        <association property="exception" javaType="com.yq.se.entity.db.Exception">
+            <id column="exception_id" property="id"/>
+        </association>
+        <association property="user" javaType="com.yq.se.entity.db.User">
+            <id column="user_id" property="id"/>
+        </association>
     </resultMap>
-
-    <insert id="add">
-        insert into
-        <include refid="table_name"/>
-        values (<include refid="values"/>)
-    </insert>
-    <update id="modifyById">
-
-    </update>
-    <delete id="delete">
-        delete from <include refid="table_name" />
-        <where>
-            <if test="solve.id!=null">id=#{solve.id}</if>
-        </where>
-    </delete>
-    <select id="queryById" resultType="com.yq.se.model.Solve">
-        select
-        <include refid="fields"/>
-        from <include refid="table_name" />
-        <where>
-            <if test="id!=null">id=#{id}</if>
-        </where>
-    </select>
-    <select id="queryAll" resultType="com.yq.se.model.Solve">
-        select <include refid="fields"/>
-        from <include refid="table_name"/>
-    </select>
 </mapper>

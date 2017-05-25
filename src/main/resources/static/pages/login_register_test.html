@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Login and Registration Form with HTML5 and CSS3" />
+		<meta name="keywords" content="html5, css3, form, switch, animation, :target, pseudo-class" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="../css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../css/animate-custom.css" />
+		<script src="../js/easyui/jquery.min.js"></script>
+		<script src="../js/init.js"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="container">
+			<section>
+				<div id="container_demo">
+					<!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
+					<a class="hiddenanchor" id="toregister"></a>
+					<a class="hiddenanchor" id="tologin"></a>
+					<div id="wrapper">
+						<div id="login" class="animate form">
+							<form action="" autocomplete="on">
+								<h1>登录</h1>
+								<p>
+									<label for="username" class="uname" data-icon="u"> 邮箱或手机号 </label>
+									<input id="username" name="username" required="required" type="text" placeholder="请输入有效的邮箱或手机号" />
+								</p>
+								<p>
+									<label for="password" class="youpasswd" data-icon="p"> 密码 </label>
+									<input id="password" name="password" required="required" type="password" placeholder="请输入密码" />
+								</p>
+								<p class="keeplogin">
+									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />
+									<label for="loginkeeping">保持登录</label>
+								</p>
+								<p class="login button">
+									<input type="submit" value="登录" />
+								</p>
+								<p class="change_link">
+									还没有注册帐号 ?
+									<a href="#toregister" class="to_register">去注册</a>
+								</p>
+							</form>
+						</div>
+
+						<div id="register" class="animate form">
+							<form id="form_register" action="http://localhost:8989/user/register" autocomplete="on" method="post">
+								<h1> 注册 </h1>
+								<p>
+									<label for="emailsignup" class="youmail" data-icon="e"> 邮箱</label>
+									<input id="username_register" name="username" required="required" type="email" placeholder="请输入有效邮箱作为登录帐号" />
+								</p>
+								<p>
+									<label for="passwordsignup" class="youpasswd" data-icon="p">输入密码 </label>
+									<input id="passwordsignup" name="password" required="required" type="password" placeholder="请输入不少于6位密码" />
+								</p>
+								<p>
+									<label for="passwordsignup_confirm" class="youpasswd" data-icon="p">请再次输入密码 </label>
+									<input id="passwordsignup_confirm" name="password2" required="required" type="password" placeholder="请输入不少于6位密码" onblur="comparedPassword()" />
+								</p>
+								<p class="signin button">
+									<input type="button" value="注册" onclick="checkRegister()" />
+								</p>
+								<p class="change_link">
+									已经注册帐号 ?
+									<a href="#tologin" class="to_register"> 转到登录 </a>
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</body>
+</html>

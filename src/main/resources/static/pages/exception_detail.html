@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>异常详情页</title>
+		<link rel="stylesheet" type="text/css" href="../css/easyui/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/icon.css" />
+		<link rel="stylesheet" type="text/css" href="../wangEditor/dist/css/wangEditor.min.css">
+		<style type="text/css">
+			#editor-trigger {
+				height: 150px;
+				/*max-height: 500px;*/
+			}
+			
+			.container {
+				width: 100%;
+				margin: 0 auto;
+				position: relative;
+			}
+		</style>
+		<script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../js/init.js"></script>
+		<script type="text/javascript" src="../wangEditor/dist/js/lib/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="../wangEditor/dist/js/wangEditor.min.js"></script>
+		<script>
+			$(function(){
+				//解析请求路径
+				var href = decodeURIComponent(window.location.href);
+				var array_href = href.split("?");//以?为分隔
+				//拿右边的exceptionId=1
+				var kv = array_href[1];//exceptionId=1
+				var array_kv = kv.split("=");
+				var v = array_kv[1];
+				$("#exceptionId").val(v);
+				//目前用户主键为假数据
+				$("#userId").val("1");
+			})
+		</script>
+	</head>
+
+	<body>
+		<div id="out_panel" class="easyui-panel" data-options="noheader:true,border:false">
+			<!--头-->
+			<div>
+				<div style="float: right;">
+					<img src="../images/logo_header.jpg" height="60" width="60" />
+					<a href="javascript:void(0)">登录</a>&nbsp;
+					<a href="javascript:void(0)">退出</a>&nbsp;
+					<a href="http://localhost:8989/pages/user_detail.html">个人中心</a>&nbsp;
+				</div>
+			</div>
+			<!--内容-->
+			<!--异常的标题和描述-->
+			<div style="float: left;margin-top: 60px;width: 100%;">
+				<hr />
+				<div>
+					<p>
+						<font style="font-family: 楷体;">标题:</font>java.lang.Exception</p>
+				</div>
+				<div>
+					<p>
+						<font style="font-family: 楷体;">提供者:</font>隔壁老王</p>
+				</div>
+				<div>
+					<p>
+						<font style="font-family: 楷体;">描述:</font>这个异常很神奇，从来没有见过</p>
+				</div>
+				<hr />
+			</div>
+			<!--异常的解析方案solve-->
+			<iframe src="detail.html" style="border: none;width: 100%;height: 400px;"></iframe>
+		</div>
+		<div id="editor-container" class="container">
+			<div id="editor-trigger">
+				<p>在这里输入我的解决方案</p>
+			</div>
+		</div>
+		<input type="hidden" id="exceptionId" name="exceptionId" value="1" />
+		<input type="hidden" id="userId" name="userId" value="1" />
+		<a class="easyui-linkbutton" data-options="onClick:submit">确认提交</a>
+
+		<script type="text/javascript">
+			// 阻止输出log
+			// wangEditor.config.printLog = false;
+
+			var editor = new wangEditor('editor-trigger');
+
+			// 上传图片
+			editor.config.uploadImgUrl = '/upload';
+			editor.config.uploadParams = {
+				// token1: 'abcde',
+				// token2: '12345'
+			};
+			editor.config.uploadHeaders = {
+				// 'Accept' : 'text/x-json'
+			}
+			// editor.config.uploadImgFileName = 'myFileName';
+
+			// 隐藏网络图片
+			// editor.config.hideLinkImg = true;
+
+			// 表情显示项
+			editor.config.emotionsShow = 'value';
+			editor.config.emotions = {
+				'default': {
+					title: '默认',
+					data: './emotions.data'
+				},
+				'weibo': {
+					title: '微博表情',
+					data: [{
+							icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif',
+							value: '[草泥马]'
+						},
+						{
+							icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif',
+							value: '[神马]'
+						},
+						{
+							icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif',
+							value: '[浮云]'
+						},
+						{
+							icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/c9/geili_thumb.gif',
+							value: '[给力]'
+						},
+						{
+							icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/f2/wg_thumb.gif',
+							value: '[围观]'
+						},
+						{
+							icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/70/vw_thumb.gif',
+							value: '[威武]'
+						}
+					]
+				}
+			};
+
+			// 插入代码时的默认语言
+			// editor.config.codeDefaultLang = 'html'
+
+			// 只粘贴纯文本
+			// editor.config.pasteText = true;
+
+			// 跨域上传
+			// editor.config.uploadImgUrl = 'http://localhost:8012/upload';
+
+			// 第三方上传
+			// editor.config.customUpload = true;
+
+			// 普通菜单配置
+			// editor.config.menus = [
+			//     'img',
+			//     'insertcode',
+			//     'eraser',
+			//     'fullscreen'
+			// ];
+			// 只排除某几个菜单（兼容IE低版本，不支持ES5的浏览器），支持ES5的浏览器可直接用 [].map 方法
+			// editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
+			//     if (item === 'insertcode') {
+			//         return null;
+			//     }
+			//     if (item === 'fullscreen') {
+			//         return null;
+			//     }
+			//     return item;
+			// });
+
+			// onchange 事件
+			editor.onchange = function() {
+				console.log(this.$txt.html());
+			};
+
+			// 取消过滤js
+			// editor.config.jsFilter = false;
+
+			// 取消粘贴过来
+			// editor.config.pasteFilter = false;
+
+			// 设置 z-index
+			// editor.config.zindex = 20000;
+
+			// 语言
+			// editor.config.lang = wangEditor.langs['en'];
+
+			// 自定义菜单UI
+			// editor.UI.menus.bold = {
+			//     normal: '<button style="font-size:20px; margin-top:5px;">B</button>',
+			//     selected: '.selected'
+			// };
+			// editor.UI.menus.italic = {
+			//     normal: '<button style="font-size:20px; margin-top:5px;">I</button>',
+			//     selected: '<button style="font-size:20px; margin-top:5px;"><i>I</i></button>'
+			// };
+			editor.create();
+
+			function submit() {
+				var html = editor.$txt.html();
+				var exceptionId = $("#exceptionId").val();
+				var userId = $("#userId").val();
+				$.post("http://localhost:8989/solve/create", {
+					"exceptionId": exceptionId,
+					"userId": userId,
+					"solution": html
+				}, function(data) {
+					if(data != null) {
+						alert("添加成功！");
+					} else {
+						alert("添加失败！");
+					}
+
+				});
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户个人主页</title>
+		<link rel="stylesheet" type="text/css" href="../css/easyui/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/icon.css" />
+		<script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
+		<script>
+			var userId = 1;
+			$(function(){
+				$.get("http://localhost:8989/user/get?id=" + userId, function(data) {
+					$("#strong").html(data.nickname);
+				});
+			})
+			function watchProvider() {
+				$("#iframe").attr("src", "datagrid_user_provide.html");
+			}
+
+			function watchSolver() {
+				$("#iframe").attr("src", "datagrid_user_solve.html");
+			}
+
+			function watchAgree() {
+				$("#iframe").attr("src", "datagrid_user_agree.html");
+			}
+
+			function userModify() {
+				$.get("http://localhost:8989/user/get?id=" + userId, function(data) {
+					$("#dialog").dialog({
+						title: '修改信息',
+						width: 600,
+						height: 300,
+						closed: false,
+						cache: false,
+						//					href: 'http://localhost:8989/user/get?id=1',
+						modal: true,
+						content: '<iframe src="user_property_grid.html" frameborder="0" width="100%" height="90%"></iframe>',
+					});
+				});
+
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="cc" class="easyui-layout" style="width:100%;height:600px;">
+			<div data-options="region:'north',title:'North Title',split:true,noheader:true" style="height:100px;">
+				<!--这里放用户的头像-->
+				<div style="float: left;">
+					<img src="../images/logo_header.jpg" style="width: 90px;height: 90px;" />
+				</div>
+				<!--这里是用户显示的昵称-->
+				<div style="float: left;padding-left: 30px;padding-top: 60px;">
+					当前用户昵称：<span><font style="color: red;font-family: '微软雅黑';"><strong id="strong">明天丶天晴</strong></font></span>
+				</div>
+				<div style="float: right;padding-right: 30px;padding-top: 60px;">
+					<a href="javascript:void(0);" onclick="userModify();">点击修改个人信息</a>
+				</div>
+			</div>
+			<div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true,noheader:true" style="width:150px;">
+				我的好友列表
+			</div>
+			<div data-options="region:'west',title:'West',split:true,noheader:true" style="width:200px;">
+				<!--手风琴-->
+				<div id="aa" class="easyui-accordion" style="width:200px;height:480px;">
+					<div title="查看我发布的异常" data-options="iconCls:'icon-lock',selected:true" style="overflow:auto;padding:10px;">
+						<!--在这里提供点击按钮-->
+						<a class="easyui-linkbutton" data-options="plain:true,width:180,height:30,onClick:watchProvider">查看</a>
+					</div>
+					<div title="查看我解决的异常" data-options="iconCls:'icon-reload',selected:false" style="padding:10px;">
+						<!--在这里提供点击按钮-->
+						<a class="easyui-linkbutton" data-options="plain:true,width:180,height:30,onClick:watchSolver">查看</a>
+					</div>
+					<div title="查看我点赞的异常" data-options="">
+						<!--在这里提供点击按钮-->
+						<a class="easyui-linkbutton" data-options="plain:true,width:180,height:30,onClick:watchAgree">查看</a>
+					</div>
+				</div>
+			</div>
+			<div data-options="region:'center',title:'center title',noheader:true" style="padding:5px;background:#eee;">
+				<!--主体面板-->
+				<iframe id="iframe" src="datagrid_user_provide.html" style="width: 98%;height: 98%;" frameborder="0"></iframe>
+			</div>
+		</div>
+		<!--弹出的dialog-->
+		<div id="dialog">
+		</div>
+	</body>
+
+</html>

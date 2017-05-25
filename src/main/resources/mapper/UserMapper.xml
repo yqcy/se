@@ -8,7 +8,7 @@
         password,
         nickname,
         phone,
-        create_date,
+        create_date AS createDate,
         status
     </sql>
     <sql id="insert_fields">
@@ -43,7 +43,7 @@
             <if test="user.username!=null">or username = #{user.username}</if>
         </where>
     </sql>
-    <resultMap id="user_map" type="com.yq.se.model.User">
+    <resultMap id="user_map" type="com.yq.se.entity.db.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -59,10 +59,12 @@
         VALUES(<include refid="values"/>)
     </insert>
     <update id="modify">
-        UPDATE
-        <include refid="table_name"/>
-        <include refid="set"/>
-        <include refid="where"/>
+        UPDATE t_user
+        <set>
+            <if test="user.nickname!=null">nickname = #{user.nickname},</if>
+            <if test="user.password!=null">password = #{user.password}</if>
+        </set>
+        WHERE id = #{user.id}
     </update>
     <delete id="delete">
         DELETE FROM
@@ -70,7 +72,7 @@
         WHERE
         id = #{id}
     </delete>
-    <select id="queryById" resultMap="user_map">
+    <select id="selectById" resultMap="user_map">
         SELECT
         <include refid="fields"/>
         FROM
@@ -78,7 +80,7 @@
         WHERE
         id = #{id}
     </select>
-    <select id="queryAll" resultType="com.yq.se.model.User">
+    <select id="selectAll" resultType="com.yq.se.entity.db.User">
         SELECT
         <include refid="fields"/>
         FROM
@@ -86,9 +88,13 @@
         <where>
             <if test="true">status!=-1</if>
             <if test="status!=null">AND status=#{status}</if>
+            <if test="beginTime!=null">AND create_date &gt; #{beginTime}</if>
+            <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
         <if test="page!=null">
-            <if test="page.sort!=null">order by ${page.sort} ${page.order}</if>
+            <if test="page.order!=null">
+                ORDER BY ${page.order}
+            </if>
         </if>
         <if test="page!=null">
             <if test="page.begin!=null">
@@ -98,7 +104,7 @@
             </if>
         </if>
     </select>
-    <select id="count" resultType="java.lang.Integer">
+    <select id="count" resultType="int">
         SELECT
         COUNT(*)
         FROM
@@ -106,6 +112,15 @@
         <where>
             <if test="true">status!=-1</if>
             <if test="status!=null">AND status=#{status}</if>
+            <if test="beginTime!=null">AND create_date &gt; #{beginTime}</if>
+            <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
+    </select>
+    <select id="selectByUsername" resultMap="user_map">
+        SELECT * FROM t_user WHERE username = #{username}
+    </select>
+    <select id="selectRegisterCountForEveryMonth" resultType="com.yq.se.entity.dto.MonthCount">
+        SELECT DATE_FORMAT(create_date,&apos;%m&apos;) AS month,COUNT(id) AS count FROM t_user GROUP BY
+        DATE_FORMAT(create_date,&apos;%m&apos;)
     </select>
 </mapper>

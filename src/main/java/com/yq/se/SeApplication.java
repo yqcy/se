@@ -1,28 +1,16 @@
 package com.yq.se;
 
-import com.yq.se.mapper.UserMapper;
-import com.yq.se.model.User;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.ApplicationPreparedEvent;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
-
-import javax.sql.DataSource;
 
 /**
  * Created by 晴 on 2017/2/26.
  */
 @SpringBootApplication
+@ServletComponentScan
 public class SeApplication implements ApplicationListener<ApplicationReadyEvent> {
 
     public static void main(String[] args) {
@@ -62,6 +50,7 @@ public class SeApplication implements ApplicationListener<ApplicationReadyEvent>
      */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
+        //打印swagger的地址
         System.out.println("http://localhost:8989" + "/swagger-ui.html");
     }
 }

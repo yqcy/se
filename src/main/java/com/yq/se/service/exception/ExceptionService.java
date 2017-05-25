@@ -1,7 +1,7 @@
 package com.yq.se.service.exception;
 
-import com.yq.se.model.Exception;
-import com.yq.se.util.Page;
+import com.yq.se.entity.db.Exception;
+import com.yq.se.util.mybatis.Page;
 
 import java.util.Date;
 import java.util.List;
@@ -11,14 +11,24 @@ import java.util.List;
  */
 public interface ExceptionService {
 
-    Exception add(Exception e);
+    Exception add(Exception e, float boost);
 
-    Exception delete(Integer id);
+    Exception delete(String id);
 
-    Exception update(Exception e);
+    Exception update(Exception e, float boost);
 
-    Exception queryById(Integer id);
+    List<Exception> modify(String json);
 
-    List<Exception> queryAll(Exception e, Page page, String dateType, Date beginTime, Date endTime);
+    Exception queryById(String id);
+
+    List<Exception> queryAll(Exception e, Page page, Date beginTime, Date endTime, String sort, String order);
+
+    List<Exception> search(String keyword, Page page);
+
+    List<Integer> queryEveryMonthClickCount();
+
+    List<String> queryAllExceptionName();
+
+    List<Exception> queryAll(String userId, Page page, Date beginTime, Date endTime, String sort, String order);
 
 }

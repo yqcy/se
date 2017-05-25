@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.yq.se.mapper.ExceptionClickMapper">
+    <insert id="insert">
+        INSERT INTO t_exception_click
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            exception_id,
+            create_date,
+            <if test="click.userId!=null">user_id,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{click.exceptionId},
+            #{click.createDate},
+            <if test="click.userId!=null">#{click.userId},</if>
+        </trim>
+    </insert>
+    <select id="selectClickTop" resultType="com.yq.se.entity.db.ExceptionClick">
+        SELECT * FROM(
+        SELECT
+        exception_id AS exceptionId,
+        COUNT(exception_id) AS clickCount
+        FROM
+        t_exception_click
+        GROUP BY exception_id
+        )
+        ORDER BY count DESC
+        <if test="num!=null">
+            LIMIT 0 , #{num}
+        </if>
+    </select>
+    <select id="selectClickCountForEveryMonth" resultType="com.yq.se.entity.dto.MonthCount">
+        SELECT DATE_FORMAT(create_date,&apos;%m&apos;) AS month,COUNT(id) AS count FROM t_exception_click GROUP BY DATE_FORMAT(create_date,&apos;%m&apos;)
+    </select>
+</mapper>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<!--远端调用-->
+		<meta http-equiv="Access-Control-Allow-Origin" Content='*'>
+		<title>异常管理系统</title>
+
+		<link rel="stylesheet" type="text/css" href="../css/easyui/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/icon.css" />
+		<script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../js/kindeditor/kindeditor-min.js"></script>
+		<script type="text/javascript" src="../js/kindeditor/zh_CN.js"></script>
+		<script type="text/javascript" src="../js/init.js"></script>
+	</head>
+
+	<body class="easyui-layout">
+		<table id="dg_exception" class="easyui-datagrid" data-options="url:'http://localhost:8989/exception/getAll',method:'GET',
+				toolbar:'#tl',checkOnSelect:false,onLoadSuccess:loadSuccess,idField:'id',onClickRow:exceptionClickRow,
+				sortName:'createDate',sortOrder:'DESC',striped:true,multiSort:true,pageSize:5,pageList:[5,10,15],pagination:true,
+				frozenColumns:[[
+					{field:'checkbox',title:'选择',halign:'center',checkbox:true},
+					{field:'fullClassName',width:400,resizable:true,formatter:classNameFormatter,title:'<font color=#D84F4B><strong>类的全限定名</strong></font>',halign:'center',resizable:false}
+			]]" style="width: 100%;height: 100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'id',width:100,hidden:true">主键</th>
+					<th data-options="field:'createDate',width:150,sortable:true,resizable:false,halign:'center',
+					            	align:'center'">
+						<font color="#D84F4B"><strong>创建日期</strong></font>
+					</th>
+					<th data-options="field:'user',width:90,resizable:false,halign:'center',formatter:userFormatter,
+					            	align:'left'">
+						<font color="#D84F4B"><strong>上传用户</strong></font>
+					</th>
+					<th data-options="field:'description',width:220,resizable:false,halign:'center',
+					            	formatter:exceptionFormatter">
+						<font color="#D84F4B"><strong>异常信息描述</strong></font>
+					</th>
+					<th data-options="field:'status',width:80,resizable:false,halign:'center',align:'center',formatter:statusFormatter,
+						editor:{type:'combobox',options:{editable:false,valueField:'value',textField:'text',data:[{value:'0',text:'待审核'},{value:'1',text:'通过'}]}}">
+						<font color="#D84F4B"><strong>解决状态</strong></font>
+					</th>
+					<th data-options="field:'btn1',width:120,formatter:btnFormatter,align:'center'"></th>
+					<th data-options="field:'space',width:10"></th>
+				</tr>
+			</thead>
+		</table>
+		<div id="tl">
+			创建日期：<input class="easyui-datebox" name="beginTime" id="beginTime" data-options="prompt:'选择开始时间',editable:false,width:120,onChange:exceptionSearch" /> 
+			到 <input class="easyui-datebox" name="endTime" id="endTime" data-options="prompt:'选择结束时间',editable:false,width:120,onChange:exceptionSearch" /> 
+			&nbsp; 提供者：
+			<input class="easyui-combobox" name="provider" id="provider" data-options="prompt:'请选择提供者进行查询',url:'http://localhost:8989/user/combobox/query?page=1&rows=5&sort=id&order=DESC',method:'get',valueField:'id',textField:'nickname',editable:false,onChange:exceptionSearch," /> 
+			&nbsp; 异常名：
+			<input class="easyui-textbox" name="exception" id="exception" data-options="prompt:'请选择异常进行查询',width:180,onChange:exceptionSearch," /> &nbsp; 解决状态：
+			<input class="easyui-combobox" name="status_exception" id="status_exception" data-options="prompt:'请选择解决状态进行查询',width:120,editable:false,onChange:exceptionSearch,
+				textField:'text',valueField:'value',data:[
+				{value:'',text:'不限'},
+				{value:'1',text:'通过'},
+				{value:'0',text:'待审核'}
+			]" />&nbsp;
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true,text:'保存修改',onClick:exceptionEndEdit"></a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true,text:'撤销修改',onClick:exceptionCancelEdit"></a>
+		</div>
+	</body>
+
+</html>

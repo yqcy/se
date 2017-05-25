@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../css/easyui/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/easyui/icon.css" />
+		<script type="text/javascript" src="../js/easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/easyui/easyui-lang-zh_CN.js"></script>
+		<script>
+			function undo() {
+				$("#pg").propertygrid("rejectChanges");
+			}
+
+			function submit() {
+				var changes = $("#pg").propertygrid("getChanges");
+				$.each(changes, function(i, e) {
+					var nickname = null;
+					var password = null;
+					if(e.name == "用户昵称") nickname = e.value;
+					if(e.name == "用户密码") password = e.value;
+					$.post("http://localhost:8989/user/modify", {
+						'id':1,
+						'nickname': nickname,
+						'password': password
+					}, function(data) {
+						$("#pg").propertygrid("acceptChanges");
+						$.messager.show({
+							title: '我的消息',
+							msg: '修改成功，消息将在3秒后关闭。',
+							timeout: 3000,
+							showType: 'slide'
+						});
+					});
+				});
+			}
+			$.get("http://localhost:8989/user/get?id=1", function(data) {
+				$("#pg").propertygrid({
+					showGroup: true,
+					scrollbarSize: 0,
+					data: [{
+							'name': '用户名',
+							'value': data.username,
+							'group': '不可修改信息',
+							'editor': {
+								'type': 'textbox',
+								'options': {
+									'readonly': true,
+									'editable': false
+								}
+							}
+						},
+						{
+							'name': '创建时间',
+							'value': data.createDate,
+							'group': '不可修改信息',
+							'editor': {
+								'type': 'datetimebox',
+								'options': {
+									'readonly': true
+								}
+							}
+						},
+						{
+							'name': '用户昵称',
+							'value': data.nickname,
+							'group': '可修改信息',
+							'editor': {
+								'type': 'textbox',
+								'options': {}
+							}
+						}, {
+							'name': '用户密码',
+							'value': data.password,
+							'group': '可修改信息',
+							'editor': {
+								'type': 'textbox',
+								'options': {
+									'type': 'password'
+								}
+							}
+						}
+					],
+					toolbar: '#tb'
+				});
+			})
+		</script>
+	</head>
+
+	<body>
+		<table id="pg" class="easyui-propertygrid" style="width:100%;height:200px ;"></table>
+		<div id="tb">
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true,text:'撤销',onClick:undo"></a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true,text:'保存',onClick:submit"></a>
+		</div>
+
+	</body>
+
+</html>

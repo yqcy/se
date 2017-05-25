@@ -1,5 +1,5 @@
 import com.yq.se.SeApplication;
-import com.yq.se.model.User;
+import com.yq.se.entity.db.User;
 import com.yq.se.service.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ public class TestApplication {
 
     @Test
     public void addUser() {
-        List<User> users = userService.queryAllUsers(1, 5);
+        List<User> users = userService.queryAllUsers(null, null, null, null, null, null);
         System.out.println(users.size());
     }
 

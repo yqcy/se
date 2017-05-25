@@ -21,31 +21,29 @@
         #{exception.status},
         #{exception.user.id}
     </sql>
-    <resultMap id="exception_user_map" type="com.yq.se.model.Exception">
+    <resultMap id="exception_user_map" type="com.yq.se.entity.db.Exception">
         <id column="exception_id" property="id"/>
         <result column="full_class_name" property="fullClassName"/>
         <result column="description" property="description"/>
         <result column="exception_create_date" property="createDate"/>
         <result column="exception_last_update" property="lastUpdate"/>
         <result column="exception_status" property="status"/>
-        <association property="user" javaType="com.yq.se.model.User">
+        <association property="user" javaType="com.yq.se.entity.db.User">
             <id column="user_id" property="id"/>
             <result column="username" property="username"/>
             <result column="nickname" property="nickname"/>
             <result column="phone" property="phone"/>
-            <result column="create_date" property="createDate"/>
+            <result column="user_create_date" property="createDate"/>
+            <result column="user_status" property="status"/>
         </association>
     </resultMap>
-    <insert id="add">
-        <selectKey keyColumn="id" keyProperty="id" resultType="int" order="AFTER">
-            SELECT MAX(id) FROM t_exception
-        </selectKey>
+    <insert id="insert">
         INSERT INTO
         t_exception
         (<include refid="fields"/>)
         VALUES(<include refid="values"/>)
     </insert>
-    <update id="modify">
+    <update id="update">
         UPDATE
         t_exception
         <set>
@@ -64,9 +62,9 @@
         <include refid="table_name"/>
         WHERE id = #{id}
     </delete>
-    <select id="queryById" resultMap="exception_user_map">
+    <select id="selectById" resultMap="exception_user_map">
         SELECT
-        e.*,u.id,u.username,u.nickname,u.phone,u.create_date
+        e.*,u.username,u.nickname,u.phone,u.create_date AS user_create_date,u.status AS user_status
         FROM
         (
         SELECT
@@ -82,9 +80,9 @@
         ON
         e.user_id = u.id
     </select>
-    <select id="queryAll" resultMap="exception_user_map">
+    <select id="selectAll" resultMap="exception_user_map">
         SELECT
-        e.*,u.id,u.username,u.nickname,u.phone,u.create_date
+        e.*,u.username,u.nickname,u.phone,u.create_date AS user_create_date,u.status AS user_status
         FROM
         (
         SELECT
@@ -95,28 +93,31 @@
         <where>
             <if test="true">status != -1</if>
             <if test="exception.id!=null">AND id = #{exception.id}</if>
-            <if test="exception.fullClassName!=null">AND full_class_name = #{exception.fullClassName}</if>
+            <if test="exception.fullClassName!=null">AND full_class_name LIKE &apos;%${exception.fullClassName}%&apos;</if>
             <if test="exception.status!=null">AND status = #{exception.status}</if>
             <if test="exception.user.id!=null">AND user_id = #{exception.user.id}</if>
-            <if test="begin!=null">
-                <if test="end!=null">AND ${dateType} BETWEEN #{page.begin} AND #{page.size}</if>
-            </if>
+            <if test="beginTime!=null">AND create_date &gt; #{beginTime}</if>
+            <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
         ) e
         LEFT JOIN
         t_user u
         ON
         e.user_id = u.id
-        <if test="page.sort!=null">
-            ORDER BY ${page.sort} ${page.order}
+        <if test="page!=null">
+            <if test="page.order!=null">
+                ORDER BY exception_${page.order}
+            </if>
         </if>
-        <if test="page.begin!=null">
-            <if test="page.size!=null">
-                LIMIT ${page.begin} , ${page.size}
+        <if test="page!=null">
+            <if test="page.begin!=null">
+                <if test="page.size!=null">
+                    LIMIT ${page.begin} , ${page.size}
+                </if>
             </if>
         </if>
     </select>
-    <select id="queryCount" resultType="java.lang.Integer">
+    <select id="count" resultType="int">
         SELECT
         COUNT(*)
         FROM
@@ -127,9 +128,43 @@
             <if test="exception.fullClassName!=null">AND full_class_name = #{exception.fullClassName}</if>
             <if test="exception.status!=null">AND status = #{exception.status}</if>
             <if test="exception.user.id!=null">AND user_id = #{exception.user.id}</if>
-            <if test="begin!=null">
-                <if test="end!=null">AND ${dateType} BETWEEN #{begin} AND #{end}</if>
-            </if>
+            <if test="beginTime!=null">AND create_date &gt; #{beginTime}</if>
+            <if test="endTime!=null">AND create_date &lt; #{endTime}</if>
         </where>
+    </select>
+    <select id="selectAllFullClassName" resultType="java.lang.String">
+        SELECT full_class_name FROM t_exception
+    </select>
+    <select id="selectAllByIds" resultMap="exception_user_map">
+        SELECT
+        e.*,u.username,u.nickname,u.phone,u.create_date AS user_create_date,u.status AS user_status
+        FROM
+        (
+        SELECT
+        id as exception_id , full_class_name , description , create_date as exception_create_date,
+        last_update as exception_last_update , status as exception_status , user_id
+        FROM
+        t_exception
+        WHERE id IN
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+        ) e
+        LEFT JOIN
+        t_user u
+        ON
+        e.user_id = u.id
+        <if test="page!=null">
+            <if test="page.order!=null">
+                ORDER BY exception_${page.order}
+            </if>
+        </if>
+        <if test="page!=null">
+            <if test="page.begin!=null">
+                <if test="page.size!=null">
+                    LIMIT ${page.begin} , ${page.size}
+                </if>
+            </if>
+        </if>
     </select>
 </mapper>

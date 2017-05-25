@@ -1,7 +1,9 @@
 package com.yq.se.service.user;
 
-import com.yq.se.model.User;
+import com.yq.se.entity.db.User;
+import com.yq.se.util.mybatis.Page;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,6 +13,7 @@ public interface UserService {
 
     /**
      * 添加新注册用户
+     *
      * @param user
      * @return
      */
@@ -18,13 +21,15 @@ public interface UserService {
 
     /**
      * 根据ID主键删除用户
+     *
      * @param id
      * @return
      */
-    int deleteById(Integer id);
+    int deleteById(String id);
 
     /**
      * 修改用户个人信息
+     *
      * @param user
      * @return
      */
@@ -32,17 +37,32 @@ public interface UserService {
 
     /**
      * 分页查询用户
-     * @param pageNum
-     * @param pageSize
-     * @return
+     *
+     * @param status
+     * @param beginTime
+     * @param endTime
+     * @param page
+     * @param sort
+     * @param order     @return
      */
-    List<User> queryAllUsers(Integer pageNum, Integer pageSize);
+    List<User> queryAllUsers(Integer status, Date beginTime, Date endTime, Page page, String sort, String order);
 
     /**
      * 查询指定ID的用户
+     *
      * @param id
      * @return
      */
-    User queryById(Integer id);
+    User queryById(String id);
+
+    boolean checkUsername(String username);
+
+    List<Integer> queryRegisterCountForEveryMonth();
+
+    User login(String username, String password);
+
+    List<Integer> queryLoginCountForEveryMonth();
+
+    List<User> queryDataForCombobox(Page page, String sort, String order);
 
 }
